@@ -5,16 +5,16 @@ class MCSocket {
     this._socket = new WebSocket(serverUrl);
   }
 
-  async _handleClose(ws, cevent) {}
+  async _handleClose(cevent) {}
 
-  async _handleError(ws, event) {}
+  async _handleError(event) {}
 
-  async _handleMessage(ws, mevent) {
+  async _handleMessage(mevent) {
     const message = await mevent.data.text();
     console.log("`" + message + "`");
   }
 
-  async _handleOpen(ws, event) {
+  async _handleOpen(event) {
     console.log("Server connection established");
   }
 
@@ -40,25 +40,28 @@ class MCSocket {
 
   init() {
     this._socket
-      .onclose((ws, cevent) => {
+      .addEventListener("close", (cevent) => {
         console.log("CLOSE VVVVVV");
-        console.log(ws, cevent);
-        this._handleClose(ws, cevent);
-      })
-      .onerror((ws, event) => {
+        console.log(cevent);
+        this._handleClose(cevent);
+      });
+    this._socket
+      .addEventListener("error", (event) => {
         console.log("ERROR VVVVVV");
-        console.log(ws, event);
-        this._handleError(ws, event);
-      })
-      .onmessage((ws, mevent) => {
+        console.log(event);
+        this._handleError(event);
+      });
+    this._socket
+      .addEventListener("message", (mevent) => {
         console.log("MESSAGE VVVVVV");
-        console.log(ws, mevent);
-        this._handleMessage(ws, mevent);
-      })
-      .onopen((ws, event) => {
+        console.log(mevent);
+        this._handleMessage(mevent);
+      });
+    this._socket
+      .addEventListener("open", (event) => {
         console.log("OPEN VVVVVV");
-        console.log(ws, event);
-        this._handleOpen(ws, event);
+        console.log(event);
+        this._handleOpen(event);
       });
 
     return this;
