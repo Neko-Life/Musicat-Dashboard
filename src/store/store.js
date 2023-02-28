@@ -1,20 +1,20 @@
 import { applyMiddleware, legacy_createStore } from "redux";
 import thunk from "redux-thunk";
-// import actions
+import { connectSocket } from "../socket/socket";
 
 /**
- * @typedef {object} ActionReducer
+ * @typedef {object} ReducerAction
  * @property {string} type
  * @property {any} payload
  */
 
 const initialState = {
-  socket: null,
+  socket: connectSocket(),
 };
 
 /**
  * @param {typeof initialState} state
- * @param {ActionReducer} action
+ * @param {ReducerAction} action
  */
 const reducer = (state = initialState, action) => {
   switch(action.type) {
