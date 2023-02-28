@@ -1,5 +1,1 @@
-const config = {
-  serverUrl: "ws://",
-};
-
-export default config;
+export const serverUrl = "ws://";
