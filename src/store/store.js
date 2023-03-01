@@ -10,6 +10,7 @@ import { connectSocket } from "../socket/socket";
 
 const initialState = {
   socket: connectSocket(),
+  botInfo: null,
 };
 
 /**
