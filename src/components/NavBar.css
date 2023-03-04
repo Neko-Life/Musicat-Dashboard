@@ -1,0 +1,20 @@
+.navbar {
+  display: flex;
+  width: 100%;
+  font-size: 130%;
+}
+
+.title {
+  flex-grow: 1;
+}
+
+.botpfp {
+  padding: 0px 1%;
+}
+
+.profile {
+  padding: 0px 3%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

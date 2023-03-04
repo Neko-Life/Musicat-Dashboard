@@ -1,4 +1,5 @@
 import { serverUrl } from "../config";
+import { rand } from "../util/util";
 
 class MCSocket {
   /**
@@ -14,7 +15,24 @@ class MCSocket {
     this.lastPong = new Date(0);
     this.pingFail = 0;
 
+    this._nonces = [];
+
     this._socket = new WebSocket(serverUrl);
+  }
+
+  _generateNonce() {
+    let str;
+
+    do {
+      str = "";
+      for (let i = 0; i < 16; i++) {
+        str += rand(0,9);
+      }
+    } while (this._nonces.includes(str))
+
+    this._nonces.push(str);
+
+    return str;
   }
 
   async _handleClose(cevent) {}
@@ -25,7 +43,7 @@ class MCSocket {
     const receivedAt = new Date();
     const message = await mevent.data.text();
 
-    // TODO: remove this log
+    // TODO: remove this log and any other verbose log in this file
     console.log("`" + message + "`");
 
     if (message === "1") {
@@ -35,6 +53,21 @@ class MCSocket {
     else {
       try {
         const payload = JSON.parse(message);
+
+        if (payload.type !== undefined) {
+          if (payload.nonce?.length !== 16) return;
+          switch(payload.type) {
+            case "req":
+              this._handleReq(payload.nonce, payload.d);
+              break;
+            case "res":
+              this._handleRes(payload.nonce, payload.d);
+              break;
+            default:
+              throw new TypeError("[ERROR] Unknown type: " + payload.type);
+          }
+        }
+
       } catch (e) {
         console.error(e);
       }
@@ -58,6 +91,16 @@ class MCSocket {
         }
       } else this.pingFail = 0;
     });
+  }
+
+  async _handleReq(nonce, d) {
+
+    const res = {}; // TODO
+    this.response(nonce, res);
+  }
+
+  async _handleRes(nonce, d) {
+    if (!this._nonces.splice(this._nonces.findIndex(n => n === nonce), 1).length) return;
   }
 
   reconnect() {
@@ -157,6 +200,30 @@ class MCSocket {
       console.error("[ERROR] Unable to ping server");
       return false;
     }
+  }
+
+  request(req) {
+    const reqObj = {
+      type: "req",
+      nonce: this._generateNonce(),
+      d: req,
+    };
+
+    this.sendObj(reqObj);
+  }
+
+  response(nonce, res) {
+    const resObj = {
+      type: "res",
+      nonce,
+      d: res,
+    };
+
+    this.sendObj(resObj);
+  }
+
+  requestBotInfo() {
+    this.request("botInfo");
   }
 }
 
