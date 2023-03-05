@@ -31,8 +31,16 @@ class MCSocket {
     } while (this._nonces.includes(str))
 
     this._nonces.push(str);
+    setTimeout(this._removeNonce(str), 3000);
 
     return str;
+  }
+
+  _removeNonce(nonce) {
+    const nIndex = this._nonces.findIndex(n => n === nonce);
+    if (nIndex < 0) return nIndex;
+    this._nonces.splice(nIndex, 1);
+    return nIndex;
   }
 
   async _handleClose(cevent) {}
@@ -55,7 +63,6 @@ class MCSocket {
         const payload = JSON.parse(message);
 
         if (payload.type !== undefined) {
-          if (payload.nonce?.length !== 16) return;
           switch(payload.type) {
             case "req":
               this._handleReq(payload.nonce, payload.d);
@@ -85,6 +92,7 @@ class MCSocket {
       if (!sent) {
         this.pingFail++;
         if (this.pingFail === 3) {
+          console.error("Dead connection");
           this.pingerRunning = false;
           this.reconnect();
           return true;
@@ -100,7 +108,9 @@ class MCSocket {
   }
 
   async _handleRes(nonce, d) {
-    if (!this._nonces.splice(this._nonces.findIndex(n => n === nonce), 1).length) return;
+    if (this._removeNonce(nonce) < 0) {
+      throw new Error("[ERROR] _handleRes: timed out");
+    }
   }
 
   reconnect() {

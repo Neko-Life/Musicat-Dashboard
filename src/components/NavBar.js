@@ -6,14 +6,14 @@ export default function NavBar() {
   const dispatch = useDispatch();
   const { botInfo } = useSelector(state => state);
 
-  useEffect(() => {
-    dispatch(); // !TODO: Request botInfo
-  }, []);
+  // useEffect(() => {
+  //   dispatch(); // !TODO: Request botInfo
+  // }, []);
 
   return (
     <div className="navbar">
       <div className="botpfp">
-        <image src="" alt=""/>
+        <img src="" alt=""/>
       </div>
       <div className="title">
         <h1>Musicat</h1>
