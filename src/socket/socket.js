@@ -54,30 +54,32 @@ class MCSocket {
     // TODO: remove this log and any other verbose log in this file
     console.log("`" + message + "`");
 
+    if (!message.length) return;
+
     if (message === "1") {
       console.log("PONG:", receivedAt.valueOf() - this.lastPing.valueOf(), "ms");
       this.lastPong = receivedAt;
+      return;
     }
-    else {
-      try {
-        const payload = JSON.parse(message);
 
-        if (payload.type !== undefined) {
-          switch(payload.type) {
-            case "req":
-              this._handleReq(payload.nonce, payload.d);
-              break;
-            case "res":
-              this._handleRes(payload.nonce, payload.d);
-              break;
-            default:
-              throw new TypeError("[ERROR] Unknown type: " + payload.type);
-          }
+    try {
+      const payload = JSON.parse(message);
+
+      if (payload.type !== undefined) {
+        switch(payload.type) {
+          case "req":
+            this._handleReq(payload.nonce, payload.d);
+            break;
+          case "res":
+            this._handleRes(payload.nonce, payload.d);
+            break;
+          default:
+            throw new TypeError("[ERROR] Unknown type: " + payload.type);
         }
-
-      } catch (e) {
-        console.error(e);
       }
+
+    } catch (e) {
+      console.error(e);
     }
   }
 
