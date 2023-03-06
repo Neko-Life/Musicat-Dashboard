@@ -31,7 +31,7 @@ class MCSocket {
     } while (this._nonces.includes(str))
 
     this._nonces.push(str);
-    setTimeout(this._removeNonce(str), 3000);
+    setTimeout(() => this._removeNonce(str), 3000);
 
     return str;
   }
@@ -113,6 +113,9 @@ class MCSocket {
     if (this._removeNonce(nonce) < 0) {
       throw new Error("[ERROR] _handleRes: timed out");
     }
+
+    console.log("response", nonce, "vvvvv");
+    console.log(d);
   }
 
   reconnect() {
@@ -235,7 +238,7 @@ class MCSocket {
   }
 
   requestBotInfo() {
-    this.request("botInfo");
+    this.request("bot_info");
   }
 }
 

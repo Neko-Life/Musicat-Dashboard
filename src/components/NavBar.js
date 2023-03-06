@@ -4,11 +4,11 @@ import "./NavBar.css";
 
 export default function NavBar() {
   const dispatch = useDispatch();
-  const { botInfo } = useSelector(state => state);
+  const { botInfo, socket } = useSelector(state => state);
 
-  // useEffect(() => {
-  //   dispatch(); // !TODO: Request botInfo
-  // }, []);
+  useEffect(() => {
+    if (botInfo === null) socket.requestBotInfo();
+  }, []);
 
   return (
     <div className="navbar">
@@ -16,7 +16,7 @@ export default function NavBar() {
         <img src="" alt=""/>
       </div>
       <div className="title">
-        <h1>Musicat</h1>
+        {/* <h1>{botInfo?.username}</h1> */}
       </div>
       <div className="profile">
         <div>

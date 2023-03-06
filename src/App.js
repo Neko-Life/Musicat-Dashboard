@@ -11,8 +11,12 @@ function App() {
     <div className="App">
       <NavBar/>
       <div className="main-container">
-        <SideBar/>
-        <RouterProvider router={router}/>
+        <div className="left-container">
+          <SideBar/>
+        </div>
+        <div className="right-container">
+          <RouterProvider router={router}/>
+        </div>
       </div>
       <Footer/>
     </div>
