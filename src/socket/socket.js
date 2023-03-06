@@ -1,4 +1,6 @@
 import { serverUrl } from "../config";
+import { setBotInfo } from "../store/actionCreators";
+import store from "../store/store";
 import { rand } from "../util/util";
 
 class MCSocket {
@@ -16,6 +18,7 @@ class MCSocket {
     this.pingFail = 0;
 
     this._nonces = [];
+    this._reqQueue = new Map();
     this._reconnecting = false;
 
     this._socket = new WebSocket(serverUrl);
@@ -68,7 +71,7 @@ class MCSocket {
     try {
       const payload = JSON.parse(message);
 
-      if (payload.type !== undefined) {
+      if (payload.type !== undefined && payload.type.length < 4) {
         switch(payload.type) {
           case "req":
             this._handleReq(payload.nonce, payload.d);
@@ -114,12 +117,29 @@ class MCSocket {
   }
 
   async _handleRes(nonce, d) {
+    const reqObj = this._reqQueue.get(nonce);
     if (this._removeNonce(nonce) < 0) {
+      reqObj.error = true;
+      reqObj.errReason = "timed out";
+      this._reqQueue.set(reqObj.nonce, reqObj);
+
       throw new Error("[ERROR] _handleRes: timed out");
     }
 
     console.log("response", nonce, "vvvvv");
     console.log(d);
+
+    if (typeof reqObj.d === "string") {
+      switch (reqObj.d) {
+        case "bot_info":
+          store.dispatch(setBotInfo(d));
+          break;
+        default:
+          throw new Error("[ERROR] Unknown d: ", reqObj.d);
+      }
+    }
+
+    this._reqQueue.delete(reqObj.nonce);
   }
 
   reconnect() {
@@ -243,6 +263,8 @@ class MCSocket {
       nonce: this._generateNonce(),
       d: req,
     };
+
+    this._reqQueue.set(reqObj.nonce, reqObj);
 
     this.sendObj(reqObj);
   }

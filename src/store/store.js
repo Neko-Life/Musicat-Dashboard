@@ -1,6 +1,7 @@
 import { applyMiddleware, legacy_createStore } from "redux";
 import thunk from "redux-thunk";
 import { connectSocket } from "../socket/socket";
+import { SET_BOT_INFO } from "./actionTypes";
 
 /**
  * @typedef {object} ReducerAction
@@ -18,7 +19,14 @@ const initialState = {
  * @param {ReducerAction} action
  */
 const reducer = (state = initialState, action) => {
-  switch(action.type) {
+  const { type, payload } = action;
+
+  switch(type) {
+    case SET_BOT_INFO:
+      return {
+        ...state,
+        botInfo: payload,
+      };
     default:
       return state;
   }

@@ -1,3 +1,1 @@
-const types = {};
-
-export default types;
+export const SET_BOT_INFO = "set/botInfo";
