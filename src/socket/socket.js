@@ -16,6 +16,7 @@ class MCSocket {
     this.pingFail = 0;
 
     this._nonces = [];
+    this._reconnecting = false;
 
     this._socket = new WebSocket(serverUrl);
   }
@@ -43,7 +44,9 @@ class MCSocket {
     return nIndex;
   }
 
-  async _handleClose(cevent) {}
+  async _handleClose(cevent) {
+    this.reconnect();
+  }
 
   async _handleError(event) {}
 
@@ -85,6 +88,7 @@ class MCSocket {
 
   async _handleOpen(event) {
     console.log("Server connection established");
+    this.requestBotInfo();
     if (this.pingerRunning) return;
 
     this.pingFail = 0;
@@ -93,7 +97,7 @@ class MCSocket {
       const sent = this.sendPing();
       if (!sent) {
         this.pingFail++;
-        if (this.pingFail === 3) {
+        if (this.pingFail === 2) {
           console.error("Dead connection");
           this.pingerRunning = false;
           this.reconnect();
@@ -119,10 +123,22 @@ class MCSocket {
   }
 
   reconnect() {
-    if (!this.pingerRunning && this.isClosed()) {
-      console.log("Lost connection to server, reconnecting...");
-      this._socket = new WebSocket(this._socket.url);
-      this.init();
+    if (this._reconnecting) return;
+    if (this.isClosed()) {
+      console.log("Lost connection to server");
+      const recon = () => {
+        if (this.pingerRunning && this.isOpen())
+        {
+          this._reconnecting = false;
+          return true;
+        }
+        console.log("reconnecting...");
+        this._socket = new WebSocket(this._socket.url);
+        this.init();
+      }
+
+      this._reconnecting = true;
+      this.looper(5000, recon);
     }
     else {
       console.error("[ERROR] Reconnect requested but doesn't qualify for reconnect");
@@ -147,6 +163,10 @@ class MCSocket {
 
   isOpen() {
     return this._getState() === this._socket.OPEN;
+  }
+
+  isReconnecting() {
+    return this._reconnecting;
   }
 
   init() {
