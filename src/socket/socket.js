@@ -110,6 +110,11 @@ class MCSocket {
     });
   }
 
+  _setReqObjError(reqObj, reason) {
+      reqObj.error = true;
+      reqObj.errReason = reason;
+  }
+
   async _handleReq(nonce, d) {
 
     const res = {}; // TODO
@@ -118,16 +123,17 @@ class MCSocket {
 
   async _handleRes(nonce, d) {
     const reqObj = this._reqQueue.get(nonce);
+    this._reqQueue.delete(reqObj.nonce);
+
     if (this._removeNonce(nonce) < 0) {
-      reqObj.error = true;
-      reqObj.errReason = "timed out";
+      this._setReqObjError(reqObj, "timed out");
       this._reqQueue.set(reqObj.nonce, reqObj);
 
       throw new Error("[ERROR] _handleRes: timed out");
     }
 
-    console.log("response", nonce, "vvvvv");
-    console.log(d);
+    // console.log("response", nonce, "vvvvv");
+    // console.log(d);
 
     if (typeof reqObj.d === "string") {
       switch (reqObj.d) {
@@ -139,7 +145,8 @@ class MCSocket {
       }
     }
 
-    this._reqQueue.delete(reqObj.nonce);
+    // if (typeof reqObj.d !== "object")
+    //   return;
   }
 
   reconnect() {

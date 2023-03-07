@@ -9,10 +9,11 @@ export default function NavBar() {
   return (
     <div className="navbar">
       <div className="botpfp">
-        <img src="" alt=""/>
+        <img src={botInfo?.avatarUrl} alt="Avatar" height="128px"/>
       </div>
       <div className="title">
-        <h1>{botInfo}</h1>
+        <h1>{botInfo?.username}</h1>
+        <p>{botInfo?.description}</p>
       </div>
       <div className="profile">
         <div>
