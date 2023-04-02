@@ -6,7 +6,7 @@ export default function Footer() {
   const { showConsole } = useSelector((state) => state);
 
   return (
-    <div>
+    <div className="footer-container">
       {showConsole && <Console />}
       <div className="main-footer"></div>
     </div>

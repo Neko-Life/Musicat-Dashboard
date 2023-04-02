@@ -1,14 +1,15 @@
 .console {
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .console-stdout {
   font-size: 16px;
+  min-height: 25vh;
   max-height: 50vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  scrollbar-width: thin;
   flex-grow: 1;
   padding: 16px 16px 0px 16px;
 }

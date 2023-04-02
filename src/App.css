@@ -2,6 +2,16 @@ body {
   margin: 0px;
 }
 
+#root, div.App {
+  min-height: 100vh;
+}
+
+div.App, .footer-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
 .main-container {
   display: flex;
 }
@@ -13,3 +23,11 @@ body {
 .right-container {
   flex: 7;
 }
+
+@media (min-width: 1280) {}
+
+@media (min-width: 1024) {}
+
+@media (min-width: 768) {}
+
+@media (min-width: 640) {}
