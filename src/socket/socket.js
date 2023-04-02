@@ -1,7 +1,8 @@
-import { serverUrl } from "../config";
-import { setBotInfo } from "../store/actionCreators";
-import store from "../store/store";
-import { rand } from "../util/util";
+import { serverUrl } from '../config';
+import { setBotInfo } from '../store/actionCreators';
+import store from '../store/store';
+import { getDebugState } from '../util/dbg';
+import { rand } from '../util/util';
 
 class MCSocket {
   /**
@@ -9,7 +10,8 @@ class MCSocket {
    */
   constructor(pingDuration = 110000) {
     pingDuration = Number(pingDuration);
-    if (isNaN(pingDuration) || pingDuration < 1) throw new TypeError("Invalid pingDuration");
+    if (isNaN(pingDuration) || pingDuration < 1)
+      throw new TypeError('Invalid pingDuration');
 
     this.pingDuration = pingDuration;
     this.pingerRunning = false;
@@ -28,11 +30,11 @@ class MCSocket {
     let str;
 
     do {
-      str = "";
+      str = '';
       for (let i = 0; i < 16; i++) {
-        str += rand(0,9);
+        str += rand(0, 9);
       }
-    } while (this._nonces.includes(str))
+    } while (this._nonces.includes(str));
 
     this._nonces.push(str);
     setTimeout(() => this._removeNonce(str), 3000);
@@ -41,7 +43,7 @@ class MCSocket {
   }
 
   _removeNonce(nonce) {
-    const nIndex = this._nonces.findIndex(n => n === nonce);
+    const nIndex = this._nonces.findIndex((n) => n === nonce);
     if (nIndex < 0) return nIndex;
     this._nonces.splice(nIndex, 1);
     return nIndex;
@@ -54,16 +56,21 @@ class MCSocket {
   async _handleError(event) {}
 
   async _handleMessage(mevent) {
+    const debug = getDebugState();
+
     const receivedAt = new Date();
     const message = await mevent.data.text();
 
-    // TODO: remove this log and any other verbose log in this file
-    console.log("`" + message + "`");
+    if (debug) console.log('`' + message + '`');
 
     if (!message.length) return;
 
-    if (message === "1") {
-      console.log("PONG:", receivedAt.valueOf() - this.lastPing.valueOf(), "ms");
+    if (message === '1') {
+      console.log(
+        'PONG:',
+        receivedAt.valueOf() - this.lastPing.valueOf(),
+        'ms'
+      );
       this.lastPong = receivedAt;
       return;
     }
@@ -72,25 +79,24 @@ class MCSocket {
       const payload = JSON.parse(message);
 
       if (payload.type !== undefined && payload.type.length < 4) {
-        switch(payload.type) {
-          case "req":
+        switch (payload.type) {
+          case 'req':
             this._handleReq(payload.nonce, payload.d);
             break;
-          case "res":
+          case 'res':
             this._handleRes(payload.nonce, payload.d);
             break;
           default:
-            throw new TypeError("[ERROR] Unknown type: " + payload.type);
+            throw new TypeError('[ERROR] Unknown type: ' + payload.type);
         }
       }
-
     } catch (e) {
       console.error(e);
     }
   }
 
   async _handleOpen(event) {
-    console.log("Server connection established");
+    console.log('Server connection established');
     this.requestBotInfo();
     if (this.pingerRunning) return;
 
@@ -101,7 +107,7 @@ class MCSocket {
       if (!sent) {
         this.pingFail++;
         if (this.pingFail === 2) {
-          console.error("Dead connection");
+          console.error('Dead connection');
           this.pingerRunning = false;
           this.reconnect();
           return true;
@@ -111,12 +117,11 @@ class MCSocket {
   }
 
   _setReqObjError(reqObj, reason) {
-      reqObj.error = true;
-      reqObj.errReason = reason;
+    reqObj.error = true;
+    reqObj.errReason = reason;
   }
 
   async _handleReq(nonce, d) {
-
     const res = {}; // TODO
     this.response(nonce, res);
   }
@@ -126,22 +131,22 @@ class MCSocket {
     this._reqQueue.delete(reqObj.nonce);
 
     if (this._removeNonce(nonce) < 0) {
-      this._setReqObjError(reqObj, "timed out");
+      this._setReqObjError(reqObj, 'timed out');
       this._reqQueue.set(reqObj.nonce, reqObj);
 
-      throw new Error("[ERROR] _handleRes: timed out");
+      throw new Error('[ERROR] _handleRes: timed out');
     }
 
     // console.log("response", nonce, "vvvvv");
     // console.log(d);
 
-    if (typeof reqObj.d === "string") {
+    if (typeof reqObj.d === 'string') {
       switch (reqObj.d) {
-        case "bot_info":
+        case 'bot_info':
           store.dispatch(setBotInfo(d));
           break;
         default:
-          throw new Error("[ERROR] Unknown d: ", reqObj.d);
+          throw new Error('[ERROR] Unknown d: ', reqObj.d);
       }
     }
 
@@ -152,23 +157,23 @@ class MCSocket {
   reconnect() {
     if (this._reconnecting) return;
     if (this.isClosed()) {
-      console.log("Lost connection to server");
+      console.log('Lost connection to server');
       const recon = () => {
-        if (this.pingerRunning && this.isOpen())
-        {
+        if (this.pingerRunning && this.isOpen()) {
           this._reconnecting = false;
           return true;
         }
-        console.log("reconnecting...");
+        console.log('reconnecting...');
         this._socket = new WebSocket(this._socket.url);
         this.init();
-      }
+      };
 
       this._reconnecting = true;
       this.looper(5000, recon);
-    }
-    else {
-      console.error("[ERROR] Reconnect requested but doesn't qualify for reconnect");
+    } else {
+      console.error(
+        "[ERROR] Reconnect requested but doesn't qualify for reconnect"
+      );
     }
   }
 
@@ -197,30 +202,41 @@ class MCSocket {
   }
 
   init() {
-    this._socket
-      .addEventListener("close", (cevent) => {
-        console.log("CLOSE VVVVVV");
+    this._socket.addEventListener('close', (cevent) => {
+      const debug = getDebugState();
+
+      if (debug) {
+        console.log('CLOSE VVVVVV');
         console.log(cevent);
-        this._handleClose(cevent);
-      });
-    this._socket
-      .addEventListener("error", (event) => {
-        console.log("ERROR VVVVVV");
+      }
+
+      this._handleClose(cevent);
+    });
+    this._socket.addEventListener('error', (event) => {
+      const debug = getDebugState();
+
+      if (debug) {
+        console.log('ERROR VVVVVV');
         console.log(event);
-        this._handleError(event);
-      });
-    this._socket
-      .addEventListener("message", (mevent) => {
-        // console.log("MESSAGE VVVVVV");
-        // console.log(mevent);
-        this._handleMessage(mevent);
-      });
-    this._socket
-      .addEventListener("open", (event) => {
-        console.log("OPEN VVVVVV");
+      }
+
+      this._handleError(event);
+    });
+    this._socket.addEventListener('message', (mevent) => {
+      // console.log("MESSAGE VVVVVV");
+      // console.log(mevent);
+      this._handleMessage(mevent);
+    });
+    this._socket.addEventListener('open', (event) => {
+      const debug = getDebugState();
+
+      if (debug) {
+        console.log('OPEN VVVVVV');
         console.log(event);
-        this._handleOpen(event);
-      });
+      }
+
+      this._handleOpen(event);
+    });
 
     return this;
   }
@@ -234,16 +250,16 @@ class MCSocket {
   }
 
   async sleep(ms) {
-    if (isNaN(Number(ms)) || ms < 1) throw new TypeError("Invalid duration");
+    if (isNaN(Number(ms)) || ms < 1) throw new TypeError('Invalid duration');
 
-    await new Promise((r,j) => setTimeout(r, ms));
+    await new Promise((r, j) => setTimeout(r, ms));
   }
 
   /**
    * Calls `breakcb` in `interval` duration (ms) until it returns true
    */
   async looper(interval, breakcb) {
-    if (typeof breakcb !== "function") throw new TypeError("Invalid callback");
+    if (typeof breakcb !== 'function') throw new TypeError('Invalid callback');
     while (true) {
       const br = await breakcb();
       if (br === true) break;
@@ -253,20 +269,19 @@ class MCSocket {
 
   sendPing() {
     if (this.isOpen()) {
-      console.log("Pinging...");
-      this.send("0");
+      console.log('Pinging...');
+      this.send('0');
       this.lastPing = new Date();
       return true;
-    }
-    else {
-      console.error("[ERROR] Unable to ping server");
+    } else {
+      console.error('[ERROR] Unable to ping server');
       return false;
     }
   }
 
   request(req) {
     const reqObj = {
-      type: "req",
+      type: 'req',
       nonce: this._generateNonce(),
       d: req,
     };
@@ -278,7 +293,7 @@ class MCSocket {
 
   response(nonce, res) {
     const resObj = {
-      type: "res",
+      type: 'res',
       nonce,
       d: res,
     };
@@ -287,7 +302,7 @@ class MCSocket {
   }
 
   requestBotInfo() {
-    this.request("bot_info");
+    this.request('bot_info');
   }
 }
 
