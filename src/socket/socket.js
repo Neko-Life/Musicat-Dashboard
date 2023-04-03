@@ -1,4 +1,5 @@
 import { serverUrl } from '../config';
+import { consolePrint } from '../console/console';
 import { setBotInfo } from '../store/actionCreators';
 import store from '../store/store';
 import { getDebugState } from '../util/dbg';
@@ -18,6 +19,7 @@ class MCSocket {
     this.lastPing = new Date(0);
     this.lastPong = new Date(0);
     this.pingFail = 0;
+    this.nextPongToConsoleStdout = false;
 
     this._nonces = [];
     this._reqQueue = new Map();
@@ -70,11 +72,12 @@ class MCSocket {
     if (!message.length) return;
 
     if (message === '1') {
-      console.log(
-        'PONG:',
-        receivedAt.valueOf() - this.lastPing.valueOf(),
-        'ms'
-      );
+      const pongTxt =
+        'PONG: ' + (receivedAt.valueOf() - this.lastPing.valueOf()) + ' ms';
+      if (this.nextPongToConsoleStdout === true) {
+        consolePrint(pongTxt);
+        this.nextPongToConsoleStdout = false;
+      } else console.log(pongTxt);
       this.lastPong = receivedAt;
       return;
     }
@@ -279,14 +282,21 @@ class MCSocket {
     }
   }
 
-  sendPing() {
+  sendPing(consoleStdout) {
     if (this.isOpen()) {
-      console.log('Pinging...');
+      const pingingTxt = 'Pinging...';
+      if (consoleStdout === true) {
+        this.nextPongToConsoleStdout = true;
+        consolePrint(pingingTxt);
+      } else console.log(pingingTxt);
       this.send('0');
       this.lastPing = new Date();
       return true;
     } else {
-      console.error('[ERROR] Unable to ping server');
+      this.nextPongToConsoleStdout = true;
+      const errorTxt = '[ERROR] Unable to ping server';
+      if (consoleStdout) consolePrint(errorTxt);
+      else console.error(errorTxt);
       return false;
     }
   }
