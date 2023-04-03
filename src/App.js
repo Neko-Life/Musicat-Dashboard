@@ -5,6 +5,7 @@ import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import router from './router/router';
 import './App.css';
+import './assets/common.css';
 import { useSelector } from 'react-redux';
 import Console from './components/Console';
 
@@ -14,7 +15,7 @@ function App() {
   return (
     <div className={'App theme-dark'}>
       <NavBar />
-      <div className="main-container">
+      <div className="shadow-light main-container">
         <div className="left-container">
           <SideBar />
         </div>
