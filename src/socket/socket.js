@@ -23,7 +23,11 @@ class MCSocket {
     this._reqQueue = new Map();
     this._reconnecting = false;
 
-    this._socket = new WebSocket(serverUrl);
+    if (serverUrl) this._socket = new WebSocket(serverUrl);
+    else {
+      console.error('[WARNING] Server URL not provided');
+      this._socket = null;
+    }
   }
 
   _generateNonce() {
@@ -202,6 +206,10 @@ class MCSocket {
   }
 
   init() {
+    if (!this._socket) {
+      return console.error('[ERROR] No socket');
+    }
+
     this._socket.addEventListener('close', (cevent) => {
       const debug = getDebugState();
 
@@ -212,6 +220,7 @@ class MCSocket {
 
       this._handleClose(cevent);
     });
+
     this._socket.addEventListener('error', (event) => {
       const debug = getDebugState();
 
@@ -222,11 +231,13 @@ class MCSocket {
 
       this._handleError(event);
     });
+
     this._socket.addEventListener('message', (mevent) => {
       // console.log("MESSAGE VVVVVV");
       // console.log(mevent);
       this._handleMessage(mevent);
     });
+
     this._socket.addEventListener('open', (event) => {
       const debug = getDebugState();
 
