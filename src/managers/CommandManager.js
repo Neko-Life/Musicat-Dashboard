@@ -11,7 +11,7 @@ export default class CommandManager {
 
   register(commandClass) {
     if (!(commandClass instanceof Command))
-      throw new TypeError('Invalid commandClass');
+      throw new TypeError('Command must be instance of Command class');
 
     if (!commandClass.name) throw new Error('Command must have a name');
 

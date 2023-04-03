@@ -1,6 +1,8 @@
 import {
+  ADD_SERVER,
   CONSOLE_CONSOLE_CLEAR,
   CONSOLE_CONSOLE_PRINT,
+  REMOVE_SERVER,
   SET_BOT_INFO,
   SET_DEBUG,
   TOGGLE_CONSOLE,
@@ -36,5 +38,19 @@ export const consoleConsoleClear = () => {
 export const toggleConsole = () => {
   return {
     type: TOGGLE_CONSOLE,
+  };
+};
+
+export const addServer = (payload) => {
+  return {
+    type: ADD_SERVER,
+    payload,
+  };
+};
+
+export const removeServer = (payload) => {
+  return {
+    type: REMOVE_SERVER,
+    payload,
   };
 };

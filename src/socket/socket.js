@@ -261,9 +261,10 @@ class MCSocket {
   }
 
   async sleep(ms) {
-    if (isNaN(Number(ms)) || ms < 1) throw new TypeError('Invalid duration');
+    const milli = Number(ms);
+    if (isNaN(milli) || milli < 1) throw new TypeError('Invalid duration');
 
-    await new Promise((r, j) => setTimeout(r, ms));
+    await new Promise((r, j) => setTimeout(r, milli));
   }
 
   /**

@@ -4,8 +4,10 @@ import thunk from 'redux-thunk';
 import { connectSocket } from '../socket/socket';
 
 import {
+  ADD_SERVER,
   CONSOLE_CONSOLE_CLEAR,
   CONSOLE_CONSOLE_PRINT,
+  REMOVE_SERVER,
   SET_BOT_INFO,
   SET_DEBUG,
   TOGGLE_CONSOLE,
@@ -24,6 +26,7 @@ const initialState = {
   stdout: [],
   maxStdoutEntry: 50,
   showConsole: false,
+  servers: new Map(),
 };
 
 /**
@@ -44,7 +47,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         debug: payload,
       };
-    case CONSOLE_CONSOLE_PRINT:
+    case CONSOLE_CONSOLE_PRINT: {
       const newStdout = state.stdout.slice();
 
       if (newStdout.length >= state.maxStdoutEntry) newStdout.shift();
@@ -55,6 +58,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         stdout: newStdout,
       };
+    }
     case CONSOLE_CONSOLE_CLEAR:
       return {
         ...state,
@@ -65,6 +69,23 @@ const reducer = (state = initialState, action) => {
         ...state,
         showConsole: !state.showConsole,
       };
+    case ADD_SERVER: {
+      const newServers = new Map([...state.servers, [payload.id, payload]]);
+
+      return {
+        ...state,
+        servers: newServers,
+      };
+    }
+    case REMOVE_SERVER: {
+      const newServers = new Map(state.servers);
+      newServers.delete(payload.id);
+
+      return {
+        ...state,
+        servers: newServers,
+      };
+    }
     default:
       return state;
   }

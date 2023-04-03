@@ -1,24 +1,24 @@
-import { RouterProvider } from "react-router-dom";
-import Footer from "./components/Footer";
-import NavBar from "./components/NavBar";
-import SideBar from "./components/SideBar";
-import router from "./router/router";
-import "./App.css";
-import { useDispatch, useSelector } from "react-redux";
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import Footer from './components/Footer';
+import NavBar from './components/NavBar';
+import SideBar from './components/SideBar';
+import router from './router/router';
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar/>
+    <div className={'App theme-dark'}>
+      <NavBar />
       <div className="main-container">
         <div className="left-container">
-          <SideBar/>
+          <SideBar />
         </div>
         <div className="right-container">
-          <RouterProvider router={router}/>
+          <RouterProvider router={router} />
         </div>
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

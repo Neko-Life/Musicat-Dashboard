@@ -1,9 +1,20 @@
+div.App.theme-dark {
+  --main-bg: #4a4e69;
+  --modal-bg: #264653;
+  --text-color: white;
+}
+
 body {
   margin: 0px;
 }
 
 #root, div.App {
   min-height: 100vh;
+}
+
+div.App {
+  background-color: var(--main-bg, unset);
+  color: var(--text-color, unset);
 }
 
 div.App, .footer-container {
