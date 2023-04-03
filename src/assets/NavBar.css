@@ -1,7 +1,6 @@
 .navbar {
   display: flex;
   width: 100%;
-  font-size: 130%;
   color: var(--nav-text-color, black);
   background-color: var(--nav-bg, white);
 }
@@ -12,6 +11,9 @@
 
 .botpfp {
   padding: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .profile {

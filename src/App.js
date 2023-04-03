@@ -11,12 +11,21 @@ import Console from './components/Console';
 
 function App() {
   const { showConsole } = useSelector((state) => state);
+  React.useEffect(() => {
+    if (showConsole) {
+      document
+        .querySelector('#console-stdin-form-input')
+        ?.focus({ preventScroll: true });
+    }
+  }, [showConsole]);
 
   return (
     <div className={'App theme-dark'}>
       <NavBar />
       <div className="shadow-light main-container">
-        <SideBar />
+        <div className="sidebar-outer-container">
+          <SideBar />
+        </div>
         <div className="main-main-container">
           <div className="main-main-container-top">
             <RouterProvider router={router} />
@@ -28,7 +37,7 @@ function App() {
                 showConsole ? 'console-show' : ''
               }`}
             >
-              <Console />
+              <Console disabled={!showConsole} />
             </div>
           </div>
         </div>

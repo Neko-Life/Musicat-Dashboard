@@ -4,7 +4,7 @@ import { handleConsoleCommand } from '../util/console';
 import '../assets/Console.css';
 import '../assets/common.css';
 
-export default function Console() {
+export default function Console({ disabled }) {
   const { stdout } = useSelector((state) => state);
   const [command, setCommand] = React.useState('');
 
@@ -15,7 +15,11 @@ export default function Console() {
 
   React.useEffect(() => {
     if (lastStdout.current)
-      lastStdout.current.scrollIntoView({ behavior: 'smooth' });
+      lastStdout.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'end',
+      });
   }, [stdout]);
 
   /**
@@ -51,10 +55,12 @@ export default function Console() {
         <div className="console-stdin">
           <form className="console-stdin-form" onSubmit={handleSubmit}>
             <input
+              id="console-stdin-form-input"
               className="stdin-form-input"
               value={command}
               onChange={handleInputChange}
               type="text"
+              disabled={disabled}
             />
           </form>
         </div>
