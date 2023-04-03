@@ -1,18 +1,50 @@
 .sidebar-container {
-  flex: 1;
-  padding: 8px;
-  margin: 16px 0px;
+  display: flex;
   position: absolute;
-  left: -263px;
-  width: 264px;
-  height: 264px;
-  box-sizing: border-box;
-  border-radius: 0px 10px 10px 0px;
-  background-color: var(--sidebar-bg, white);
-  color: var(--sidebar-text-color, black);
+  height: 480px;
   transition: .3s;
+  z-index: 1;
 }
 
-.sidebar-container:hover {
-  left: 0px;
+.sidebar-left-container {
+  border-radius: 0px 10px 10px 0px;
+}
+
+.sidebar-left {
+  left: var(--sidebar-container-left, -263px);
+}
+
+.sidebar-left:hover {
+  --sidebar-container-left: 0px;
+}
+
+.sidebar-right-container {
+  border-radius: 10px 0px 0px 10px;
+}
+
+.sidebar-right {
+  right: var(--sidebar-container-right, -263px);
+}
+
+.sidebar-right:hover {
+  --sidebar-container-right: 0px;
+}
+
+.sidebar-left-container, .sidebar-right-container {
+  background-color: var(--sidebar-bg, white);
+  color: var(--sidebar-text-color, black);
+  padding: 8px;
+  margin: 16px 0px;
+  width: 262px;
+  box-sizing: border-box;
+}
+
+.sidebar-expand-trigger-left {
+  width: 2px;
+  background-color: unset;
+}
+
+.sidebar-expand-trigger-right {
+  width: 24px;
+  background-color: unset;
 }

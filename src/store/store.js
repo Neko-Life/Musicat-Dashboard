@@ -24,7 +24,7 @@ const initialState = {
   botInfo: null,
   debug: false,
   stdout: [],
-  maxStdoutEntry: 50,
+  maxStdoutEntry: 100,
   showConsole: false,
   servers: new Map(),
 };

@@ -11,23 +11,47 @@ export default function SideBar() {
   };
 
   return (
-    <div className="shadow-light sidebar-container">
-      <div>
-        <input
-          id="toggle-console"
-          type="checkbox"
-          checked={showConsole}
-          onChange={handleToggleConsoleChange}
-        />
-        <label htmlFor="toggle-console">Console</label>
+    <>
+      <div className="sidebar-container sidebar-left">
+        <div className="shadow-light sidebar-left-container">
+          <div>
+            <input
+              type="checkbox"
+              checked={showConsole}
+              onChange={handleToggleConsoleChange}
+            />
+            <label htmlFor="toggle-console">Console</label>
+          </div>
+          <div>
+            <ul>
+              {servers.forEach((server, idx) => {
+                return <li key={server.id}>{server.name}</li>;
+              })}
+            </ul>
+          </div>
+        </div>
+        <div className="sidebar-expand-trigger-left"></div>
       </div>
-      <div>
-        <ul>
-          {servers.forEach((server, idx) => {
-            return <li key={server.id}>{server.name}</li>;
-          })}
-        </ul>
+      <div className="sidebar-container sidebar-right">
+        <div className="sidebar-expand-trigger-right"></div>
+        <div className="shadow-light sidebar-right-container">
+          <div>
+            <input
+              type="checkbox"
+              checked={showConsole}
+              onChange={handleToggleConsoleChange}
+            />
+            <label htmlFor="toggle-console">Console</label>
+          </div>
+          <div>
+            <ul>
+              {servers.forEach((server, idx) => {
+                return <li key={server.id}>{server.name}</li>;
+              })}
+            </ul>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

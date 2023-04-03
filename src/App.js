@@ -22,7 +22,14 @@ function App() {
             <RouterProvider router={router} />
           </div>
           <div className="main-main-container-bottom">
-            {showConsole && <Console />}
+            <div
+              draggable="true"
+              className={`console-container ${
+                showConsole ? 'console-show' : ''
+              }`}
+            >
+              <Console />
+            </div>
           </div>
         </div>
       </div>
