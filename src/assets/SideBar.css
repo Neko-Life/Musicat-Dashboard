@@ -1,0 +1,18 @@
+.sidebar-container {
+  flex: 1;
+  padding: 8px;
+  margin: 16px 0px;
+  position: absolute;
+  left: -263px;
+  width: 264px;
+  height: 264px;
+  box-sizing: border-box;
+  border-radius: 0px 10px 10px 0px;
+  background-color: var(--sidebar-bg, white);
+  color: var(--sidebar-text-color, black);
+  transition: .3s;
+}
+
+.sidebar-container:hover {
+  left: 0px;
+}

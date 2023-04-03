@@ -16,14 +16,12 @@ function App() {
     <div className={'App theme-dark'}>
       <NavBar />
       <div className="shadow-light main-container">
-        <div className="left-container">
-          <SideBar />
-        </div>
-        <div className="right-container">
-          <div className="right-container-top">
+        <SideBar />
+        <div className="main-main-container">
+          <div className="main-main-container-top">
             <RouterProvider router={router} />
           </div>
-          <div className="right-container-bottom">
+          <div className="main-main-container-bottom">
             {showConsole && <Console />}
           </div>
         </div>

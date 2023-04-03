@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleConsole } from '../store/actionCreators';
+import '../assets/SideBar.css';
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ export default function SideBar() {
   };
 
   return (
-    <div>
+    <div className="shadow-light sidebar-container">
       <div>
         <input
           id="toggle-console"

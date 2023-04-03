@@ -2,6 +2,12 @@ div.App.theme-dark {
   --main-bg: #4a4e69;
   --modal-bg: #264653;
   --text-color: white;
+  --sidebar-bg: white;
+  --sidebar-text-color: black;
+  --nav-bg: white;
+  --nav-text-color: black;
+  --console-bg: #264653;
+  --console-stdout-bg: #001d3d;
 }
 
 body {
@@ -13,7 +19,6 @@ body {
 }
 
 div.App {
-  background-color: var(--main-bg, unset);
   color: var(--text-color, unset);
   flex-grow: 1;
 }
@@ -26,26 +31,21 @@ div.App, .footer-container {
 .main-container {
   display: flex;
   flex-grow: 1;
+  background-color: var(--main-bg, unset);
 }
 
-.left-container {
-  flex: 1;
-  padding: 0px 8px;
-  margin: 16px 0px;
-  border-right: 1px solid white;
-}
-
-.right-container {
+.main-main-container {
   display: flex;
   flex-direction: column;
-  flex: 7;
+  width: 100vw;
 }
 
-.right-container-top {
+.main-main-container-top {
   flex-grow: 1;
 }
 
-.right-container-bottom {
+.main-main-container-bottom {
+  padding: 6px 10px 10px 10px;
 }
 
 @media (min-width: 1280) {}

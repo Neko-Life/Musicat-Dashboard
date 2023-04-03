@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import './NavBar.css';
+import '../assets/NavBar.css';
 
 export default function NavBar() {
   const { botInfo } = useSelector((state) => state);

@@ -38,24 +38,26 @@ export default function Console() {
   };
 
   return (
-    <div className="console">
-      <div className="console-stdout">
-        {stdout.map((str, idx) => (
-          <div ref={idx === stdout.length - 1 ? lastStdout : null} key={idx}>
-            <p className="no-mar">{str}</p>
-          </div>
-        ))}
-      </div>
+    <div className="shadow-light console">
+      <div className="console-std-container">
+        <div className="console-stdout">
+          {stdout.map((str, idx) => (
+            <div ref={idx === stdout.length - 1 ? lastStdout : null} key={idx}>
+              <p className="no-mar">{str}</p>
+            </div>
+          ))}
+        </div>
 
-      <div className="console-stdin">
-        <form className="console-stdin-form" onSubmit={handleSubmit}>
-          <input
-            className="stdin-form-input"
-            value={command}
-            onChange={handleInputChange}
-            type="text"
-          />
-        </form>
+        <div className="console-stdin">
+          <form className="console-stdin-form" onSubmit={handleSubmit}>
+            <input
+              className="stdin-form-input"
+              value={command}
+              onChange={handleInputChange}
+              type="text"
+            />
+          </form>
+        </div>
       </div>
     </div>
   );
