@@ -6,11 +6,16 @@
 
 .console-stdout {
   font-size: 16px;
-  min-height: 20vh;
+  min-height: 15vh;
+  max-height: 50vh;
   overflow-y: scroll;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   flex-grow: 1;
-  padding: 16px 16px 0px 16px;
+  margin-top: 16px;
+  padding: 0px 16px;
 }
 
 .console-stdin-form {

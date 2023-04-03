@@ -5,8 +5,12 @@ import NavBar from './components/NavBar';
 import SideBar from './components/SideBar';
 import router from './router/router';
 import './App.css';
+import { useSelector } from 'react-redux';
+import Console from './components/Console';
 
 function App() {
+  const { showConsole } = useSelector((state) => state);
+
   return (
     <div className={'App theme-dark'}>
       <NavBar />
@@ -15,7 +19,12 @@ function App() {
           <SideBar />
         </div>
         <div className="right-container">
-          <RouterProvider router={router} />
+          <div className="right-container-top">
+            <RouterProvider router={router} />
+          </div>
+          <div className="right-container-bottom">
+            {showConsole && <Console />}
+          </div>
         </div>
       </div>
       <Footer />
