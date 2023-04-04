@@ -37,11 +37,20 @@ const reducer = (state = initialState, action) => {
   const { type, payload } = action;
 
   switch (type) {
-    case SET_BOT_INFO:
+    case SET_BOT_INFO: {
+      const elFavicon = document.querySelector('#page-favicon');
+      const elTitle = document.querySelector('#page-title');
+      const elMeta = document.querySelector('#page-meta-description');
+
+      elFavicon.href = payload.avatarUrl;
+      elTitle.textContent = payload.username;
+      elMeta.content = payload.username + ' Dashboard';
+
       return {
         ...state,
         botInfo: payload,
       };
+    }
     case SET_DEBUG:
       return {
         ...state,
