@@ -8,7 +8,7 @@
 
 .console-stdout {
   font-size: 16px;
-  min-height: 12vh;
+  min-height: 14px;
   max-height: calc(100vh - 88px);
   overflow-y: scroll;
   overflow-x: hidden;
@@ -23,6 +23,7 @@
   position: absolute;
   bottom: var(--console-bottom, -120vh);
   transition: .3s;
+  transition-timing-function: ease-in-out;
   box-sizing: border-box;
   width: calc(100vw - 16px)
 }

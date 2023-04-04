@@ -32,7 +32,6 @@ function App() {
           </div>
           <div className="main-main-container-bottom">
             <div
-              draggable="true"
               className={`console-container ${
                 showConsole ? 'console-show' : ''
               }`}

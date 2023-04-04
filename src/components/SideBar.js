@@ -16,6 +16,7 @@ export default function SideBar() {
         <div className="shadow-light sidebar-left-container">
           <div>
             <input
+              id="toggle-console"
               type="checkbox"
               checked={showConsole}
               onChange={handleToggleConsoleChange}

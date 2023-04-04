@@ -44,7 +44,7 @@ export default function Console({ disabled }) {
   return (
     <div className="shadow-light console">
       <div className="console-std-container">
-        <div className="console-stdout">
+        <div id="console-stdout" className="console-stdout">
           {stdout.map((str, idx) => (
             <div ref={idx === stdout.length - 1 ? lastStdout : null} key={idx}>
               <p className="no-mar">{str}</p>

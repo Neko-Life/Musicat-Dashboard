@@ -2,7 +2,8 @@
   display: flex;
   position: absolute;
   height: 100vh;
-  transition: .3s;
+  transition: .5s;
+  transition-timing-function: ease-in-out;
   z-index: 1;
 }
 
