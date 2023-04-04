@@ -61,6 +61,7 @@ export default function Console({ disabled }) {
               onChange={handleInputChange}
               type="text"
               disabled={disabled}
+              autoComplete="off"
             />
           </form>
         </div>
