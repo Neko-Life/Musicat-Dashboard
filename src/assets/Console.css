@@ -10,8 +10,7 @@
   font-size: 16px;
   min-height: 14px;
   max-height: calc(100vh - 88px);
-  overflow-y: scroll;
-  overflow-x: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   gap: 8px;
