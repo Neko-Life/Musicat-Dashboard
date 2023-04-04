@@ -1,17 +1,17 @@
 .sidebar-container {
   display: flex;
-  position: absolute;
-  height: 100vh;
+  position: fixed;
+  /* height: 100vh; */
   transition: .5s;
   transition-timing-function: ease-in-out;
   z-index: 1;
 }
 
-@media only screen and (min-height: 640px) {
-  .sidebar-container {
-    height: 70vh;
-  }
-}
+/* @media only screen and (min-height: 640px) { */
+/*   .sidebar-container { */
+/*     height: 70vh; */
+/*   } */
+/* } */
 
 .sidebar-left-container {
   border-radius: 0px 10px 10px 0px;

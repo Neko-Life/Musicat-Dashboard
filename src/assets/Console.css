@@ -20,7 +20,7 @@
 }
 
 .console-container {
-  position: absolute;
+  position: fixed;
   bottom: var(--console-bottom, -120vh);
   transition: .3s;
   transition-timing-function: ease-in-out;
