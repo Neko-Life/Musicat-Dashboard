@@ -10,7 +10,7 @@ export default function NavBar() {
         <img src={botInfo?.avatarUrl} alt="Avatar" height="64px" />
       </div>
       <div className="title">
-        <h1>{botInfo?.username}</h1>
+        <h2>{botInfo?.username}</h2>
         <p>{botInfo?.description}</p>
       </div>
       <div className="profile">
