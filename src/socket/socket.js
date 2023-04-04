@@ -185,23 +185,23 @@ class MCSocket {
   }
 
   _getState() {
-    return this._socket.readyState;
+    return this._socket ? this._socket.readyState : '';
   }
 
   isClosed() {
-    return this._getState() === this._socket.CLOSED;
+    return this._getState() === this._socket?.CLOSED;
   }
 
   isClosing() {
-    return this._getState() === this._socket.CLOSING;
+    return this._getState() === this._socket?.CLOSING;
   }
 
   isConnecting() {
-    return this._getState() === this._socket.CONNECTING;
+    return this._getState() === this._socket?.CONNECTING;
   }
 
   isOpen() {
-    return this._getState() === this._socket.OPEN;
+    return this._getState() === this._socket?.OPEN;
   }
 
   isReconnecting() {
