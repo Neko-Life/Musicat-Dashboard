@@ -8,22 +8,25 @@ export default class ConsoleMaxHCommand extends Command {
   }
 
   run(args) {
-    /**
-     * @type {HTMLDivElement}
-     */
-    const el = document.querySelector('#console-stdout');
+    if (!args) {
+      return consolePrint('max height: ' + this.currentMaxHeight);
+    }
 
-    const newH = args ? Number(args) : NaN;
+    const newH = Number(args);
     if (isNaN(newH) || newH < 0 || newH > 100) {
       return consolePrint('[ERROR] Invalid [number]');
     }
 
     if (newH >= 0 && newH <= 100) {
       consolePrint('max height set to ' + newH);
+
+      /**
+       * @type {HTMLDivElement}
+       */
+      const el = document.querySelector('#console-stdout');
+
       return this.setMaxH(el, newH);
     }
-
-    consolePrint('max height: ' + this.currentMaxHeight);
   }
 
   setMaxH(el, h) {
