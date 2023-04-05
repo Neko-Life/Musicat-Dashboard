@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import navigators from '../util/navigators';
 
 export default function Main() {
-  const navigate = useNavigate();
+  navigators.landing = useNavigate();
 
   return (
     <div>
-      <h1 onClick={() => navigate("/lksdgfwyrg")}>Main</h1>
+      <h1>Main</h1>
     </div>
   );
 }

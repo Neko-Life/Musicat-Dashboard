@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar';
-import router from '../router/router';
+import router from '../router/router-Landing';
 import Console from '../components/Console';
 import '../assets/Landing.css';
 import '../assets/common.css';

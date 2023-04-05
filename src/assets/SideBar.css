@@ -44,9 +44,15 @@
   margin: 16px 0px;
   width: 348px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
-.sidebar-expand-trigger-left,.sidebar-expand-trigger-right {
+.sidebar-expand-trigger-left, .sidebar-expand-trigger-right {
   width: 24px;
   background-color: unset;
+}
+
+.tiny-text {
+  font-size: 1px;
 }
