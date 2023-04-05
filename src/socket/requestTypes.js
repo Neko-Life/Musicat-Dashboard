@@ -1,2 +1,2 @@
-export const BOT_INFO = 'bot_info';
-export const SERVER_LIST = 'server_list';
+export const BOT_INFO = 1;
+export const SERVER_LIST = 2;

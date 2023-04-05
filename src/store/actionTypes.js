@@ -3,7 +3,5 @@ export const SET_DEBUG = 'set/debug';
 export const CONSOLE_CONSOLE_PRINT = 'console/print';
 export const CONSOLE_CONSOLE_CLEAR = 'console/clear';
 export const TOGGLE_CONSOLE = 'console/toggle';
-export const ADD_SERVER = 'add/server';
-export const REMOVE_SERVER = 'remove/server';
 export const SET_COMMAND_MANAGER = 'set/commandManager';
 export const SET_SERVER_LIST = 'set/serverList';

@@ -148,7 +148,7 @@ class MCSocket {
     // console.log("response", nonce, "vvvvv");
     // console.log(d);
 
-    if (typeof reqObj.d === 'string') {
+    if (typeof reqObj.d === 'number') {
       switch (reqObj.d) {
         case BOT_INFO:
           store.dispatch(setBotInfo(d));

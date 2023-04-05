@@ -4,10 +4,8 @@ import thunk from 'redux-thunk';
 import { connectSocket } from '../socket/socket';
 
 import {
-  ADD_SERVER,
   CONSOLE_CONSOLE_CLEAR,
   CONSOLE_CONSOLE_PRINT,
-  REMOVE_SERVER,
   SET_BOT_INFO,
   SET_COMMAND_MANAGER,
   SET_DEBUG,
@@ -81,23 +79,6 @@ const reducer = (state = initialState, action) => {
         ...state,
         showConsole: !state.showConsole,
       };
-    case ADD_SERVER: {
-      const newServers = new Map([...state.servers, [payload.id, payload]]);
-
-      return {
-        ...state,
-        servers: newServers,
-      };
-    }
-    case REMOVE_SERVER: {
-      const newServers = new Map(state.servers);
-      newServers.delete(payload.id);
-
-      return {
-        ...state,
-        servers: newServers,
-      };
-    }
     case SET_COMMAND_MANAGER: {
       return {
         ...state,
@@ -107,7 +88,7 @@ const reducer = (state = initialState, action) => {
     case SET_SERVER_LIST: {
       return {
         ...state,
-        serverList: payload,
+        serverList: payload?.map((v) => JSON.parse(v)) || [],
       };
     }
     default:

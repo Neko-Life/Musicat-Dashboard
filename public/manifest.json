@@ -1,12 +1,7 @@
 {
-  "short_name": "Musicat Dashboard",
-  "name": "Musicat Dashboard",
+  "short_name": "Dashboard",
+  "name": "Dashboard",
   "icons": [
-    {
-      "src": "favicon.png",
-      "sizes": "4096x4096",
-      "type": "image/png"
-    }
   ],
   "start_url": ".",
   "display": "standalone",
