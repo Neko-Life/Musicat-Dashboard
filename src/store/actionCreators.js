@@ -4,6 +4,7 @@ import {
   CONSOLE_CONSOLE_PRINT,
   REMOVE_SERVER,
   SET_BOT_INFO,
+  SET_COMMAND_MANAGER,
   SET_DEBUG,
   TOGGLE_CONSOLE,
 } from './actionTypes';
@@ -51,6 +52,13 @@ export const addServer = (payload) => {
 export const removeServer = (payload) => {
   return {
     type: REMOVE_SERVER,
+    payload,
+  };
+};
+
+export const setCommandManager = (payload) => {
+  return {
+    type: SET_COMMAND_MANAGER,
     payload,
   };
 };

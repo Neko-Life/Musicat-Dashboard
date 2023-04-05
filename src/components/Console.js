@@ -5,7 +5,8 @@ import '../assets/Console.css';
 import '../assets/common.css';
 
 export default function Console({ disabled }) {
-  const { stdout } = useSelector((state) => state);
+  const { stdout, commandManager } = useSelector((state) => state);
+  const [savedCommand, setSavedCommand] = React.useState('');
   const [command, setCommand] = React.useState('');
 
   /**
@@ -13,14 +14,10 @@ export default function Console({ disabled }) {
    */
   const lastStdout = React.useRef(null);
 
-  React.useEffect(() => {
-    if (lastStdout.current)
-      lastStdout.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'end',
-        inline: 'end',
-      });
-  }, [stdout]);
+  /**
+   * @type {React.LegacyRef<HTMLInputElement>}
+   */
+  const stdinInput = React.useRef(null);
 
   /**
    * @type {React.FormEventHandler<HTMLFormElement>}
@@ -32,6 +29,7 @@ export default function Console({ disabled }) {
     handleConsoleCommand(command);
 
     setCommand('');
+    setSavedCommand('');
   };
 
   /**
@@ -39,7 +37,30 @@ export default function Console({ disabled }) {
    */
   const handleInputChange = (e) => {
     setCommand(e.target.value);
+    setSavedCommand(e.target.value);
   };
+
+  /**
+   * @type {React.KeyboardEventHandler<HTMLInputElement>}
+   */
+  const handleKeyDown = (e) => {
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setCommand(commandManager.getPreviousCommand() || savedCommand);
+    } else if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setCommand(commandManager.getNextCommand() || savedCommand);
+    }
+  };
+
+  React.useEffect(() => {
+    if (lastStdout.current)
+      lastStdout.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'end',
+      });
+  }, [stdout]);
 
   return (
     <div className="shadow-light console">
@@ -55,6 +76,7 @@ export default function Console({ disabled }) {
         <div className="console-stdin">
           <form className="console-stdin-form" onSubmit={handleSubmit}>
             <input
+              ref={stdinInput}
               id="console-stdin-form-input"
               className="stdin-form-input"
               value={command}
@@ -62,6 +84,7 @@ export default function Console({ disabled }) {
               type="text"
               disabled={disabled}
               autoComplete="off"
+              onKeyDown={handleKeyDown}
             />
           </form>
         </div>

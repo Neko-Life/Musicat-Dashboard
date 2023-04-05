@@ -9,6 +9,7 @@ import {
   CONSOLE_CONSOLE_PRINT,
   REMOVE_SERVER,
   SET_BOT_INFO,
+  SET_COMMAND_MANAGER,
   SET_DEBUG,
   TOGGLE_CONSOLE,
 } from './actionTypes';
@@ -27,6 +28,7 @@ const initialState = {
   maxStdoutEntry: 100,
   showConsole: false,
   servers: new Map(),
+  commandManager: null,
 };
 
 /**
@@ -93,6 +95,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         servers: newServers,
+      };
+    }
+    case SET_COMMAND_MANAGER: {
+      return {
+        ...state,
+        commandManager: payload,
       };
     }
     default:
