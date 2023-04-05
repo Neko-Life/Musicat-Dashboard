@@ -62,7 +62,9 @@ export default class CommandManager {
 
     const handlerResult = handler.run(args);
 
-    this.history.push(command);
+    if (this.history[this.history.length - 1] !== command)
+      this.history.push(command);
+
     if (this.history.length > this.maxHistoryEntry) {
       this.history.shift();
     }
