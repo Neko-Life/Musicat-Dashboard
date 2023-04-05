@@ -5,6 +5,7 @@ export default class ConsoleMaxHCommand extends Command {
   constructor() {
     super('console-max-h');
     this.currentMaxHeight = 100;
+    this.subtract100 = 88;
   }
 
   run(args) {
@@ -31,6 +32,6 @@ export default class ConsoleMaxHCommand extends Command {
 
   setMaxH(el, h) {
     this.currentMaxHeight = h;
-    el.style.maxHeight = `calc(${h}vh - 88px)`;
+    el.style.maxHeight = `calc(${h}vh - ${(this.subtract100 / 100) * h}px)`;
   }
 }
