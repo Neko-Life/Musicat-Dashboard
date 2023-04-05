@@ -6,6 +6,7 @@ import {
   SET_BOT_INFO,
   SET_COMMAND_MANAGER,
   SET_DEBUG,
+  SET_SERVER_LIST,
   TOGGLE_CONSOLE,
 } from './actionTypes';
 
@@ -59,6 +60,13 @@ export const removeServer = (payload) => {
 export const setCommandManager = (payload) => {
   return {
     type: SET_COMMAND_MANAGER,
+    payload,
+  };
+};
+
+export const setServerList = (payload) => {
+  return {
+    type: SET_SERVER_LIST,
     payload,
   };
 };

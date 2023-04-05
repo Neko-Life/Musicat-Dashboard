@@ -1,11 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { setNavigator } from '../util/navigators';
 
 export default function NotFound() {
-  const navigate = useNavigate();
+  setNavigator('landing', useNavigate());
 
   return (
     <div>
-      <h1 onClick={() => navigate("/")}>NotFound</h1>
+      <h1>NotFound</h1>
     </div>
   );
 }

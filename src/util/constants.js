@@ -1,5 +1,6 @@
 export const RANDOM_MESSAGES = [
   '?',
+  'u found me!!',
   'nothin to see here',
   'WTF',
   'go away please',

@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
-import navigators from '../util/navigators';
+import { setNavigator } from '../util/navigators';
 
 export default function Main() {
-  navigators.landing = useNavigate();
+  setNavigator('landing', useNavigate());
 
   return (
     <div>

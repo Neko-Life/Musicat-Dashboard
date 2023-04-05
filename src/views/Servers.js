@@ -1,11 +1,15 @@
+import { useNavigate } from 'react-router-dom';
+import { setNavigator } from '../util/navigators';
 import { useSelector } from 'react-redux';
 
 export default function Servers() {
-  const { servers } = useSelector((state) => state);
+  setNavigator('landing', useNavigate());
+
+  const { serverList } = useSelector((state) => state);
   return (
     <div>
       <ul>
-        {servers.forEach((server, idx) => {
+        {serverList.forEach((server, idx) => {
           return <li key={server.id}>{server.name}</li>;
         })}
       </ul>

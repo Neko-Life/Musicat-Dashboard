@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleConsole } from '../store/actionCreators';
-import navigators from '../util/navigators';
+import { getNavigator } from '../util/navigators';
 import { getRandMessage } from '../util/util';
 import '../assets/SideBar.css';
 
@@ -42,14 +42,14 @@ export default function SideBar() {
           </div>
           <button
             onClick={() => {
-              navigators.landing?.('/');
+              getNavigator('landing')?.('/');
             }}
           >
             Home
           </button>
           <button
             onClick={() => {
-              navigators.landing?.('/servers');
+              getNavigator('landing')?.('/servers');
             }}
           >
             Servers

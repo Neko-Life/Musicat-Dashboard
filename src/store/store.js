@@ -11,6 +11,7 @@ import {
   SET_BOT_INFO,
   SET_COMMAND_MANAGER,
   SET_DEBUG,
+  SET_SERVER_LIST,
   TOGGLE_CONSOLE,
 } from './actionTypes';
 
@@ -27,8 +28,8 @@ const initialState = {
   stdout: [],
   maxStdoutEntry: 100,
   showConsole: false,
-  servers: new Map(),
   commandManager: null,
+  serverList: [],
 };
 
 /**
@@ -101,6 +102,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         commandManager: payload,
+      };
+    }
+    case SET_SERVER_LIST: {
+      return {
+        ...state,
+        serverList: payload,
       };
     }
     default:

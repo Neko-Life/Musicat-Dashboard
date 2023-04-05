@@ -1,9 +1,10 @@
 import { serverUrl } from '../config';
 import { consolePrint } from '../console/console';
-import { setBotInfo } from '../store/actionCreators';
+import { setBotInfo, setServerList } from '../store/actionCreators';
 import store from '../store/store';
 import { getDebugState } from '../util/dbg';
 import { rand } from '../util/util';
+import { BOT_INFO, SERVER_LIST } from './requestTypes';
 
 class MCSocket {
   /**
@@ -149,8 +150,11 @@ class MCSocket {
 
     if (typeof reqObj.d === 'string') {
       switch (reqObj.d) {
-        case 'bot_info':
+        case BOT_INFO:
           store.dispatch(setBotInfo(d));
+          break;
+        case SERVER_LIST:
+          store.dispatch(setServerList(d));
           break;
         default:
           throw new Error('[ERROR] Unknown d: ', reqObj.d);
@@ -324,7 +328,11 @@ class MCSocket {
   }
 
   requestBotInfo() {
-    this.request('bot_info');
+    this.request(BOT_INFO);
+  }
+
+  requestServerList() {
+    this.request(SERVER_LIST);
   }
 }
 
