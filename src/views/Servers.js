@@ -11,7 +11,7 @@ export default function Servers() {
 
   React.useEffect(() => {
     if (socket) socket.requestServerList();
-  }, []);
+  }, [socket]);
 
   if (getDebugState()) console.log(serverList);
 

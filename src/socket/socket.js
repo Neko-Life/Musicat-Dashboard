@@ -175,6 +175,7 @@ class MCSocket {
           return true;
         }
         console.log('reconnecting...');
+        this._socket = null;
         this._socket = new WebSocket(this._socket.url);
         this.init();
       };
