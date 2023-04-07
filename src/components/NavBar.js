@@ -16,7 +16,9 @@ export default function NavBar() {
         <p>{botInfo?.description}</p>
       </div>
       <div className="profile">
-        <div>Login</div>
+        <div>
+          <button className="btn-normal">Login</button>
+        </div>
       </div>
     </div>
   );

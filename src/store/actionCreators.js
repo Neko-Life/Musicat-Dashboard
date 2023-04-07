@@ -4,6 +4,7 @@ import {
   SET_BOT_INFO,
   SET_COMMAND_MANAGER,
   SET_DEBUG,
+  SET_OAUTH_STATE,
   SET_SERVER_LIST,
   TOGGLE_CONSOLE,
 } from './actionTypes';
@@ -51,6 +52,13 @@ export const setCommandManager = (payload) => {
 export const setServerList = (payload) => {
   return {
     type: SET_SERVER_LIST,
+    payload,
+  };
+};
+
+export const setOauthState = (payload) => {
+  return {
+    type: SET_OAUTH_STATE,
     payload,
   };
 };

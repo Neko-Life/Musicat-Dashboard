@@ -1,10 +1,14 @@
 import { serverUrl } from '../config';
 import { consolePrint } from '../console/console';
-import { setBotInfo, setServerList } from '../store/actionCreators';
+import {
+  setBotInfo,
+  setOauthState,
+  setServerList,
+} from '../store/actionCreators';
 import store from '../store/store';
 import { getDebugState } from '../util/dbg';
 import { rand } from '../util/util';
-import { BOT_INFO, SERVER_LIST } from './requestTypes';
+import { BOT_INFO, OAUTH_STATE, SERVER_LIST } from './requestTypes';
 
 class MCSocket {
   /**
@@ -155,6 +159,9 @@ class MCSocket {
           break;
         case SERVER_LIST:
           store.dispatch(setServerList(d));
+          break;
+        case OAUTH_STATE:
+          store.dispatch(setOauthState(d));
           break;
         default:
           throw new Error('[ERROR] Unknown d: ', reqObj.d);
@@ -334,6 +341,12 @@ class MCSocket {
 
   requestServerList() {
     this.request(SERVER_LIST);
+  }
+
+  sendOauth(searchParams) {}
+
+  requestOauthState() {
+    this.request(OAUTH_STATE);
   }
 }
 

@@ -9,6 +9,7 @@ import {
   SET_BOT_INFO,
   SET_COMMAND_MANAGER,
   SET_DEBUG,
+  SET_OAUTH_STATE,
   SET_SERVER_LIST,
   TOGGLE_CONSOLE,
 } from './actionTypes';
@@ -28,6 +29,7 @@ const initialState = {
   showConsole: false,
   commandManager: null,
   serverList: [],
+  oauthState: null,
 };
 
 /**
@@ -89,6 +91,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         serverList: payload?.map((v) => JSON.parse(v)) || [],
+      };
+    }
+    case SET_OAUTH_STATE: {
+      return {
+        ...state,
+        oauthState: payload || null,
       };
     }
     default:
