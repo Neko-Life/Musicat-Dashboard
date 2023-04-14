@@ -268,7 +268,7 @@ class MCSocket {
   }
 
   send(str) {
-    this._socket.send(str);
+    this.isOpen() && this._socket.send(str);
   }
 
   sendObj(obj) {

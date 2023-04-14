@@ -1,6 +1,8 @@
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { setNavigator } from '../util/navigators';
 
 export default function Login() {
+  setNavigator('landing', useNavigate());
   const [searchParams, setSearchParams] = useSearchParams();
 
   // send searchParams to server
