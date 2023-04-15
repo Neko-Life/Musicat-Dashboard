@@ -182,8 +182,10 @@ class MCSocket {
           return true;
         }
         console.log('reconnecting...');
+        const url = this._socket.url;
+        this._socket.close();
         this._socket = null;
-        this._socket = new WebSocket(this._socket.url);
+        this._socket = new WebSocket(url);
         this.init();
       };
 
