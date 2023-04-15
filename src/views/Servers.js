@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setNavigator } from '../util/navigators';
 import { useSelector } from 'react-redux';
@@ -9,7 +9,7 @@ export default function Servers() {
 
   const { serverList, socket } = useSelector((state) => state);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (socket) socket.requestServerList();
   }, [socket]);
 

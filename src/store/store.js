@@ -90,7 +90,7 @@ const reducer = (state = initialState, action) => {
     case SET_SERVER_LIST: {
       return {
         ...state,
-        serverList: payload?.map((v) => JSON.parse(v)) || [],
+        serverList: payload || [],
       };
     }
     case SET_OAUTH_STATE: {

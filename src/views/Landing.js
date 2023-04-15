@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { RouterProvider } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Footer from '../components/Footer';
@@ -11,7 +11,8 @@ import '../assets/common.css';
 
 export default function Landing() {
   const { showConsole } = useSelector((state) => state);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (showConsole) {
       document
         .querySelector('#console-stdin-form-input')

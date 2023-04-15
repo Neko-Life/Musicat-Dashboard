@@ -1,8 +1,23 @@
+import { useRef } from 'react';
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import '../assets/NavBar.css';
 
 export default function NavBar() {
-  const { botInfo } = useSelector((state) => state);
+  const { botInfo, oauthState, socket } = useSelector((state) => state);
+
+  const loginButtonRef = useRef(null);
+
+  useEffect(() => {
+    if (oauthState?.length) window.location.href = oauthState;
+  }, [oauthState]);
+
+  const handleLoginClick = () => {
+    if (socket) {
+      if (loginButtonRef.current) loginButtonRef.current.disabled = true;
+      socket.requestOauthState();
+    }
+  };
 
   return (
     <div className="navbar">
@@ -17,7 +32,13 @@ export default function NavBar() {
       </div>
       <div className="profile">
         <div>
-          <button className="btn-normal">Login</button>
+          <button
+            ref={loginButtonRef}
+            className="btn-normal"
+            onClick={handleLoginClick}
+          >
+            Login
+          </button>
         </div>
       </div>
     </div>

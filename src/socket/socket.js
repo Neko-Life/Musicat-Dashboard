@@ -99,7 +99,7 @@ class MCSocket {
             this._handleRes(payload.nonce, payload.d);
             break;
           default:
-            throw new TypeError('[ERROR] Unknown type: ' + payload.type);
+            throw new TypeError('Unknown type: ' + payload.type);
         }
       }
     } catch (e) {
@@ -146,7 +146,7 @@ class MCSocket {
       this._setReqObjError(reqObj, 'timed out');
       this._reqQueue.set(reqObj.nonce, reqObj);
 
-      throw new Error('[ERROR] _handleRes: timed out');
+      throw new Error('_handleRes: timed out');
     }
 
     // console.log("response", nonce, "vvvvv");
@@ -164,7 +164,7 @@ class MCSocket {
           store.dispatch(setOauthState(d));
           break;
         default:
-          throw new Error('[ERROR] Unknown d: ', reqObj.d);
+          throw new Error('Unknown d: ', reqObj.d);
       }
     }
 
@@ -192,9 +192,7 @@ class MCSocket {
       this._reconnecting = true;
       this.looper(5000, recon);
     } else {
-      console.error(
-        "[ERROR] Reconnect requested but doesn't qualify for reconnect"
-      );
+      throw new Error("Reconnect requested but doesn't qualify for reconnect");
     }
   }
 
@@ -224,7 +222,7 @@ class MCSocket {
 
   init() {
     if (!this._socket) {
-      return console.error('[ERROR] No socket');
+      throw new Error('No socket');
     }
 
     this._socket.addEventListener('close', (cevent) => {
@@ -270,7 +268,8 @@ class MCSocket {
   }
 
   send(str) {
-    this.isOpen() && this._socket.send(str);
+    if (this.isOpen()) this._socket.send(str);
+    else throw new Error('Connection not open');
   }
 
   sendObj(obj) {
@@ -345,7 +344,15 @@ class MCSocket {
     this.request(SERVER_LIST);
   }
 
-  sendOauth(searchParams) {}
+  sendOauth(data) {
+    // !TODO: create event object { type: "e", d: { e: E_OAUTH, d: toSend }}
+    const toSend = {
+      code: data.get('code'),
+      state: data.get('state'),
+    };
+
+    this.sendObj(toSend);
+  }
 
   requestOauthState() {
     this.request(OAUTH_STATE);
