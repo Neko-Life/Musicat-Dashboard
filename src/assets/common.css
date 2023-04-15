@@ -30,6 +30,7 @@ div.App, .footer-container {
 .btn-normal:hover {
   border: 0px;
   background-color: aliceblue;
+  cursor: pointer;
   transition: .2s;
 }
 

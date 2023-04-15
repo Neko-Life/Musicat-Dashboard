@@ -32,7 +32,7 @@ class MCSocket {
 
     if (serverUrl) this._socket = new WebSocket(serverUrl);
     else {
-      console.error('[WARNING] Server URL not provided');
+      console.error('[ERROR] Server URL not provided');
       this._socket = null;
     }
   }
@@ -192,7 +192,9 @@ class MCSocket {
       this._reconnecting = true;
       this.looper(5000, recon);
     } else {
-      throw new Error("Reconnect requested but doesn't qualify for reconnect");
+      console.error(
+        new Error("Reconnect requested but doesn't qualify for reconnect")
+      );
     }
   }
 
@@ -222,7 +224,7 @@ class MCSocket {
 
   init() {
     if (!this._socket) {
-      throw new Error('No socket');
+      console.error(new Error('No socket'));
     }
 
     this._socket.addEventListener('close', (cevent) => {
@@ -269,7 +271,7 @@ class MCSocket {
 
   send(str) {
     if (this.isOpen()) this._socket.send(str);
-    else throw new Error('Connection not open');
+    else console.error(new Error('Connection not open'));
   }
 
   sendObj(obj) {
