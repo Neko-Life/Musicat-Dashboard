@@ -4,13 +4,9 @@ import { useSelector } from 'react-redux';
 import '../assets/NavBar.css';
 
 export default function NavBar() {
-  const { botInfo, oauthState, socket } = useSelector((state) => state);
+  const { botInfo, socket } = useSelector((state) => state);
 
   const loginButtonRef = useRef(null);
-
-  useEffect(() => {
-    if (oauthState?.length) window.location.href = oauthState;
-  }, [oauthState]);
 
   const handleLoginClick = () => {
     if (socket) {

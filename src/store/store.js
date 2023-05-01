@@ -29,7 +29,6 @@ const initialState = {
   showConsole: false,
   commandManager: null,
   serverList: [],
-  oauthState: null,
 };
 
 /**
@@ -94,10 +93,11 @@ const reducer = (state = initialState, action) => {
       };
     }
     case SET_OAUTH_STATE: {
-      return {
-        ...state,
-        oauthState: payload || null,
-      };
+      window.location.href =
+        payload +
+        '&redirect_uri=' +
+        encodeURIComponent(window.location.origin + '/login');
+      return {};
     }
     default:
       return state;
