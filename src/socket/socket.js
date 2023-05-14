@@ -225,6 +225,7 @@ class MCSocket {
   init() {
     if (!this._socket) {
       console.error(new Error('No socket'));
+      return this;
     }
 
     this._socket.addEventListener('close', (cevent) => {
