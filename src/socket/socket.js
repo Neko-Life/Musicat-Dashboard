@@ -135,7 +135,7 @@ class MCSocket {
 
   async _handleReq(nonce, d) {
     const res = {}; // TODO
-    this.response(nonce, res);
+    return this.response(nonce, res);
   }
 
   async _handleRes(nonce, d) {
@@ -271,12 +271,17 @@ class MCSocket {
   }
 
   send(str) {
-    if (this.isOpen()) this._socket.send(str);
+    if (this.isOpen()) {
+      this._socket.send(str);
+      return true;
+    }
     else console.error(new Error('Connection not open'));
+
+    return false;
   }
 
   sendObj(obj) {
-    this.send(JSON.stringify(obj));
+    return this.send(JSON.stringify(obj));
   }
 
   async sleep(ms) {
@@ -326,7 +331,7 @@ class MCSocket {
 
     this._reqQueue.set(reqObj.nonce, reqObj);
 
-    this.sendObj(reqObj);
+    return this.sendObj(reqObj);
   }
 
   response(nonce, res) {
@@ -336,15 +341,15 @@ class MCSocket {
       d: res,
     };
 
-    this.sendObj(resObj);
+    return this.sendObj(resObj);
   }
 
   requestBotInfo() {
-    this.request(BOT_INFO);
+    return this.request(BOT_INFO);
   }
 
   requestServerList() {
-    this.request(SERVER_LIST);
+    return this.request(SERVER_LIST);
   }
 
   sendOauth(data) {
@@ -354,11 +359,11 @@ class MCSocket {
       state: data.get('state'),
     };
 
-    this.sendObj(toSend);
+    return this.sendObj(toSend);
   }
 
   requestOauthState() {
-    this.request(OAUTH_STATE);
+    return this.request(OAUTH_STATE);
   }
 }
 
