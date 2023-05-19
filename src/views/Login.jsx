@@ -9,9 +9,19 @@ export default function Login() {
   const { socket } = useSelector((state) => state);
   const [data] = useSearchParams();
 
+  const execSend = async () => {
+    while (true)
+      if (
+        await new Promise((r, j) =>
+          setTimeout(() => r(socket && socket?.sendOauth(data)), 1000)
+        )
+      )
+        break;
+  };
+
   useEffect(() => {
-    if (socket) socket.sendOauth(data);
-  }, [socket]);
+    execSend();
+  }, []);
 
   return (
     <div>
