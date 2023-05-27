@@ -1,29 +1,28 @@
-.main-container {
+.mainContainer {
   display: flex;
   flex-grow: 1;
   background-color: var(--main-bg, unset);
 }
 
-.main-main-container {
+.mainMainContainer {
   display: flex;
   flex-direction: column;
   width: 100vw;
 }
 
-.main-main-container-top {
+.mainMainContainerTop {
   flex-grow: 1;
   padding: 0px 24px;
 }
 
-.main-main-container-bottom {
+.mainMainContainerBottom {
   padding: 6px 10px 10px 10px;
 }
 
-.sidebar-outer-container {
+.sidebarOuterContainer {
   position: fixed;
   top: 50vh;
   left: 50vw;
   display: flex;
   align-items: center;
 }
-

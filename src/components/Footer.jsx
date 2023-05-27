@@ -1,9 +1,10 @@
 import React from 'react';
+import footerStyles from '../assets/Footer.module.css';
 
 export default function Footer() {
   return (
-    <div className="footer-container">
-      <div className="main-footer"></div>
+    <div className={footerStyles.footerContainer}>
+      <div className={footerStyles.mainFooter}></div>
     </div>
   );
 }

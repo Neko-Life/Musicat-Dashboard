@@ -1,21 +1,24 @@
-div.App, .footer-container {
+.App {
   display: flex;
   flex-direction: column;
+  color: var(--text-color, unset);
+  flex-grow: 1;
+  min-height: 100vh;
 }
 
-.shadow-light {
+.shadowLight {
   box-shadow: 1px 1px 6px 0px rgba(10,10,10,0.4);
 }
 
-.no-pad {
+.noPad {
   padding: 0px;
 }
 
-.no-mar {
+.noMar {
   margin: 0px;
 }
 
-.btn-normal {
+.btnNormal {
   width: 80px;
   height: 48px;
   border-radius: 10px;
@@ -27,14 +30,14 @@ div.App, .footer-container {
   transition: .2s;
 }
 
-.btn-normal:hover {
+.btnNormal:hover {
   border: 0px;
   background-color: aliceblue;
   cursor: pointer;
   transition: .2s;
 }
 
-.btn-normal:active {
+.btnNormal:active {
   border: 0px;
   box-shadow: inset 0px 0px 6px 0px rgba(10,10,10,0.4);
   background-color: var(--main-bg, white);

@@ -1,0 +1,4 @@
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+}

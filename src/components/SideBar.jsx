@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toggleConsole } from '../store/actionCreators';
 import { getNavigator } from '../util/navigators';
 import { getRandMessage } from '../util/util';
-import '../assets/SideBar.css';
+import sidebarStyles from '../assets/SideBar.module.css';
+import commonStyles from '../assets/common.module.css';
 
 export default function SideBar() {
   const dispatch = useDispatch();
@@ -29,8 +30,12 @@ export default function SideBar() {
 
   return (
     <>
-      <div className="sidebar-container sidebar-left">
-        <div className="shadow-light sidebar-left-container">
+      <div
+        className={`${sidebarStyles.sidebarContainer} ${sidebarStyles.sidebarLeft}`}
+      >
+        <div
+          className={`${commonStyles.shadowLight} ${sidebarStyles.sidebarLeftContainer}`}
+        >
           <div>
             <input
               id="toggle-console"
@@ -55,15 +60,17 @@ export default function SideBar() {
             Servers
           </button>
         </div>
-        <div className="sidebar-expand-trigger-left"></div>
+        <div className={sidebarStyles.sidebarExpandTriggerLeft}></div>
       </div>
       <div
         ref={msgRef}
         onTransitionEnd={() => setHovering(!hovering)}
-        className="sidebar-container sidebar-right"
+        className={`${sidebarStyles.sidebarRight} ${sidebarStyles.sidebarContainer}`}
       >
-        <div className="sidebar-expand-trigger-right"></div>
-        <div className="shadow-light sidebar-right-container tiny-text">
+        <div className={sidebarStyles.sidebarExpandTriggerRight}></div>
+        <div
+          className={`${commonStyles.shadowLight} ${sidebarStyles.sidebarRightContainer} ${sidebarStyles.tinyText}`}
+        >
           <div>{currentMessage}</div>
         </div>
       </div>

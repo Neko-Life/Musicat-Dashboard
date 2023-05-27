@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { setNavigator } from '../util/navigators';
+import AppLayout from '../layouts/AppLayout';
 
 export default function Main() {
-  setNavigator('landing', useNavigate());
-
   return (
-    <div>
-      <h1>Main</h1>
-    </div>
+    <AppLayout>
+      <div>
+        <h1>Main</h1>
+      </div>
+    </AppLayout>
   );
 }

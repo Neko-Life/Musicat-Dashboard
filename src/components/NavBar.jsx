@@ -1,7 +1,7 @@
 import { useRef } from 'react';
-import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import '../assets/NavBar.css';
+import navbarStyles from '../assets/NavBar.module.css';
+import commonStyles from '../assets/common.module.css';
 
 export default function NavBar() {
   const { botInfo, socket } = useSelector((state) => state);
@@ -16,21 +16,21 @@ export default function NavBar() {
   };
 
   return (
-    <div className="navbar">
-      <div className="botpfp">
+    <div className={navbarStyles.navbar}>
+      <div className={navbarStyles.botpfp}>
         <a href="/">
           <img src={botInfo?.avatarUrl} alt="Avatar" height="64px" />
         </a>
       </div>
-      <div className="title">
+      <div className={navbarStyles.title}>
         <h2>{botInfo?.username}</h2>
         <p>{botInfo?.description}</p>
       </div>
-      <div className="profile">
+      <div className={navbarStyles.profile}>
         <div>
           <button
             ref={loginButtonRef}
-            className="btn-normal"
+            className={commonStyles.btnNormal}
             onClick={handleLoginClick}
           >
             Login

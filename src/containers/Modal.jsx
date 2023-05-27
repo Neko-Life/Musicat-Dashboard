@@ -1,20 +1,24 @@
 import React from 'react';
-import '../assets/Modal.css';
-import '../assets/common.css';
+import modalStyles from '../assets/Modal.module.css';
+import commonStyles from '../assets/common.module.css';
 
 export default function Modal({ children, fullHeight, show, setShow }) {
   return (
     <div
       onClick={(e) => {
-        if (e.target.className.includes('modal-background-container')) {
+        if (e.target.className.includes(modalStyles.modalBackgroundContainer)) {
           setShow(false);
         }
       }}
-      className={`modal-background-container ${
+      className={`${modalStyles.modalBackgroundContainer} ${
         fullHeight ? 'full-height' : ''
       } ${show ? '' : 'hidden'}`}
     >
-      <div className="shadow-light modal-container">{children}</div>
+      <div
+        className={`${commonStyles.shadowLight} ${modalStyles.modalContainer}`}
+      >
+        {children}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-.sidebar-container {
+.sidebarContainer {
   display: flex;
   position: fixed;
   /* height: 100vh; */
@@ -13,31 +13,31 @@
 /*   } */
 /* } */
 
-.sidebar-left-container {
+.sidebarLeftContainer {
   border-radius: 0px 10px 10px 0px;
 }
 
-.sidebar-left {
+.sidebarLeft {
   left: var(--sidebar-container-left, -349px);
 }
 
-.sidebar-left:hover {
+.sidebarLeft:hover {
   --sidebar-container-left: 0px;
 }
 
-.sidebar-right-container {
+.sidebarRightContainer {
   border-radius: 10px 0px 0px 10px;
 }
 
-.sidebar-right {
+.sidebarRight {
   right: var(--sidebar-container-right, -349px);
 }
 
-.sidebar-right:hover {
+.sidebarRight:hover {
   --sidebar-container-right: 0px;
 }
 
-.sidebar-left-container, .sidebar-right-container {
+.sidebarLeftContainer, .sidebarRightContainer {
   background-color: var(--sidebar-bg, white);
   color: var(--sidebar-text-color, black);
   padding: 8px;
@@ -48,11 +48,11 @@
   flex-direction: column;
 }
 
-.sidebar-expand-trigger-left, .sidebar-expand-trigger-right {
+.sidebarExpandTriggerLeft, .sidebarExpandTriggerRight {
   width: 24px;
   background-color: unset;
 }
 
-.tiny-text {
+.tinyText {
   font-size: 1px;
 }

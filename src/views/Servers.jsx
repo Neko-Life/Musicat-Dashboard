@@ -1,12 +1,9 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { setNavigator } from '../util/navigators';
 import { useSelector } from 'react-redux';
 import { getDebugState } from '../util/dbg';
+import AppLayout from '../layouts/AppLayout';
 
 export default function Servers() {
-  setNavigator('landing', useNavigate());
-
   const { serverList, socket } = useSelector((state) => state);
 
   useEffect(() => {
@@ -16,12 +13,14 @@ export default function Servers() {
   if (getDebugState()) console.log(serverList);
 
   return (
-    <div>
-      <ul>
-        {serverList.map((server, idx) => {
-          return <li key={server.id}>{server.name}</li>;
-        })}
-      </ul>
-    </div>
+    <AppLayout>
+      <div>
+        <ul>
+          {serverList.map((server, idx) => {
+            return <li key={server.id}>{server.name}</li>;
+          })}
+        </ul>
+      </div>
+    </AppLayout>
   );
 }

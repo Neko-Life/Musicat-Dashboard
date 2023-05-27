@@ -1,11 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { setNavigator } from '../util/navigators';
+import AppLayout from '../layouts/AppLayout';
 
 export default function Login() {
-  setNavigator('landing', useNavigate());
-
   const { socket } = useSelector((state) => state);
   const [data] = useSearchParams();
 
@@ -24,8 +21,10 @@ export default function Login() {
   }, []);
 
   return (
-    <div>
-      <h1>Please wait, loading...</h1>
-    </div>
+    <AppLayout>
+      <div>
+        <h1>Please wait, loading...</h1>
+      </div>
+    </AppLayout>
   );
 }

@@ -1,4 +1,4 @@
-.modal-background-container {
+.modalBackgroundContainer {
   width: 100vw;
   height: 100vh;
   position: fixed;
@@ -9,16 +9,16 @@
   transition: .2s;
 }
 
-.modal-background-container.full-height {
+.modalBackgroundContainer.fullHeight {
   align-items: flex-start;
 }
 
-.modal-background-container.hidden {
+.modalBackgroundContainer.hidden {
   display: none;
   transition: .2s;
 }
 
-.modal-container {
+.modalContainer {
   z-index: 1;
   background-color: var(--modal-bg, white);
   border-radius: 20px;

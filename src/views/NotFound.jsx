@@ -1,12 +1,11 @@
-import { useNavigate } from 'react-router-dom';
-import { setNavigator } from '../util/navigators';
+import AppLayout from '../layouts/AppLayout';
 
 export default function NotFound() {
-  setNavigator('landing', useNavigate());
-
   return (
-    <div>
-      <h1>NotFound</h1>
-    </div>
+    <AppLayout>
+      <div>
+        <h1>NotFound</h1>
+      </div>
+    </AppLayout>
   );
 }
