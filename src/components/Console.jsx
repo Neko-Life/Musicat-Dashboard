@@ -66,7 +66,7 @@ export default function Console({ disabled }) {
     <div className={`${commonStyles.shadowLight} ${consoleStyles.console}`}>
       <div className={consoleStyles.consoleStdContainer}>
         <div id="console-stdout" className={consoleStyles.consoleStdout}>
-          {stdout.map((str, idx) => (
+          {stdout?.map((str, idx) => (
             <div ref={idx === stdout.length - 1 ? lastStdout : null} key={idx}>
               <p className={commonStyles.noMar}>{str}</p>
             </div>
