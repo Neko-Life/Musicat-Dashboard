@@ -10,6 +10,7 @@ export default function SideBar() {
   const dispatch = useDispatch();
   const [currentMessage, setCurrentMessage] = React.useState('');
   const [hovering, setHovering] = React.useState(false);
+  const [showSideBar, setShowSideBar] = React.useState(false);
 
   /**
    * @type {React.LegacyRef<HTMLDivElement>}
@@ -31,8 +32,18 @@ export default function SideBar() {
   return (
     <>
       <div
-        className={`${sidebarStyles.sidebarContainer} ${sidebarStyles.sidebarLeft}`}
+        className={`${sidebarStyles.sidebarContainer} ${
+          sidebarStyles.sidebarLeft
+        } ${showSideBar ? sidebarStyles.show : ''}`}
       >
+        <div className={sidebarStyles.btnToggleContainer}>
+          <button
+            className={sidebarStyles.btnToggle}
+            onClick={() => setShowSideBar((val) => !val)}
+          >
+            ICON
+          </button>
+        </div>
         <div
           className={`${commonStyles.shadowLight} ${sidebarStyles.sidebarLeftContainer}`}
         >

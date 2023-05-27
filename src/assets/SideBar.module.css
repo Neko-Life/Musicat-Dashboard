@@ -21,7 +21,7 @@
   left: var(--sidebar-container-left, -349px);
 }
 
-.sidebarLeft:hover {
+.sidebarLeft.show {
   --sidebar-container-left: 0px;
 }
 
@@ -37,9 +37,12 @@
   --sidebar-container-right: 0px;
 }
 
-.sidebarLeftContainer, .sidebarRightContainer {
+.sidebarLeftContainer, .sidebarRightContainer, .btnToggleContainer {
   background-color: var(--sidebar-bg, white);
   color: var(--sidebar-text-color, black);
+}
+
+.sidebarLeftContainer, .sidebarRightContainer {
   padding: 8px;
   margin: 16px 0px;
   width: 348px;
@@ -55,4 +58,10 @@
 
 .tinyText {
   font-size: 1px;
+}
+
+.btnToggleContainer {
+  position: absolute;
+  top: 50%;
+  right: -4px;
 }

@@ -11,8 +11,8 @@ export default function Modal({ children, fullHeight, show, setShow }) {
         }
       }}
       className={`${modalStyles.modalBackgroundContainer} ${
-        fullHeight ? 'full-height' : ''
-      } ${show ? '' : 'hidden'}`}
+        fullHeight ? modalStyles.fullHeight : ''
+      } ${show ? '' : modalStyles.hidden}`}
     >
       <div
         className={`${commonStyles.shadowLight} ${modalStyles.modalContainer}`}
