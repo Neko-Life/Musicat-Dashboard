@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 import AppLayout from '../layouts/AppLayout';
 import { defineComponentLayout } from '../util/defineLayout';
 
