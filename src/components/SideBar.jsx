@@ -41,7 +41,7 @@ export default function SideBar() {
             className={sidebarStyles.btnToggle}
             onClick={() => setShowSideBar((val) => !val)}
           >
-            ICON
+            {'>'}
           </button>
         </div>
         <div

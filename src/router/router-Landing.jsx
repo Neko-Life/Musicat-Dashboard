@@ -4,21 +4,26 @@ import NotFound from '../views/NotFound';
 import Login from '../views/Login';
 import Servers from '../views/Servers';
 
+function useDefinedComponentLayout(Component) {
+  const renderComponent = <Component />;
+  return Component.getLayout?.(renderComponent) || renderComponent;
+}
+
 export default createBrowserRouter([
   {
     path: '/',
-    element: <Main />,
+    element: useDefinedComponentLayout(Main),
   },
   {
     path: '/servers',
-    element: <Servers />,
+    element: useDefinedComponentLayout(Servers),
   },
   {
     path: '/login',
-    element: <Login />,
+    element: useDefinedComponentLayout(Login),
   },
   {
     path: '*',
-    element: <NotFound />,
+    element: useDefinedComponentLayout(NotFound),
   },
 ]);

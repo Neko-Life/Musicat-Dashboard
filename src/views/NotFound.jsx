@@ -1,11 +1,14 @@
 import AppLayout from '../layouts/AppLayout';
+import { defineComponentLayout } from '../util/defineLayout';
 
-export default function NotFound() {
+function NotFound() {
   return (
-    <AppLayout>
-      <div>
-        <h1>NotFound</h1>
-      </div>
-    </AppLayout>
+    <div>
+      <h1>NotFound</h1>
+    </div>
   );
 }
+
+defineComponentLayout(NotFound, AppLayout);
+
+export default NotFound;

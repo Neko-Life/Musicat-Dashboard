@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getDebugState } from '../util/dbg';
 import AppLayout from '../layouts/AppLayout';
+import { defineComponentLayout } from '../util/defineLayout';
 
-export default function Servers() {
+function Servers() {
   const { serverList, socket } = useSelector((state) => state);
 
   useEffect(() => {
@@ -13,14 +14,16 @@ export default function Servers() {
   if (getDebugState()) console.log(serverList);
 
   return (
-    <AppLayout>
-      <div>
-        <ul>
-          {serverList.map((server, idx) => {
-            return <li key={server.id}>{server.name}</li>;
-          })}
-        </ul>
-      </div>
-    </AppLayout>
+    <div>
+      <ul>
+        {serverList.map((server, idx) => {
+          return <li key={server.id}>{server.name}</li>;
+        })}
+      </ul>
+    </div>
   );
 }
+
+defineComponentLayout(Servers, AppLayout);
+
+export default Servers;

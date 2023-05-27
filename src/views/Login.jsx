@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import AppLayout from '../layouts/AppLayout';
+import { defineComponentLayout } from '../util/defineLayout';
 
-export default function Login() {
+function Login() {
   const { socket } = useSelector((state) => state);
   const [data] = useSearchParams();
 
@@ -21,10 +22,12 @@ export default function Login() {
   }, []);
 
   return (
-    <AppLayout>
-      <div>
-        <h1>Please wait, loading...</h1>
-      </div>
-    </AppLayout>
+    <div>
+      <h1>Please wait, loading...</h1>
+    </div>
   );
 }
+
+defineComponentLayout(Login, AppLayout);
+
+export default Login;

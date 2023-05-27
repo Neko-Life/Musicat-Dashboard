@@ -1,11 +1,14 @@
 import AppLayout from '../layouts/AppLayout';
+import { defineComponentLayout } from '../util/defineLayout';
 
-export default function Main() {
+function Main() {
   return (
-    <AppLayout>
-      <div>
-        <h1>Main</h1>
-      </div>
-    </AppLayout>
+    <div>
+      <h1>Main</h1>
+    </div>
   );
 }
+
+defineComponentLayout(Main, AppLayout);
+
+export default Main;
