@@ -3,11 +3,7 @@ import Main from '../views/Main';
 import NotFound from '../views/NotFound';
 import Login from '../views/Login';
 import Servers from '../views/Servers';
-
-function useDefinedComponentLayout(Component) {
-  const renderComponent = <Component />;
-  return Component.getLayout?.(renderComponent) || renderComponent;
-}
+import { useDefinedComponentLayout } from '../util/router';
 
 export default createBrowserRouter([
   {
