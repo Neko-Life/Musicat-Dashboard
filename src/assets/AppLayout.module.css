@@ -1,0 +1,28 @@
+.mainContainer {
+  display: flex;
+  flex-grow: 1;
+  background-color: var(--main-bg, unset);
+}
+
+.mainMainContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+}
+
+.mainMainContainerTop {
+  flex-grow: 1;
+  padding: 0px 24px;
+}
+
+.mainMainContainerBottom {
+  padding: 6px 10px 10px 10px;
+}
+
+.sidebarOuterContainer {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+  display: flex;
+  align-items: center;
+}

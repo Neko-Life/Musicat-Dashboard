@@ -18,19 +18,6 @@ body {
   margin: 0px;
 }
 
-#root, div.App {
+#root {
   min-height: 100vh;
 }
-
-div.App {
-  color: var(--text-color, unset);
-  flex-grow: 1;
-}
-
-@media (min-width: 1280) {}
-
-@media (min-width: 1024) {}
-
-@media (min-width: 768) {}
-
-@media (min-width: 640) {}

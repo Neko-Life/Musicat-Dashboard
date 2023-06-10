@@ -1,0 +1,46 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color, unset);
+  flex-grow: 1;
+  min-height: 100vh;
+}
+
+.shadowLight {
+  box-shadow: 1px 1px 6px 0px rgba(10,10,10,0.4);
+}
+
+.noPad {
+  padding: 0px;
+}
+
+.noMar {
+  margin: 0px;
+}
+
+.btnNormal {
+  width: 80px;
+  height: 48px;
+  border-radius: 10px;
+  background-color: white;
+  box-shadow: 1px 1px 6px 0px rgba(10,10,10,0.4);
+  border: 0px;
+  font-weight: bold;
+  font-size: 14px;
+  transition: .2s;
+}
+
+.btnNormal:hover {
+  border: 0px;
+  background-color: aliceblue;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btnNormal:active {
+  border: 0px;
+  box-shadow: inset 0px 0px 6px 0px rgba(10,10,10,0.4);
+  background-color: var(--main-bg, white);
+  color: var(--text-color, black);
+  transition: .2s;
+}

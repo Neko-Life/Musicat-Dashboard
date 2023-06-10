@@ -1,0 +1,25 @@
+.modalBackgroundContainer {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.3);
+  transition: .2s;
+}
+
+.modalBackgroundContainer.fullHeight {
+  align-items: flex-start;
+}
+
+.modalBackgroundContainer.hidden {
+  display: none;
+  transition: .2s;
+}
+
+.modalContainer {
+  z-index: 1;
+  background-color: var(--modal-bg, white);
+  border-radius: 20px;
+}
