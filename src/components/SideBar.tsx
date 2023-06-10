@@ -1,22 +1,23 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { toggleConsole } from '@/store/actionCreators';
-import { getNavigator } from '@/util/navigators';
+import { useDispatch } from 'react-redux';
 import { getRandMessage } from '@/util/util';
 import sidebarStyles from '@/assets/SideBar.module.css';
 import commonStyles from '@/assets/common.module.css';
+import { useNavigate } from 'react-router-dom';
+import { actions } from '@/store/reducers';
+import { useMainSelector } from '@/hooks/useSelector';
+
+const { toggleConsole } = actions.main;
 
 export default function SideBar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = React.useState('');
   const [hovering, setHovering] = React.useState(false);
 
-  /**
-   * @type {React.LegacyRef<HTMLDivElement>}
-   */
-  const msgRef = React.useRef(null);
+  const msgRef = React.useRef<HTMLDivElement>(null);
 
-  const { showConsole } = useSelector((state) => state);
+  const { showConsole } = useMainSelector();
 
   const handleToggleConsoleChange = () => {
     dispatch(toggleConsole());
@@ -47,14 +48,14 @@ export default function SideBar() {
           </div>
           <button
             onClick={() => {
-              getNavigator('landing')?.('/');
+              navigate('/');
             }}
           >
             Home
           </button>
           <button
             onClick={() => {
-              getNavigator('landing')?.('/servers');
+              navigate('/servers');
             }}
           >
             Servers

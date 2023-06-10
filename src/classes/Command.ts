@@ -1,15 +1,17 @@
 export default class Command {
-  constructor(name) {
+  name: string;
+
+  constructor(name: string) {
     this.name = name;
   }
 
   /**
    * Meant to be derived and overriden
    */
-  run(args) {}
+  run() {}
 
   /**
    * Meant to be derived and overriden
    */
-  parseArgs(args) {}
+  parseArgs() {}
 }

@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
+import { useMainSelector } from '@/hooks/useSelector';
 
 function Login() {
-  const { socket } = useSelector((state) => state);
+  const { socket } = useMainSelector();
   const [data] = useSearchParams();
 
   const execSend = async () => {

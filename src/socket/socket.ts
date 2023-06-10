@@ -1,20 +1,31 @@
 import { serverUrl } from '@/config';
 import { consolePrint } from '@/console/console';
-import {
-  setBotInfo,
-  setOauthState,
-  setServerList,
-} from '@/store/actionCreators';
-import store from '@/store/store';
+import store, { actions } from '@/store/store';
 import { getDebugState } from '@/util/dbg';
 import { rand } from '@/util/util';
-import { BOT_INFO, OAUTH_STATE, SERVER_LIST } from './requestTypes';
+import { ERequestType } from './requestTypes';
 
-class MCSocket {
-  /**
-   * @param {number} [pingDuration=110000] - in ms
-   */
-  constructor(pingDuration = 110000) {
+interface IRequestPayload {
+  type: 'req' | 'res';
+  nonce: string;
+  d: ERequestType | any;
+}
+
+const { setBotInfo, setOauthState, setServerList } = actions.main;
+
+export class MCSocket {
+  pingDuration: number;
+  pingerRunning: boolean;
+  lastPing: Date;
+  lastPong: Date;
+  pingFail: number;
+  nextPongToConsoleStdout: boolean;
+  _nonces: string[];
+  _reqQueue: Map<string, IRequestPayload>;
+  _reconnecting: boolean;
+  _socket: WebSocket | null;
+
+  constructor(pingDuration: string | number = 110000) {
     pingDuration = Number(pingDuration);
     if (isNaN(pingDuration) || pingDuration < 1)
       throw new TypeError('Invalid pingDuration');
@@ -38,7 +49,7 @@ class MCSocket {
   }
 
   _generateNonce() {
-    let str;
+    let str: string;
 
     do {
       str = '';
@@ -53,20 +64,20 @@ class MCSocket {
     return str;
   }
 
-  _removeNonce(nonce) {
+  _removeNonce(nonce: string) {
     const nIndex = this._nonces.findIndex((n) => n === nonce);
     if (nIndex < 0) return nIndex;
     this._nonces.splice(nIndex, 1);
     return nIndex;
   }
 
-  async _handleClose(cevent) {
+  async _handleClose(cevent: any) {
     this.reconnect();
   }
 
-  async _handleError(event) {}
+  async _handleError(event: any) {}
 
-  async _handleMessage(mevent) {
+  async _handleMessage(mevent: any) {
     const debug = getDebugState();
 
     const receivedAt = new Date();
@@ -107,7 +118,7 @@ class MCSocket {
     }
   }
 
-  async _handleOpen(event) {
+  async _handleOpen(event: any) {
     console.log('Server connection established');
     this.requestBotInfo();
     if (this.pingerRunning) return;
@@ -128,43 +139,44 @@ class MCSocket {
     });
   }
 
-  _setReqObjError(reqObj, reason) {
+  _setReqObjError(reqObj: any, reason: string) {
     reqObj.error = true;
     reqObj.errReason = reason;
   }
 
-  async _handleReq(nonce, d) {
+  async _handleReq(nonce: string, d: any) {
     const res = {}; // TODO
     return this.response(nonce, res);
   }
 
-  async _handleRes(nonce, d) {
+  async _handleRes(nonce: string, d: ERequestType | any) {
     const reqObj = this._reqQueue.get(nonce);
-    this._reqQueue.delete(reqObj.nonce);
+    if (reqObj) {
+      this._reqQueue.delete(reqObj.nonce);
 
-    if (this._removeNonce(nonce) < 0) {
-      this._setReqObjError(reqObj, 'timed out');
-      this._reqQueue.set(reqObj.nonce, reqObj);
+      if (this._removeNonce(nonce) < 0) {
+        this._setReqObjError(reqObj, 'timed out');
+        this._reqQueue.set(reqObj.nonce, reqObj);
 
-      throw new Error('_handleRes: timed out');
-    }
+        throw new Error('_handleRes: timed out');
+      }
 
-    // console.log("response", nonce, "vvvvv");
-    // console.log(d);
+      // I didn't ask for this
+    } else return;
 
-    if (typeof reqObj.d === 'number') {
+    if (typeof reqObj?.d === 'number') {
       switch (reqObj.d) {
-        case BOT_INFO:
+        case ERequestType.BOT_INFO:
           store.dispatch(setBotInfo(d));
           break;
-        case SERVER_LIST:
+        case ERequestType.SERVER_LIST:
           store.dispatch(setServerList(d));
           break;
-        case OAUTH_STATE:
+        case ERequestType.OAUTH_STATE:
           store.dispatch(setOauthState(d));
           break;
         default:
-          throw new Error('Unknown d: ', reqObj.d);
+          console.error(new Error('Unknown op: ' + reqObj.d));
       }
     }
 
@@ -172,7 +184,7 @@ class MCSocket {
     //   return;
   }
 
-  reconnect() {
+  reconnect(url?: string) {
     if (this._reconnecting) return;
     if (this.isClosed()) {
       console.log('Lost connection to server');
@@ -181,11 +193,24 @@ class MCSocket {
           this._reconnecting = false;
           return true;
         }
+
+        const connectUrl = url || this._socket?.url;
+
+        if (!connectUrl?.length) {
+          console.error(
+            new Error(
+              'Socket instance destroyed, cannot continue reconnecting. Please provide a WebSocket URL'
+            )
+          );
+          return true;
+        }
+
         console.log('reconnecting...');
-        const url = this._socket.url;
-        this._socket.close();
+
+        this._socket?.close();
         this._socket = null;
-        this._socket = new WebSocket(url);
+
+        this._socket = new WebSocket(connectUrl);
         this.init();
       };
 
@@ -270,21 +295,26 @@ class MCSocket {
     return this;
   }
 
-  send(str) {
-    if (this.isOpen()) {
-      this._socket.send(str);
-      return true;
+  send(str: string) {
+    if (!this._socket) {
+      console.error(new Error('No socket instance initialized'));
+      return false;
     }
-    else console.error(new Error('Connection not open'));
 
-    return false;
+    if (!this.isOpen()) {
+      console.error(new Error('Connection not open'));
+      return false;
+    }
+
+    this._socket.send(str);
+    return true;
   }
 
-  sendObj(obj) {
+  sendObj(obj: any) {
     return this.send(JSON.stringify(obj));
   }
 
-  async sleep(ms) {
+  async sleep(ms: number) {
     const milli = Number(ms);
     if (isNaN(milli) || milli < 1) throw new TypeError('Invalid duration');
 
@@ -294,7 +324,10 @@ class MCSocket {
   /**
    * Calls `breakcb` in `interval` duration (ms) until it returns true
    */
-  async looper(interval, breakcb) {
+  async looper(
+    interval: number,
+    breakcb: () => boolean | undefined | Promise<boolean | undefined>
+  ) {
     if (typeof breakcb !== 'function') throw new TypeError('Invalid callback');
     while (true) {
       const br = await breakcb();
@@ -303,7 +336,7 @@ class MCSocket {
     }
   }
 
-  sendPing(consoleStdout) {
+  sendPing(consoleStdout?: boolean) {
     if (this.isOpen()) {
       const pingingTxt = 'Pinging...';
       if (consoleStdout === true) {
@@ -322,8 +355,8 @@ class MCSocket {
     }
   }
 
-  request(req) {
-    const reqObj = {
+  request(req: ERequestType) {
+    const reqObj: IRequestPayload = {
       type: 'req',
       nonce: this._generateNonce(),
       d: req,
@@ -334,7 +367,7 @@ class MCSocket {
     return this.sendObj(reqObj);
   }
 
-  response(nonce, res) {
+  response(nonce: string, res: any) {
     const resObj = {
       type: 'res',
       nonce,
@@ -345,14 +378,14 @@ class MCSocket {
   }
 
   requestBotInfo() {
-    return this.request(BOT_INFO);
+    return this.request(ERequestType.BOT_INFO);
   }
 
   requestServerList() {
-    return this.request(SERVER_LIST);
+    return this.request(ERequestType.SERVER_LIST);
   }
 
-  sendOauth(data) {
+  sendOauth(data: any) {
     // !TODO: create event object { type: "e", d: { e: E_OAUTH, d: toSend }}
     const toSend = {
       code: data.get('code'),
@@ -363,7 +396,7 @@ class MCSocket {
   }
 
   requestOauthState() {
-    return this.request(OAUTH_STATE);
+    return this.request(ERequestType.OAUTH_STATE);
   }
 }
 

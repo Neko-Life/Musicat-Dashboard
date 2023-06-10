@@ -1,13 +1,14 @@
 import Command from '@/classes/Command';
-import { consoleConsoleClear } from '@/store/actionCreators';
-import store from '@/store/store';
+import store, { actions } from '@/store/store';
+
+const { consoleConsoleClear } = actions.main;
 
 export default class ConsoleClearCommand extends Command {
   constructor() {
     super('clear');
   }
 
-  run(args) {
+  run() {
     store.dispatch(consoleConsoleClear());
   }
 }

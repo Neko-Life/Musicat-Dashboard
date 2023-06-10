@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { getDebugState } from '@/util/dbg';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
+import { useMainSelector } from '@/hooks/useSelector';
 
 function Servers() {
-  const { serverList, socket } = useSelector((state) => state);
+  const { serverList, socket } = useMainSelector();
 
   useEffect(() => {
     if (socket) socket.requestServerList();

@@ -1,12 +1,12 @@
 import { useRef } from 'react';
-import { useSelector } from 'react-redux';
 import navbarStyles from '@/assets/NavBar.module.css';
 import commonStyles from '@/assets/common.module.css';
+import { useMainSelector } from '@/hooks/useSelector';
 
 export default function NavBar() {
-  const { botInfo, socket } = useSelector((state) => state);
+  const { botInfo, socket } = useMainSelector();
 
-  const loginButtonRef = useRef(null);
+  const loginButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleLoginClick = () => {
     if (socket) {

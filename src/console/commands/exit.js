@@ -1,13 +1,14 @@
 import Command from '@/classes/Command';
-import { toggleConsole } from '@/store/actionCreators';
-import store from '@/store/store';
+import store, { actions } from '@/store/store';
+
+const { toggleConsole } = actions.main;
 
 export default class ConsoleExitCommand extends Command {
   constructor() {
     super('exit');
   }
 
-  run(args) {
+  run() {
     store.dispatch(toggleConsole());
   }
 }

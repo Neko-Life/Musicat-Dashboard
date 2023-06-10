@@ -1,6 +1,6 @@
 import { RANDOM_MESSAGES } from './constants.js';
 
-export const rand = (min, max) => {
+export const rand = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
