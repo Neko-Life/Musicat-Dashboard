@@ -8,7 +8,7 @@ export default class PingCommand extends Command {
   }
 
   run() {
-    const { socket } = store.getState();
+    const { socket } = store.getState().main;
     if (!socket) return consolePrint('[ERROR] No connection');
     socket.sendPing(true);
   }

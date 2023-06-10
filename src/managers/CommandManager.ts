@@ -3,38 +3,34 @@ import { consolePrint } from '@/console/console';
 import { getDebugState } from '@/util/dbg';
 
 export default class CommandManager {
+  commands: Map<string, Command>;
+
+  /**
+   * Command history
+   */
+  history: string[];
+
+  /**
+   * Command history index
+   */
+  historyIndex: number;
+
+  /**
+   * Maximum number of entry command history can hold
+   */
+  maxHistoryEntry: number;
+
   constructor() {
-    /**
-     * @type {Map<string, Command>}
-     */
     this.commands = new Map();
-
-    /**
-     * Command history
-     *
-     * @type {string[]}
-     */
     this.history = [];
-
-    /**
-     * Command history index
-     *
-     * @type {number}
-     */
     this.historyIndex = 0;
-
-    /**
-     * Maximum number of entry command history can hold
-     * @type {number}
-     */
     this.maxHistoryEntry = 100;
   }
 
   /**
    * Handle command, returns whatever the handler returns
-   * @param {string} command
    */
-  handle(command) {
+  handle(command: string) {
     const debug = getDebugState();
 
     command = command.trim();
@@ -91,15 +87,14 @@ export default class CommandManager {
    * Get command from name
    * @param {string} command - command name
    */
-  get(command) {
+  get(command: string) {
     return this.commands.get(command);
   }
 
   /**
    * Register a Command instance
-   * @param {Command} commandClass
    */
-  register(commandClass) {
+  register(commandClass: Command) {
     if (!(commandClass instanceof Command))
       throw new TypeError('Command must be instance of Command class');
 

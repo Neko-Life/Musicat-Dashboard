@@ -7,7 +7,7 @@ export default class DebugCommand extends Command {
     super('debug');
   }
 
-  run(args) {
+  run(args: string) {
     setDebugState(!getDebugState());
     consolePrint('debug: ' + (getDebugState() ? 'enabled' : 'disabled'));
   }

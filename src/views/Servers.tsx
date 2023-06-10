@@ -16,7 +16,7 @@ function Servers() {
   return (
     <div>
       <ul>
-        {serverList.map((server, idx) => {
+        {serverList.map((server) => {
           return <li key={server.id}>{server.name}</li>;
         })}
       </ul>

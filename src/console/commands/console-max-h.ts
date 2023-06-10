@@ -2,13 +2,16 @@ import Command from '@/classes/Command';
 import { consolePrint } from '../console';
 
 export default class ConsoleMaxHCommand extends Command {
+  currentMaxHeight: number;
+  subtract100: number;
+
   constructor() {
     super('console-max-h');
     this.currentMaxHeight = 100;
     this.subtract100 = 88;
   }
 
-  run(args) {
+  run(args: string) {
     if (!args) {
       return consolePrint('max height: ' + this.currentMaxHeight);
     }
@@ -21,17 +24,16 @@ export default class ConsoleMaxHCommand extends Command {
     if (newH >= 0 && newH <= 100) {
       consolePrint('max height set to ' + newH);
 
-      /**
-       * @type {HTMLDivElement}
-       */
       const el = document.querySelector('#console-stdout');
 
-      return this.setMaxH(el, newH);
+      return this.setMaxH(el as HTMLDivElement, newH);
     }
   }
 
-  setMaxH(el, h) {
+  setMaxH(el: HTMLDivElement | null, h: number) {
     this.currentMaxHeight = h;
-    el.style.maxHeight = `calc(${h}vh - ${(this.subtract100 / 100) * h}px)`;
+
+    if (el)
+      el.style.maxHeight = `calc(${h}vh - ${(this.subtract100 / 100) * h}px)`;
   }
 }

@@ -6,7 +6,7 @@ export default class EchoCommand extends Command {
     super('echo');
   }
 
-  run(args) {
+  run(args: string) {
     return consolePrint(args);
   }
 }

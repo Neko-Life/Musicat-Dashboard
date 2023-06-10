@@ -8,10 +8,10 @@ export default class Command {
   /**
    * Meant to be derived and overriden
    */
-  run() {}
+  run(arg: string) {}
 
   /**
    * Meant to be derived and overriden
    */
-  parseArgs() {}
+  parseArgs(arg: string) {}
 }

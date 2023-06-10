@@ -7,8 +7,9 @@ import appLayoutStyles from '@/assets/AppLayout.module.css';
 import consoleStyles from '@/assets/Console.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
+import { ILayoutProps } from '@/interfaces/layouts';
 
-function AppLayout({ children }) {
+function AppLayout({ children }: ILayoutProps) {
   const { showConsole } = useMainSelector();
 
   useEffect(() => {
