@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
-import AppLayout from '../layouts/AppLayout';
-import { defineComponentLayout } from '../util/defineLayout';
+import AppLayout from '@/layouts/AppLayout';
+import { defineComponentLayout } from '@/util/defineLayout';
 
 function Login() {
   const { socket } = useSelector((state) => state);

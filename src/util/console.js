@@ -1,4 +1,4 @@
-import store from '../store/store';
+import store from '@/store/store';
 
 export const handleConsoleCommand = (command) => {
   const { commandManager } = store.getState();

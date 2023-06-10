@@ -1,13 +1,13 @@
-import { serverUrl } from '../config';
-import { consolePrint } from '../console/console';
+import { serverUrl } from '@/config';
+import { consolePrint } from '@/console/console';
 import {
   setBotInfo,
   setOauthState,
   setServerList,
-} from '../store/actionCreators';
-import store from '../store/store';
-import { getDebugState } from '../util/dbg';
-import { rand } from '../util/util';
+} from '@/store/actionCreators';
+import store from '@/store/store';
+import { getDebugState } from '@/util/dbg';
+import { rand } from '@/util/util';
 import { BOT_INFO, OAUTH_STATE, SERVER_LIST } from './requestTypes';
 
 class MCSocket {

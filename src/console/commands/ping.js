@@ -1,5 +1,5 @@
-import Command from '../../classes/Command';
-import store from '../../store/store';
+import Command from '@/classes/Command';
+import store from '@/store/store';
 import { consolePrint } from '../console';
 
 export default class PingCommand extends Command {

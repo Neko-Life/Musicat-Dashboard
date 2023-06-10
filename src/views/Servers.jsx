@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { getDebugState } from '../util/dbg';
-import AppLayout from '../layouts/AppLayout';
-import { defineComponentLayout } from '../util/defineLayout';
+import { getDebugState } from '@/util/dbg';
+import AppLayout from '@/layouts/AppLayout';
+import { defineComponentLayout } from '@/util/defineLayout';
 
 function Servers() {
   const { serverList, socket } = useSelector((state) => state);

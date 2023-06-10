@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-import navbarStyles from '../assets/NavBar.module.css';
-import commonStyles from '../assets/common.module.css';
+import navbarStyles from '@/assets/NavBar.module.css';
+import commonStyles from '@/assets/common.module.css';
 
 export default function NavBar() {
   const { botInfo, socket } = useSelector((state) => state);

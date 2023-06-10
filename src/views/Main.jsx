@@ -1,5 +1,5 @@
-import AppLayout from '../layouts/AppLayout';
-import { defineComponentLayout } from '../util/defineLayout';
+import AppLayout from '@/layouts/AppLayout';
+import { defineComponentLayout } from '@/util/defineLayout';
 
 function Main() {
   return (

@@ -1,4 +1,4 @@
-import Command from '../../classes/Command';
+import Command from '@/classes/Command';
 import { consolePrint } from '../console';
 
 export default class ConsoleMaxHCommand extends Command {

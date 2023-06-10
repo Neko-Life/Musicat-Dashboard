@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleConsole } from '../store/actionCreators';
-import { getNavigator } from '../util/navigators';
-import { getRandMessage } from '../util/util';
-import sidebarStyles from '../assets/SideBar.module.css';
-import commonStyles from '../assets/common.module.css';
+import { toggleConsole } from '@/store/actionCreators';
+import { getNavigator } from '@/util/navigators';
+import { getRandMessage } from '@/util/util';
+import sidebarStyles from '@/assets/SideBar.module.css';
+import commonStyles from '@/assets/common.module.css';
 
 export default function SideBar() {
   const dispatch = useDispatch();

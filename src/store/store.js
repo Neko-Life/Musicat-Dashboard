@@ -1,7 +1,7 @@
 import { applyMiddleware, legacy_createStore } from 'redux';
 import thunk from 'redux-thunk';
 
-import { connectSocket } from '../socket/socket';
+import { connectSocket } from '@/socket/socket';
 
 import {
   CONSOLE_CONSOLE_CLEAR,

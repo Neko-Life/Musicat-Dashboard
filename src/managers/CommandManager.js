@@ -1,6 +1,6 @@
-import Command from '../classes/Command';
-import { consolePrint } from '../console/console';
-import { getDebugState } from '../util/dbg';
+import Command from '@/classes/Command';
+import { consolePrint } from '@/console/console';
+import { getDebugState } from '@/util/dbg';
 
 export default class CommandManager {
   constructor() {

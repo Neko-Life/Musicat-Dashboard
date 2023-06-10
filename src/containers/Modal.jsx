@@ -1,6 +1,6 @@
 import React from 'react';
-import modalStyles from '../assets/Modal.module.css';
-import commonStyles from '../assets/common.module.css';
+import modalStyles from '@/assets/Modal.module.css';
+import commonStyles from '@/assets/common.module.css';
 
 export default function Modal({ children, fullHeight, show, setShow }) {
   return (

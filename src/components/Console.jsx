@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { handleConsoleCommand } from '../util/console';
-import consoleStyles from '../assets/Console.module.css';
-import commonStyles from '../assets/common.module.css';
+import { handleConsoleCommand } from '@/util/console';
+import consoleStyles from '@/assets/Console.module.css';
+import commonStyles from '@/assets/common.module.css';
 
 export default function Console({ disabled }) {
   const { stdout, commandManager } = useSelector((state) => state);

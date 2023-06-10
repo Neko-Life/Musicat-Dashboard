@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setNavigator } from '../util/navigators';
-import Footer from '../components/Footer';
-import NavBar from '../components/NavBar';
-import SideBar from '../components/SideBar';
-import Console from '../components/Console';
-import appLayoutStyles from '../assets/AppLayout.module.css';
-import consoleStyles from '../assets/Console.module.css';
-import commonStyles from '../assets/common.module.css';
+import { setNavigator } from '@/util/navigators';
+import Footer from '@/components/Footer';
+import NavBar from '@/components/NavBar';
+import SideBar from '@/components/SideBar';
+import Console from '@/components/Console';
+import appLayoutStyles from '@/assets/AppLayout.module.css';
+import consoleStyles from '@/assets/Console.module.css';
+import commonStyles from '@/assets/common.module.css';
 
 function AppLayout({ children }) {
   setNavigator('landing', useNavigate());

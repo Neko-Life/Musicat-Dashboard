@@ -1,5 +1,5 @@
-import Command from '../../classes/Command';
-import { getDebugState, setDebugState } from '../../util/dbg';
+import Command from '@/classes/Command';
+import { getDebugState, setDebugState } from '@/util/dbg';
 import { consolePrint } from '../console';
 
 export default class DebugCommand extends Command {

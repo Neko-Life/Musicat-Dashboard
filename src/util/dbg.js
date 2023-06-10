@@ -1,5 +1,5 @@
-import { setDebug } from '../store/actionCreators';
-import store from '../store/store';
+import { setDebug } from '@/store/actionCreators';
+import store from '@/store/store';
 
 export const getDebugState = () => {
   const { debug } = store.getState();
