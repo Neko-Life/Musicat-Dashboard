@@ -15,11 +15,9 @@ function Servers() {
 
   return (
     <div>
-      <ul>
-        {serverList.map((server) => {
-          return <li key={server.id}>{server.name}</li>;
-        })}
-      </ul>
+      {serverList.map((server) => {
+        return <div key={server.id}>{server.name}</div>;
+      })}
     </div>
   );
 }
