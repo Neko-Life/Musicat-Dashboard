@@ -1,20 +1,24 @@
-import React from 'react';
-import { handleConsoleCommand } from '@/util/console';
+import React, { useContext } from 'react';
 import consoleStyles from '@/assets/Console.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
+import MainContext from '@/contexts/MainContext';
 
 interface IConsoleProps {
   disabled?: boolean;
 }
 
 export default function Console({ disabled }: IConsoleProps) {
-  const { stdout, commandManager } = useMainSelector();
+  const { commandManager } = useContext(MainContext);
+  const { stdout } = useMainSelector();
   const [savedCommand, setSavedCommand] = React.useState('');
   const [command, setCommand] = React.useState('');
 
   const lastStdout = React.useRef<HTMLDivElement>(null);
   const stdinInput = React.useRef<HTMLInputElement>(null);
+
+  const handleConsoleCommand = (command: string) =>
+    commandManager?.handle(command);
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();

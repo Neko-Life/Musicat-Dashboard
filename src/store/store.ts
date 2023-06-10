@@ -3,13 +3,7 @@ import { reducer, actions } from './reducers';
 
 const store = configureStore({
   reducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredPaths: ['main.socket', 'main.commandManager'],
-        ignoredActionPaths: ['payload'],
-      },
-    }),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware(),
 });
 
 export type AppState = ReturnType<typeof store.getState>;

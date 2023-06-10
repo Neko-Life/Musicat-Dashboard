@@ -207,8 +207,7 @@ export class MCSocket {
 
         console.log('reconnecting...');
 
-        this._socket?.close();
-        this._socket = null;
+        this.shutdown();
 
         this._socket = new WebSocket(connectUrl);
         this.init();
@@ -221,6 +220,11 @@ export class MCSocket {
         new Error("Reconnect requested but doesn't qualify for reconnect")
       );
     }
+  }
+
+  shutdown(code?: number, reason?: string) {
+    this._socket?.close(code, reason);
+    this._socket = null;
   }
 
   _getState() {

@@ -1,26 +1,17 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
-import { useMainSelector } from '@/hooks/useSelector';
+import MainContext from '@/contexts/MainContext';
+import { loopCb } from '@/util/util';
 
 function Login() {
-  const { socket } = useMainSelector();
+  const { socket } = useContext(MainContext);
   const [data] = useSearchParams();
 
-  const execSend = async () => {
-    while (true)
-      if (
-        await new Promise((r, j) =>
-          setTimeout(() => r(socket && socket?.sendOauth(data)), 1000)
-        )
-      )
-        break;
-  };
-
   useEffect(() => {
-    execSend();
-  }, []);
+    if (socket) loopCb(() => socket && socket.sendOauth(data));
+  }, [socket]);
 
   return (
     <div>

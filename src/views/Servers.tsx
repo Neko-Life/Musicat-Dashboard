@@ -1,14 +1,17 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { getDebugState } from '@/util/dbg';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
 import { useMainSelector } from '@/hooks/useSelector';
+import MainContext from '@/contexts/MainContext';
+import { loopCb } from '@/util/util';
 
 function Servers() {
-  const { serverList, socket } = useMainSelector();
+  const { socket } = useContext(MainContext);
+  const { serverList } = useMainSelector();
 
   useEffect(() => {
-    if (socket) socket.requestServerList();
+    if (socket) loopCb(() => socket && socket.requestServerList(), 10);
   }, [socket]);
 
   if (getDebugState()) console.log(serverList);

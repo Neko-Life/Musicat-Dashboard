@@ -1,26 +1,42 @@
 import React, { useEffect } from 'react';
-import Landing from './views/Landing';
-import './managers/Managers';
-import commonStyles from './assets/common.module.css';
-import './App.css';
-import { actions } from './store/reducers';
-import { useDispatch } from 'react-redux';
-import { connectSocket } from './socket/socket';
+import Landing from '@/views/Landing';
+import commonStyles from '@/assets/common.module.css';
+import '@/App.css';
+import { connectSocket } from '@/socket/socket';
+import MainContext from '@/contexts/MainContext';
+import useMainContextValues from '@/hooks/useMainContextValues';
+import CommandManager from '@/managers/CommandManager';
+import { registerAll } from '@/console/commands';
 
 function App() {
-  const dispatch = useDispatch();
+  const mainContextValues = useMainContextValues();
 
-  // init socket
+  // init socket and command manager
   useEffect(() => {
     const socket = connectSocket();
 
-    dispatch(actions.main.setSocket(socket));
+    const commandManager = new CommandManager();
+    registerAll(commandManager);
+
+    const { setSocket, setCommandManager } = mainContextValues;
+
+    setSocket(socket);
+    setCommandManager(commandManager);
+
+    // clean ups
+    return () => {
+      socket.shutdown();
+      setSocket(undefined);
+      setCommandManager(undefined);
+    };
   }, []);
 
   return (
-    <div className={`${commonStyles.App} App theme-dark`}>
-      <Landing />
-    </div>
+    <MainContext.Provider value={mainContextValues}>
+      <div className={`${commonStyles.App} App theme-dark`}>
+        <Landing />
+      </div>
+    </MainContext.Provider>
   );
 }
 

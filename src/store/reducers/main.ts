@@ -1,15 +1,11 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import type { MCSocket } from '@/socket/socket';
-import type CommandManager from '@/managers/CommandManager';
 
 interface IStoreState {
-  socket?: MCSocket;
   botInfo?: any;
   debug: boolean;
   stdout: string[];
   maxStdoutEntry: number;
   showConsole: boolean;
-  commandManager?: CommandManager;
   serverList: any[];
 }
 
@@ -25,9 +21,6 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState,
   reducers: {
-    setSocket: (state, { payload }: PayloadAction<IStoreState['socket']>) => {
-      state.socket = payload;
-    },
     setBotInfo: (state, { payload }: PayloadAction<IStoreState['botInfo']>) => {
       const elFavicon: HTMLLinkElement | null =
         document.querySelector('#page-favicon');
@@ -59,12 +52,6 @@ export const mainSlice = createSlice({
     },
     toggleConsole: (state) => {
       state.showConsole = !state.showConsole;
-    },
-    setCommandManager: (
-      state,
-      { payload }: PayloadAction<IStoreState['commandManager']>
-    ) => {
-      state.commandManager = payload;
     },
     setServerList: (
       state,
