@@ -1,13 +1,13 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { getDebugState } from '@/util/dbg';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
 import { useMainSelector } from '@/hooks/useSelector';
-import MainContext from '@/contexts/MainContext';
 import { loopCb } from '@/util/util';
+import { getSocket } from '@/socket/instance';
 
 function Servers() {
-  const { socket } = useContext(MainContext);
+  const socket = getSocket();
   const { serverList } = useMainSelector();
 
   useEffect(() => {

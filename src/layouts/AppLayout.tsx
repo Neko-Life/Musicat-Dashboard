@@ -8,9 +8,21 @@ import consoleStyles from '@/assets/Console.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
 import { ILayoutProps } from '@/interfaces/layouts';
+import { useSearchParams } from 'react-router-dom';
+import { actions } from '@/store/reducers';
+import { useDispatch } from 'react-redux';
+import { pathIs } from '@/util/util';
 
-function AppLayout({ children }: ILayoutProps) {
+interface IAppLayoutProps extends ILayoutProps {
+  hideNavBar?: boolean;
+}
+
+const { toggleConsole } = actions.main;
+
+function AppLayout({ children, hideNavBar }: IAppLayoutProps) {
+  const dispatch = useDispatch();
   const { showConsole } = useMainSelector();
+  const [searchParams] = useSearchParams();
 
   useEffect(() => {
     if (showConsole) {
@@ -22,9 +34,16 @@ function AppLayout({ children }: ILayoutProps) {
     }
   }, [showConsole]);
 
+  useEffect(() => {
+    const shouldShowConsole =
+      pathIs('/console') || searchParams.get('console') === '1';
+
+    if (!showConsole && shouldShowConsole) dispatch(toggleConsole());
+  }, []);
+
   return (
     <>
-      <NavBar />
+      {hideNavBar ? null : <NavBar />}
       <div
         className={`${appLayoutStyles.mainContainer} ${commonStyles.shadowLight}`}
       >

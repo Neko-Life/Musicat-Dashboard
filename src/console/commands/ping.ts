@@ -1,6 +1,6 @@
 import Command from '@/classes/Command';
-import store from '@/store/store';
 import { consolePrint } from '../console';
+import { getSocket } from '@/socket/instance';
 
 export default class PingCommand extends Command {
   constructor() {
@@ -8,7 +8,7 @@ export default class PingCommand extends Command {
   }
 
   run() {
-    const { socket } = store.getState().main;
+    const socket = getSocket();
     if (!socket) return consolePrint('[ERROR] No connection');
     socket.sendPing(true);
   }

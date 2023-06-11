@@ -1,11 +1,11 @@
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import navbarStyles from '@/assets/NavBar.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
-import MainContext from '@/contexts/MainContext';
+import { getSocket } from '@/socket/instance';
 
 export default function NavBar() {
-  const { socket } = useContext(MainContext);
+  const socket = getSocket();
   const { botInfo } = useMainSelector();
 
   const loginButtonRef = useRef<HTMLButtonElement>(null);

@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import type {
+  FormEventHandler,
+  ChangeEventHandler,
+  KeyboardEventHandler,
+} from 'react';
 import consoleStyles from '@/assets/Console.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
-import MainContext from '@/contexts/MainContext';
 import { Box, Button } from '@mui/material';
 import { actions } from '@/store/reducers';
 import { useDispatch } from 'react-redux';
+import { pathIs } from '@/util/util';
+import { getConsoleMarginTop } from '@/util/theme';
+import { getCommandManager } from '@/managers/instance';
 
 interface IConsoleProps {
   disabled?: boolean;
@@ -14,16 +21,16 @@ interface IConsoleProps {
 const { toggleConsole } = actions.main;
 
 export default function Console({ disabled }: IConsoleProps) {
-  const { commandManager } = useContext(MainContext);
+  const commandManager = getCommandManager();
   const { stdout, showConsole } = useMainSelector();
   const dispatch = useDispatch();
-  const [savedCommand, setSavedCommand] = React.useState('');
-  const [command, setCommand] = React.useState('');
+  const [savedCommand, setSavedCommand] = useState('');
+  const [command, setCommand] = useState('');
 
-  const lastStdout = React.useRef<HTMLDivElement>(null);
-  const stdinInput = React.useRef<HTMLInputElement>(null);
+  const lastStdout = useRef<HTMLDivElement>(null);
+  const stdinInput = useRef<HTMLInputElement>(null);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (lastStdout.current)
       lastStdout.current.scrollIntoView({
         behavior: 'smooth',
@@ -35,7 +42,7 @@ export default function Console({ disabled }: IConsoleProps) {
   const handleConsoleCommand = (command: string) =>
     commandManager?.handle(command);
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     if (!command) return;
 
@@ -45,12 +52,12 @@ export default function Console({ disabled }: IConsoleProps) {
     setSavedCommand('');
   };
 
-  const handleInputChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setCommand(e.target.value);
     setSavedCommand(e.target.value);
   };
 
-  const handleKeyDown: React.KeyboardEventHandler<HTMLInputElement> = (e) => {
+  const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (e) => {
     if (!commandManager) return;
 
     if (e.key === 'ArrowUp') {
@@ -69,13 +76,21 @@ export default function Console({ disabled }: IConsoleProps) {
   return (
     <div className={`${commonStyles.shadowLight} ${consoleStyles.console}`}>
       <div className={consoleStyles.consoleStdContainer}>
-        <div id="console-stdout" className={consoleStyles.consoleStdout}>
+        <Box
+          id="console-stdout"
+          className={consoleStyles.consoleStdout}
+          sx={{
+            height: pathIs('/console')
+              ? `calc(100vh - ${getConsoleMarginTop()})`
+              : 'unset',
+          }}
+        >
           {stdout?.map((str, idx) => (
             <div ref={idx === stdout.length - 1 ? lastStdout : null} key={idx}>
               <p className={commonStyles.noMar}>{str}</p>
             </div>
           ))}
-        </div>
+        </Box>
 
         <div className={consoleStyles.consoleStdin}>
           <form
