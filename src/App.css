@@ -12,6 +12,7 @@ div.App.theme-dark {
 
 html {
   overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 body {
