@@ -12,6 +12,11 @@ interface IPostTokenData {
   redirect_uri?: string;
 }
 
+/**
+ * Rather not to request client side
+ * This only for testing and will be removed
+ * in the future
+ */
 export function postToken(data: IPostTokenData) {
   data.redirect_uri = getRedirectUri();
   const res = oauthService.post('/token', data, {

@@ -184,7 +184,7 @@ export class MCSocket {
   }
 
   async _handleEvent(event: EEvent, d: any) {
-    // !TODO
+    // !TODO: save data and clean console.log
     console.log('event d', event, d);
     switch (event) {
       case EEvent.OAUTH:
@@ -411,7 +411,6 @@ export class MCSocket {
   }
 
   sendOauth(data: any) {
-    // !TODO: create event object { type: "e", d: { e: E_OAUTH, d: toSend }}
     const toSend = {
       code: data.get('code'),
       state: data.get('state'),
