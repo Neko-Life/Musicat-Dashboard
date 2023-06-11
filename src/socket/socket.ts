@@ -1,15 +1,11 @@
 import { serverUrl } from '@/config';
 import { consolePrint } from '@/console/console';
+import type { IEventPayload, IRequestPayload } from '@/interfaces/socket';
 import store, { actions } from '@/store/store';
 import { getDebugState } from '@/util/dbg';
 import { rand } from '@/util/util';
 import { ERequestType } from './requestTypes';
-
-interface IRequestPayload {
-  type: 'req' | 'res';
-  nonce: string;
-  d: ERequestType | any;
-}
+import { EEvent } from './eventTypes';
 
 const { setBotInfo, setOauthState, setServerList } = actions.main;
 
@@ -109,6 +105,9 @@ export class MCSocket {
           case 'res':
             this._handleRes(payload.nonce, payload.d);
             break;
+          case 'e':
+            this._handleEvent(payload.event, payload.d);
+            break;
           default:
             throw new TypeError('Unknown type: ' + payload.type);
         }
@@ -182,6 +181,18 @@ export class MCSocket {
 
     // if (typeof reqObj.d !== "object")
     //   return;
+  }
+
+  async _handleEvent(event: EEvent, d: any) {
+    // !TODO
+    console.log('event d', event, d);
+    switch (event) {
+      case EEvent.OAUTH:
+        console.log('OAUTH');
+        break;
+      default:
+        return;
+    }
   }
 
   reconnect(url?: string) {
@@ -318,6 +329,16 @@ export class MCSocket {
     return this.send(JSON.stringify(obj));
   }
 
+  emitEvent(event: EEvent, data: any) {
+    const eObj: IEventPayload = {
+      type: 'e',
+      event,
+      d: data,
+    };
+
+    return this.sendObj(eObj);
+  }
+
   async sleep(ms: number) {
     const milli = Number(ms);
     if (isNaN(milli) || milli < 1) throw new TypeError('Invalid duration');
@@ -396,7 +417,7 @@ export class MCSocket {
       state: data.get('state'),
     };
 
-    return this.sendObj(toSend);
+    return this.emitEvent(EEvent.OAUTH, toSend);
   }
 
   requestOauthState() {

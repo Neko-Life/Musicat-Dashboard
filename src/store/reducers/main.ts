@@ -1,3 +1,4 @@
+import { getRedirectUri } from '@/util/util';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IStoreState {
@@ -61,9 +62,7 @@ export const mainSlice = createSlice({
     },
     setOauthState: (state, { payload }: PayloadAction<string>) => {
       window.location.href =
-        payload +
-        '&redirect_uri=' +
-        encodeURIComponent(window.location.origin + '/login');
+        payload + '&redirect_uri=' + getRedirectUri('/login');
 
       state = Object.create(null);
     },

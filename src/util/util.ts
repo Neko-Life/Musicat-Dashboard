@@ -30,3 +30,7 @@ export const loopCb = async (
 export const pathIs = (path?: string) => {
   return window.location.pathname === path;
 };
+
+export const getRedirectUri = (path: string = '') => {
+  return encodeURIComponent(window.location.origin + path);
+};

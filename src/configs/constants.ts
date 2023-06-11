@@ -20,3 +20,4 @@ export const RANDOM_MESSAGES = [
 ];
 
 export const CONSOLE_MARGIN_TOP = 88;
+export const DISCORD_API = 'https://discord.com/api/v10';
