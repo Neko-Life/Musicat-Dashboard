@@ -1,4 +1,4 @@
-import { RANDOM_MESSAGES } from './constants.js';
+import { RANDOM_MESSAGES } from '@/configs/constants.js';
 
 export const rand = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -22,4 +22,11 @@ export const loopCb = async (
     if (await new Promise((r, j) => setTimeout(() => r(cb()), sleep))) break;
     iteration--;
   }
+};
+
+/**
+ * Is `path` is current location path?
+ */
+export const pathIs = (path?: string) => {
+  return window.location.pathname === path;
 };

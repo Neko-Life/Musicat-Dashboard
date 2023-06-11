@@ -1,27 +1,21 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { getRandMessage } from '@/util/util';
+import { getRandMessage, pathIs } from '@/util/util';
 import sidebarStyles from '@/assets/SideBar.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useNavigate } from 'react-router-dom';
-import { actions } from '@/store/reducers';
-import { useMainSelector } from '@/hooks/useSelector';
+import { Button } from '@mui/material';
+import { sxButtonCommonStyles as sxButtonCommonStylesFn } from '@/styles/Button';
 
-const { toggleConsole } = actions.main;
+const getBtnStyles = (active?: boolean) => {
+  return sxButtonCommonStylesFn(active);
+};
 
 export default function SideBar() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentMessage, setCurrentMessage] = React.useState('');
   const [hovering, setHovering] = React.useState(false);
 
   const msgRef = React.useRef<HTMLDivElement>(null);
-
-  const { showConsole } = useMainSelector();
-
-  const handleToggleConsoleChange = () => {
-    dispatch(toggleConsole());
-  };
 
   React.useEffect(() => {
     if (msgRef.current && !hovering) {
@@ -37,29 +31,22 @@ export default function SideBar() {
         <div
           className={`${commonStyles.shadowLight} ${sidebarStyles.sidebarLeftContainer}`}
         >
-          <div>
-            <input
-              id="toggle-console"
-              type="checkbox"
-              checked={showConsole}
-              onChange={handleToggleConsoleChange}
-            />
-            <label htmlFor="toggle-console">Console</label>
-          </div>
-          <button
+          <Button
+            sx={getBtnStyles(pathIs('/'))}
             onClick={() => {
               navigate('/');
             }}
           >
             Home
-          </button>
-          <button
+          </Button>
+          <Button
+            sx={getBtnStyles(pathIs('/servers'))}
             onClick={() => {
               navigate('/servers');
             }}
           >
             Servers
-          </button>
+          </Button>
         </div>
         <div className={sidebarStyles.sidebarExpandTriggerLeft}></div>
       </div>
