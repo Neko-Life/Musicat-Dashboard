@@ -22,3 +22,12 @@ body {
 #root {
   min-height: 100vh;
 }
+
+* {
+  transition-timing-function: ease-in-out;
+  transition: .5s;
+}
+
+button {
+  transition: .2s;
+}

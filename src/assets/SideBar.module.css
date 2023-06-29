@@ -2,9 +2,6 @@
   display: flex;
   position: fixed;
   /* height: 100vh; */
-  transition: .5s;
-  transition-timing-function: ease-in-out;
-  z-index: 1;
 }
 
 /* @media only screen and (min-height: 640px) { */

@@ -27,14 +27,12 @@
   border: 0px;
   font-weight: bold;
   font-size: 14px;
-  transition: .2s;
 }
 
 .btnNormal:hover {
   border: 0px;
   background-color: aliceblue;
   cursor: pointer;
-  transition: .2s;
 }
 
 .btnNormal:active {
@@ -42,5 +40,4 @@
   box-shadow: inset 0px 0px 6px 0px rgba(10,10,10,0.4);
   background-color: var(--main-bg, white);
   color: var(--text-color, black);
-  transition: .2s;
 }

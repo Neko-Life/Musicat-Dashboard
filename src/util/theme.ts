@@ -10,5 +10,6 @@ export const getColors = () => {
     warn: 'yellow',
     success: 'green',
     info: 'cyan',
+    serverCardBg: 'white',
   };
 };

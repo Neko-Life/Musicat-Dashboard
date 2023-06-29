@@ -58,6 +58,7 @@ export const mainSlice = createSlice({
       state,
       { payload }: PayloadAction<IStoreState['serverList']>
     ) => {
+      console.log(payload);
       state.serverList = payload || [];
     },
     setOauthState: (state, { payload }: PayloadAction<string>) => {

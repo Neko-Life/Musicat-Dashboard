@@ -21,8 +21,6 @@
 .consoleContainer {
   position: fixed;
   bottom: var(--console-bottom, -120vh);
-  transition: .3s;
-  transition-timing-function: ease-in-out;
   box-sizing: border-box;
   width: calc(100vw - 16px)
 }

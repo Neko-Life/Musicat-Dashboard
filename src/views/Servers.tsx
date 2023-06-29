@@ -5,6 +5,10 @@ import { defineComponentLayout } from '@/util/defineLayout';
 import { useMainSelector } from '@/hooks/useSelector';
 import { loopCb } from '@/util/util';
 import { getSocket } from '@/socket/instance';
+import { Box, Button } from '@mui/material';
+import { getColors } from '@/util/theme';
+
+const colors = getColors();
 
 function Servers() {
   const socket = getSocket();
@@ -18,11 +22,30 @@ function Servers() {
   if (getDebugState()) console.log(serverList);
 
   return (
-    <div>
+    <Box
+      sx={{
+        display: 'flex',
+        gap: '16px',
+      }}
+    >
       {serverList.map((server) => {
-        return <div key={server.id}>{server.name}</div>;
+        return (
+          <Button
+            variant="contained"
+            key={server.id}
+            sx={{
+              backgroundColor: colors.serverCardBg,
+              color: 'black',
+              minWidth: '300px',
+              minHeight: '500px',
+              zIndex: 0,
+            }}
+          >
+            {server.name}
+          </Button>
+        );
       })}
-    </div>
+    </Box>
   );
 }
 
