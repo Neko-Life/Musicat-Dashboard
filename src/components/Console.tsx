@@ -162,10 +162,10 @@ export default function Console({ disabled }: IConsoleProps) {
             transition: '.5s',
             position: 'fixed',
             bottom: '18px',
-            right: '-96px',
+            right: '-102px',
             fontWeight: 600,
             minWidth: 0,
-            padding: '10px 24px 8px 24px',
+            padding: '10px 28px 8px 24px',
             lineHeight: 'unset',
             color: showConsole ? 'white' : '',
             '&:hover, &.active': {

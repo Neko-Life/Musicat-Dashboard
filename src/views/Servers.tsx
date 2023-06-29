@@ -35,6 +35,7 @@ function Servers() {
           <Button
             key={server.id}
             sx={{
+              overflow: 'hidden',
               backgroundColor: colors.serverCardBg,
               color: 'black',
               width: '300px',
@@ -74,28 +75,43 @@ function Servers() {
                   position: 'relative',
                 }}
               >
-                <img
-                  src={server.banner_url || server.icon_url}
-                  alt="Server Icon"
-                  className="server-card-img"
-                  style={{
-                    aspectRatio: '1/1',
-                    height: '100%',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                />
                 <Box
-                  className="server-card-img-fc"
+                  className="server-card-img"
                   sx={{
-                    position: 'absolute',
                     width: '100%',
                     height: '100%',
-                    top: 0,
-                    left: 0,
                   }}
-                />
+                >
+                  <img
+                    src={server.banner_url || server.icon_url}
+                    alt="Server Icon"
+                    style={{
+                      aspectRatio: '1/1',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  />
+                  <Typography
+                    sx={{
+                      position: 'absolute',
+                      height: '100%',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      width: '100%',
+                      fontSize: 60,
+                      fontWeight: 800,
+                      color: 'red',
+                      opacity: 0,
+                      top: 0,
+                      left: 0,
+                    }}
+                  >
+                    WASTED
+                  </Typography>
+                </Box>
               </Box>
               <Box
                 sx={{

@@ -46,12 +46,22 @@ img:hover {
   transition: .2s;
 }
 
+.server-card-img, .server-card-img * {
+  transition: 0s;
+}
+
 .server-card-img:hover {
-  scale: 1000%;
+  background-color: black;
   transition: 1200s;
 }
 
-.server-card-img-fc:hover {
-  background-color: red;
+.server-card-img:hover img {
+  scale: 1000%;
+  opacity: 0.3;
+  transition: 1200s;
+}
+
+.server-card-img:hover p {
+  opacity: 100;
   transition: 1200s;
 }
