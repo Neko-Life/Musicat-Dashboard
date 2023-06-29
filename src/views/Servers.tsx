@@ -39,16 +39,19 @@ function Servers() {
               color: 'black',
               width: '300px',
               maxWidth: '300px',
-              height: '400px',
-              maxHeight: '400px',
               zIndex: 0,
               padding: 0,
               cursor: 'default',
               textTransform: 'none',
               display: 'flex',
               flexDirection: 'column',
+              transition: '.2s',
               '&:hover': {
                 backgroundColor: 'white',
+                boxShadow: '0px 0px 100px 0px rgba(0,0,0,0.5)',
+                zIndex: 1,
+                scale: '103%',
+                transition: '.2s',
               },
               '& span': {
                 color: colors.serverCardRipple,
@@ -62,53 +65,89 @@ function Servers() {
                 display: 'flex',
                 flexDirection: 'column',
                 flexGrow: '1',
-                '&:hover': {
-                  backgroundColor: colors.fade[100],
-                },
               }}
             >
               <Box
                 sx={{
                   overflow: 'hidden',
+                  height: '300px',
+                  position: 'relative',
                 }}
               >
                 <img
-                  src=""
+                  src={server.banner_url || server.icon_url}
                   alt="Server Icon"
+                  className="server-card-img"
                   style={{
                     aspectRatio: '1/1',
                     height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                />
+                <Box
+                  className="server-card-img-fc"
+                  sx={{
+                    position: 'absolute',
+                    width: '100%',
+                    height: '100%',
+                    top: 0,
+                    left: 0,
                   }}
                 />
               </Box>
               <Box
                 sx={{
-                  flexGrow: 1,
+                  position: 'relative',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
                 }}
               >
-                <Typography>{server.name}</Typography>
+                <img
+                  src={server.splash}
+                  alt=""
+                  style={{
+                    position: 'absolute',
+                    width: '100%',
+                  }}
+                />
+                <Box>
+                  <Typography
+                    fontSize={20}
+                    margin="12px"
+                    overflow="hidden"
+                    textOverflow="ellipsis"
+                    fontWeight={600}
+                  >
+                    {server.name}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    paddingBottom: '24px',
+                  }}
+                >
+                  <Button
+                    variant="contained"
+                    color={server.isMutual ? 'secondary' : 'success'}
+                    sx={{
+                      zIndex: 1,
+                      fontWeight: 600,
+                      '& span': {
+                        color: colors.buttonRipple + ' !important',
+                      },
+                    }}
+                  >
+                    {server.isMutual ? 'Manage' : 'Add'}
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '8px',
-                padding: '24px',
-              }}
-            >
-              <Button
-                variant="contained"
-                color={server.isMutual ? 'secondary' : 'success'}
-                sx={{
-                  zIndex: 1,
-                  '& span': {
-                    color: colors.buttonRipple + ' !important',
-                  },
-                }}
-              >
-                {server.isMutual ? 'Manage' : 'Add'}
-              </Button>
             </Box>
           </Button>
         );

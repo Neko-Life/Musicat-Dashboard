@@ -10,6 +10,15 @@ div.App.theme-dark {
   --console-stdout-bg: #001d3d;
 }
 
+* {
+  transition-timing-function: ease-in-out;
+  transition: .5s;
+}
+
+#root {
+  min-height: 100vh;
+}
+
 html {
   overflow: hidden;
   overflow-wrap: break-word;
@@ -19,15 +28,30 @@ body {
   margin: 0px;
 }
 
-#root {
-  min-height: 100vh;
-}
-
-* {
-  transition-timing-function: ease-in-out;
-  transition: .5s;
-}
-
 button {
   transition: .2s;
+}
+
+button:hover {
+  scale: 105%;
+  transition: .2s;
+}
+
+img {
+  transition: .2s;
+}
+
+img:hover {
+  scale: 105%;
+  transition: .2s;
+}
+
+.server-card-img:hover {
+  scale: 1000%;
+  transition: 1200s;
+}
+
+.server-card-img-fc:hover {
+  background-color: red;
+  transition: 1200s;
 }
