@@ -21,6 +21,8 @@ function Servers() {
 
   if (getDebugState()) console.log(serverList);
 
+  const handleServerClick = () => {};
+
   return (
     <Box
       sx={{
@@ -150,6 +152,7 @@ function Servers() {
                   }}
                 >
                   <Button
+                    onClick={handleServerClick}
                     variant="contained"
                     color={server.isMutual ? 'secondary' : 'success'}
                     sx={{

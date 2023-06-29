@@ -7,7 +7,8 @@ import { rand } from '@/util/util';
 import { ERequestType } from './requestTypes';
 import { EEvent } from './eventTypes';
 
-const { setBotInfo, setOauthState, setServerList } = actions.main;
+const { setBotInfo, setOauthState, setServerList, setInviteLink } =
+  actions.main;
 
 export class MCSocket {
   pingDuration: number;
@@ -189,6 +190,9 @@ export class MCSocket {
     switch (event) {
       case EEvent.OAUTH:
         console.log('OAUTH');
+        break;
+      case EEvent.INVITE_LINK:
+        store.dispatch(setInviteLink(d));
         break;
       default:
         return;

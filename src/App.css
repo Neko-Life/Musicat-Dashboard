@@ -67,4 +67,5 @@ img:hover {
 
 .server-card-img:hover p {
   opacity: 100;
+  transition-timing-function: cubic-bezier(1,0,1,0);
 }

@@ -8,6 +8,7 @@ interface IStoreState {
   maxStdoutEntry: number;
   showConsole: boolean;
   serverList: any[];
+  inviteLink: string;
 }
 
 const initialState: IStoreState = {
@@ -16,6 +17,7 @@ const initialState: IStoreState = {
   maxStdoutEntry: 100,
   showConsole: false,
   serverList: [],
+  inviteLink: '#',
 };
 
 export const mainSlice = createSlice({
@@ -58,7 +60,7 @@ export const mainSlice = createSlice({
       state,
       { payload }: PayloadAction<IStoreState['serverList']>
     ) => {
-      console.log(payload);
+      if (state.debug === true) console.log(payload);
       state.serverList = payload || [];
     },
     setOauthState: (state, { payload }: PayloadAction<string>) => {
@@ -66,6 +68,9 @@ export const mainSlice = createSlice({
         payload + '&redirect_uri=' + getRedirectUri('/login');
 
       state = Object.create(null);
+    },
+    setInviteLink: (state, { payload }: PayloadAction<string>) => {
+      state.inviteLink = payload;
     },
   },
 });
