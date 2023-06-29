@@ -11,7 +11,8 @@ function Servers() {
   const { serverList } = useMainSelector();
 
   useEffect(() => {
-    if (socket) loopCb(() => socket && socket.requestServerList(), 10);
+    if (socket)
+      loopCb(() => (socket?.isOpen() ? socket.requestServerList() : false), 10);
   }, [socket]);
 
   if (getDebugState()) console.log(serverList);
