@@ -47,21 +47,24 @@ img:hover {
 }
 
 .server-card-img, .server-card-img * {
-  transition: 0s;
+  transition-delay: 0s;
+  transition-duration: 0s;
+}
+
+.server-card-img:hover, .server-card-img:hover * {
+  transition-delay: 5s;
+  transition-duration: 1200s;
 }
 
 .server-card-img:hover {
   background-color: black;
-  transition: 1200s;
 }
 
 .server-card-img:hover img {
   scale: 1000%;
   opacity: 0.3;
-  transition: 1200s;
 }
 
 .server-card-img:hover p {
   opacity: 100;
-  transition: 1200s;
 }
