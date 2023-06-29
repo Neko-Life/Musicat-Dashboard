@@ -5,12 +5,14 @@ export const getConsoleMarginTop = () => {
 };
 
 export const getColors = () => {
-  return {
+  return Object.freeze({
     error: 'red',
     warn: 'yellow',
     success: 'green',
     info: 'cyan',
     serverCardBg: 'white',
+    serverCardRipple: 'blue',
+    buttonRipple: 'white',
     fade: {
       100: 'rgba(0,0,0,0.1)',
       200: 'rgba(0,0,0,0.2)',
@@ -18,5 +20,5 @@ export const getColors = () => {
       400: 'rgba(0,0,0,0.4)',
       500: 'rgba(0,0,0,0.5)',
     },
-  };
+  });
 };

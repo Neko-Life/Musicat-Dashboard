@@ -43,8 +43,15 @@ function Servers() {
               maxHeight: '400px',
               zIndex: 0,
               padding: 0,
+              cursor: 'default',
+              textTransform: 'none',
+              display: 'flex',
+              flexDirection: 'column',
               '&:hover': {
                 backgroundColor: 'white',
+              },
+              '& span': {
+                color: colors.serverCardRipple,
               },
             }}
           >
@@ -54,6 +61,7 @@ function Servers() {
                 height: '100%',
                 display: 'flex',
                 flexDirection: 'column',
+                flexGrow: '1',
                 '&:hover': {
                   backgroundColor: colors.fade[100],
                 },
@@ -61,8 +69,6 @@ function Servers() {
             >
               <Box
                 sx={{
-                  height: '50%',
-                  maxHeight: '50%',
                   overflow: 'hidden',
                 }}
               >
@@ -70,6 +76,7 @@ function Servers() {
                   src=""
                   alt="Server Icon"
                   style={{
+                    aspectRatio: '1/1',
                     height: '100%',
                   }}
                 />
@@ -81,21 +88,27 @@ function Servers() {
               >
                 <Typography>{server.name}</Typography>
               </Box>
-              <Box
+            </Box>
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '8px',
+                padding: '24px',
+              }}
+            >
+              <Button
+                variant="contained"
+                color={server.isMutual ? 'secondary' : 'success'}
                 sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  padding: '24px',
+                  zIndex: 1,
+                  '& span': {
+                    color: colors.buttonRipple + ' !important',
+                  },
                 }}
               >
-                <Button
-                  variant="contained"
-                  color={server.isMutual ? 'secondary' : 'success'}
-                >
-                  {server.isMutual ? 'Manage' : 'Add'}
-                </Button>
-              </Box>
+                {server.isMutual ? 'Manage' : 'Add'}
+              </Button>
             </Box>
           </Button>
         );
