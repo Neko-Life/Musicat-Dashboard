@@ -97,13 +97,14 @@ function Servers() {
                   />
                   <Typography
                     sx={{
+                      fontFamily: 'pricedown',
                       position: 'absolute',
                       height: '100%',
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
                       width: '100%',
-                      fontSize: 60,
+                      fontSize: 80,
                       fontWeight: 800,
                       color: 'red',
                       opacity: 0,

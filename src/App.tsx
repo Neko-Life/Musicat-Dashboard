@@ -1,6 +1,7 @@
 import React from 'react';
 import Landing from '@/views/Landing';
 import commonStyles from '@/assets/common.module.css';
+import '@/assets/fonts.css';
 import '@/App.css';
 
 function App() {
