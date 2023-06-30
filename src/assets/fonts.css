@@ -1,7 +1,47 @@
 @font-face {
     font-family: 'pricedown';
-    src: url('./fonts/pricedown/pricedown_bl-webfont.woff2') format('woff2'),
-         url('./fonts/pricedown/pricedown_bl-webfont.woff') format('woff');
+    src: url('./fonts/pricedown_bl-webfont.woff2') format('woff2'),
+         url('./fonts/pricedown_bl-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'didactgothic';
+    src: url('./fonts/didactgothic-regular-webfont.woff2') format('woff2'),
+         url('./fonts/didactgothic-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'texgyreadventorbold';
+    src: url('./fonts/texgyreadventor-bold-webfont.woff2') format('woff2'),
+         url('./fonts/texgyreadventor-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'texgyreadventorbold_italic';
+    src: url('./fonts/texgyreadventor-bolditalic-webfont.woff2') format('woff2'),
+         url('texgyreadventor-bolditalic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'texgyreadventoritalic';
+    src: url('./fonts/texgyreadventor-italic-webfont.woff2') format('woff2'),
+         url('./fonts/texgyreadventor-italic-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'texgyreadventorregular';
+    src: url('./fonts/texgyreadventor-regular-webfont.woff2') format('woff2'),
+         url('./fonts/texgyreadventor-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }

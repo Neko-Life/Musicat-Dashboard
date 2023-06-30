@@ -25,7 +25,13 @@ export default function NavBar() {
         </a>
       </div>
       <div className={navbarStyles.title}>
-        <h2>{botInfo?.username}</h2>
+        <h2
+          style={{
+            fontFamily: 'pricedown',
+          }}
+        >
+          {botInfo?.username}
+        </h2>
         <p>{botInfo?.description}</p>
       </div>
       <div className={navbarStyles.profile}>

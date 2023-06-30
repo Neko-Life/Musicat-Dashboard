@@ -1,5 +1,4 @@
-div.App.theme-dark {
-  --main-bg: #4a4e69;
+div.App.theme-dark { --main-bg: #4a4e69;
   --modal-bg: #264653;
   --text-color: white;
   --sidebar-bg: white;
@@ -13,6 +12,7 @@ div.App.theme-dark {
 * {
   transition-timing-function: ease-in-out;
   transition: .5s;
+  font-family: texgyreadventorregular;
 }
 
 #root {
@@ -29,6 +29,7 @@ body {
 }
 
 button {
+  font-family: didactgothic;
   transition: .2s;
 }
 
