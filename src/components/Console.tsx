@@ -161,7 +161,7 @@ export default function Console({ disabled }: IConsoleProps) {
           sx={{
             transition: '.5s',
             position: 'fixed',
-            bottom: '18px',
+            bottom: '20px',
             right: '-102px',
             fontWeight: 600,
             minWidth: 0,
