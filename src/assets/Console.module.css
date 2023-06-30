@@ -9,7 +9,6 @@
 .consoleStdout {
   font-size: 16px;
   min-height: 14px;
-  max-height: calc(100vh - 88px);
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -19,14 +18,19 @@
 }
 
 .consoleContainer {
-  position: fixed;
-  bottom: var(--console-bottom, -120vh);
+  display: flex;
+  position: absolute;
+  bottom: var(--console-bottom, -100%);
   box-sizing: border-box;
-  width: calc(100vw - 16px)
+  width: 100%;
+  max-height: 100%;
+  padding: 8px;
+  z-index: 10;
+  animation-timing-function: ease;
 }
 
 .consoleShow {
-  --console-bottom: 8px;
+  --console-bottom: 0px;
 }
 
 .stdinFormInput {
@@ -42,6 +46,7 @@
   outline: 0px;
   color: var(--console-stdin-text-color, white);
   box-shadow: 0px -2px 1px 0px rgba(0,0,0,0.5);
+  padding-right: 90px;
 }
 
 .consoleStdContainer {
@@ -52,4 +57,5 @@
   margin: 8px;
   border: 1px solid white;
   border-radius: 4px;
+  overflow: hidden;
 }

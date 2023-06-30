@@ -52,18 +52,34 @@ function AppLayout({ children, hideNavBar }: IAppLayoutProps) {
         </div>
         <div className={appLayoutStyles.mainMainContainer}>
           <div className={appLayoutStyles.mainMainContainerTop}>{children}</div>
-          <div className={appLayoutStyles.mainMainContainerBottom}>
-            <div
-              className={`${consoleStyles.consoleContainer} ${
-                showConsole ? consoleStyles.consoleShow : ''
-              }`}
-            >
-              <Console disabled={!showConsole} />
-            </div>
-          </div>
+          <div className={appLayoutStyles.mainMainContainerBottom}></div>
         </div>
       </div>
       <Footer />
+      <div
+        style={{
+          position: 'fixed',
+          bottom: 0,
+          left: 0,
+          zIndex: 10,
+          display: 'contents',
+        }}
+      >
+        <div
+          style={{
+            position: 'relative',
+            display: 'contents',
+          }}
+        >
+          <div
+            className={`${consoleStyles.consoleContainer} ${
+              showConsole ? consoleStyles.consoleShow : ''
+            }`}
+          >
+            <Console disabled={!showConsole} />
+          </div>
+        </div>
+      </div>
     </>
   );
 }
