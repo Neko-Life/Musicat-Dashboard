@@ -20,19 +20,41 @@ export default function NavBar() {
   return (
     <div className={navbarStyles.navbar}>
       <div className={navbarStyles.botpfp}>
-        <a href="/">
-          <img src={botInfo?.avatarUrl} alt="Avatar" height="64px" />
+        <a
+          href="/"
+          style={{
+            display: 'flex',
+          }}
+        >
+          <img
+            src={botInfo?.avatarUrl}
+            alt="Avatar"
+            height="64px"
+            style={{
+              margin: 'auto',
+            }}
+          />
         </a>
       </div>
       <div className={navbarStyles.title}>
         <h2
+          className="one-line-text"
           style={{
             fontFamily: 'pricedown',
+            marginTop: '8px',
+            marginBottom: '8px',
           }}
         >
           {botInfo?.username}
         </h2>
-        <p>{botInfo?.description}</p>
+        <p
+          className="one-line-text"
+          style={{
+            margin: '0',
+          }}
+        >
+          {botInfo?.description}
+        </p>
       </div>
       <div className={navbarStyles.profile}>
         <div>

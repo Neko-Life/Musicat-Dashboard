@@ -123,6 +123,7 @@ function Servers() {
                   flexDirection: 'column',
                   justifyContent: 'center',
                   alignItems: 'center',
+                  flexGrow: 1,
                 }}
               >
                 <img
@@ -133,13 +134,20 @@ function Servers() {
                     width: '100%',
                   }}
                 />
-                <Box>
+                <Box
+                  sx={{
+                    flexGrow: 1,
+                  }}
+                >
                   <Typography
                     fontSize={20}
                     margin="12px"
                     overflow="hidden"
                     textOverflow="ellipsis"
                     fontWeight={600}
+                    sx={{
+                      wordBreak: 'break-all',
+                    }}
                   >
                     {server.name}
                   </Typography>

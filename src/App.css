@@ -1,4 +1,5 @@
-div.App.theme-dark { --main-bg: #4a4e69;
+div.App.theme-dark {
+  --main-bg: #4a4e69;
   --modal-bg: #264653;
   --text-color: white;
   --sidebar-bg: white;
@@ -11,12 +12,8 @@ div.App.theme-dark { --main-bg: #4a4e69;
 
 * {
   transition-timing-function: ease-in-out;
-  transition: .5s;
+  transition: 0.5s;
   font-family: texgyreadventorregular;
-}
-
-#root {
-  min-height: 100vh;
 }
 
 html {
@@ -30,29 +27,37 @@ body {
 
 button {
   font-family: didactgothic;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 button:hover {
   scale: 105%;
-  transition: .2s;
+  transition: 0.2s;
 }
 
 img {
-  transition: .2s;
+  transition: 0.2s;
 }
 
 img:hover {
   scale: 105%;
-  transition: .2s;
+  transition: 0.2s;
 }
 
-.server-card-img, .server-card-img * {
+.one-line-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.server-card-img,
+.server-card-img * {
   transition-delay: 0s;
   transition-duration: 0s;
 }
 
-.server-card-img:hover, .server-card-img:hover * {
+.server-card-img:hover,
+.server-card-img:hover * {
   transition-delay: 5s;
   transition-duration: 1200s;
 }
@@ -68,5 +73,5 @@ img:hover {
 
 .server-card-img:hover p {
   opacity: 100;
-  transition-timing-function: cubic-bezier(1,0,1,0);
+  transition-timing-function: cubic-bezier(1, 0, 1, 0);
 }
