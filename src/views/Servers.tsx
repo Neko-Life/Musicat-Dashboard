@@ -29,8 +29,8 @@ function Servers() {
         padding: '16px',
       }}
     >
-      {serverList.map((server) => {
-        return <ServerCard server={server} />;
+      {serverList.map((server, idx) => {
+        return <ServerCard key={idx} server={server} />;
       })}
     </Box>
   );

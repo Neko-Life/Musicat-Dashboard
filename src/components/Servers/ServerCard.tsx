@@ -1,16 +1,21 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, Card, Typography } from '@mui/material';
 import { getColors } from '@/util/theme';
 import { IServerCardProps } from '@/interfaces/components/Servers';
+import TouchRipple from '@mui/material/ButtonBase/TouchRipple';
+import useTouchRipple from '@/hooks/useTouchRipple';
 
 const colors = getColors();
 
 export default function ServerCard({ server }: IServerCardProps) {
   const handleServerClick = () => {};
 
+  const { rippleRef, rippleParentProps, rippleParentStyles } = useTouchRipple();
+
   return (
-    <Button
-      key={server.id}
+    <Card
+      {...rippleParentProps}
       sx={{
+        ...rippleParentStyles,
         overflow: 'hidden',
         backgroundColor: colors.serverCardBg,
         color: 'black',
@@ -29,9 +34,6 @@ export default function ServerCard({ server }: IServerCardProps) {
           zIndex: 1,
           scale: '103%',
           transition: '.2s',
-        },
-        '& span': {
-          color: colors.serverCardRipple,
         },
       }}
     >
@@ -153,6 +155,7 @@ export default function ServerCard({ server }: IServerCardProps) {
           </Box>
         </Box>
       </Box>
-    </Button>
+      <TouchRipple ref={rippleRef} style={{ color: colors.serverCardRipple }} />
+    </Card>
   );
 }
