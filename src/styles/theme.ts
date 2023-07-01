@@ -5,7 +5,7 @@ export const defaultTheme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          fontFamily: 'texgyreadventorregular',
+          fontFamily: 'texgyreadventorbold',
         },
       },
     },

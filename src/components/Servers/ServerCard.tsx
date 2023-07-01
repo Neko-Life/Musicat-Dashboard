@@ -118,6 +118,7 @@ export default function ServerCard({ server }: IServerCardProps) {
               margin="12px"
               overflow="hidden"
               textOverflow="ellipsis"
+              fontFamily="texgyreadventorbold"
               fontWeight={600}
               sx={{
                 wordBreak: 'break-all',
@@ -141,6 +142,7 @@ export default function ServerCard({ server }: IServerCardProps) {
               sx={{
                 zIndex: 1,
                 fontWeight: 600,
+                fontFamily: 'texgyreadventorregular',
                 '& span': {
                   color: colors.buttonRipple + ' !important',
                 },
