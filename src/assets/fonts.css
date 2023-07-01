@@ -25,7 +25,7 @@
 @font-face {
     font-family: 'texgyreadventorbold_italic';
     src: url('./fonts/texgyreadventor-bolditalic-webfont.woff2') format('woff2'),
-         url('texgyreadventor-bolditalic-webfont.woff') format('woff');
+         url('./fonts/texgyreadventor-bolditalic-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
