@@ -37,6 +37,7 @@ export const mainSlice = createSlice({
       if (elTitle) elTitle.textContent = payload.username;
       if (elMeta) elMeta.content = payload.username + ' Dashboard';
 
+      if (state.debug) console.log(payload);
       state.botInfo = payload;
     },
     setDebug: (state, { payload }: PayloadAction<IStoreState['debug']>) => {

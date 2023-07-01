@@ -24,6 +24,7 @@ function Servers() {
       sx={{
         display: 'flex',
         flexWrap: 'wrap',
+        justifyContent: 'center',
         gap: '16px',
         padding: '16px',
       }}
