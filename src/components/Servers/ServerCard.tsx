@@ -9,7 +9,8 @@ const colors = getColors();
 export default function ServerCard({ server }: IServerCardProps) {
   const handleServerClick = () => {};
 
-  const { rippleRef, rippleParentProps, rippleParentStyles } = useTouchRipple();
+  const { rippleRef, rippleParentProps, rippleParentStyles, rippleStyles } =
+    useTouchRipple();
 
   return (
     <Card
@@ -155,7 +156,7 @@ export default function ServerCard({ server }: IServerCardProps) {
           </Box>
         </Box>
       </Box>
-      <TouchRipple ref={rippleRef} style={{ color: colors.serverCardRipple }} />
+      <TouchRipple ref={rippleRef} style={rippleStyles} />
     </Card>
   );
 }
