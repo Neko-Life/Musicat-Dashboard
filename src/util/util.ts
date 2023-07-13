@@ -17,7 +17,7 @@ export const getRandMessage = () => {
 export const loopCb = async (
   cb: () => boolean | undefined,
   sleep: number = 1000,
-  iteration: number = 60
+  iteration: number = 1000
 ) => {
   while (iteration) {
     if (await new Promise((r, j) => setTimeout(() => r(cb()), sleep))) break;

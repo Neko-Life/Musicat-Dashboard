@@ -321,7 +321,7 @@ export class MCSocket {
     }
 
     if (!this.isOpen()) {
-      console.error(new Error('Connection not open'));
+      console.warn('Connection not open');
       return false;
     }
 

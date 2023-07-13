@@ -39,7 +39,7 @@ img {
   transition: 0.2s;
 }
 
-img:hover {
+img:hover:not(.no-hover-scale) {
   scale: 105%;
   transition: 0.2s;
 }

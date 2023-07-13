@@ -59,13 +59,15 @@ export default function ServerCard({ server }: IServerCardProps) {
             sx={{
               width: '100%',
               height: '100%',
+              overflow: 'hidden',
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
             <img
               src={server.banner_url || server.icon_url}
               alt="Server Icon"
               style={{
-                aspectRatio: '1/1',
                 height: '100%',
                 display: 'flex',
                 justifyContent: 'center',
@@ -104,11 +106,12 @@ export default function ServerCard({ server }: IServerCardProps) {
           }}
         >
           <img
-            src={server.splash}
+            src={server.discovery_splash_url}
             alt=""
+            className="no-hover-scale"
             style={{
               position: 'absolute',
-              width: '100%',
+              height: '100%',
             }}
           />
           <Box
@@ -125,6 +128,7 @@ export default function ServerCard({ server }: IServerCardProps) {
               fontWeight={600}
               sx={{
                 wordBreak: 'break-all',
+                textAlign: 'center',
               }}
             >
               {server.name}

@@ -10,7 +10,7 @@ function Login() {
   const [data] = useSearchParams();
 
   useEffect(() => {
-    if (socket) loopCb(() => socket && socket.sendOauth(data));
+    if (socket) loopCb(() => socket && socket.sendOauth(data), 10);
   }, [socket]);
 
   return (
