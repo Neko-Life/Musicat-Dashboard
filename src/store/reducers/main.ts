@@ -1,4 +1,4 @@
-import { getRedirectUri } from '@/util/util';
+import { setStateNull } from '@/util/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IStoreState {
@@ -64,14 +64,10 @@ export const mainSlice = createSlice({
       if (state.debug === true) console.log(payload);
       state.serverList = payload || [];
     },
-    setOauthState: (state, { payload }: PayloadAction<string>) => {
-      window.location.href =
-        payload + '&redirect_uri=' + getRedirectUri('/login');
+    setOauth: (state, { payload }: PayloadAction<string>) => {
+      window.location.href = payload;
 
-      state = Object.create(null);
-    },
-    setInviteLink: (state, { payload }: PayloadAction<string>) => {
-      state.inviteLink = payload;
+      setStateNull(state);
     },
   },
 });

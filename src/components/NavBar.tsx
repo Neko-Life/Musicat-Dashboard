@@ -3,6 +3,7 @@ import navbarStyles from '@/assets/NavBar.module.css';
 import commonStyles from '@/assets/common.module.css';
 import { useMainSelector } from '@/hooks/useSelector';
 import { getSocket } from '@/socket/instance';
+import { getRedirectUri } from '@/util/util';
 
 export default function NavBar() {
   const socket = getSocket();
@@ -13,7 +14,7 @@ export default function NavBar() {
   const handleLoginClick = () => {
     if (socket) {
       if (loginButtonRef.current) loginButtonRef.current.disabled = true;
-      socket.requestOauthState();
+      socket.requestOauth(getRedirectUri('/login'));
     }
   };
 

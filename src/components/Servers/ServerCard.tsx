@@ -3,11 +3,21 @@ import { getColors } from '@/util/theme';
 import { IServerCardProps } from '@/interfaces/components/Servers';
 import TouchRipple from '@mui/material/ButtonBase/TouchRipple';
 import useTouchRipple from '@/hooks/useTouchRipple';
+import { getSocket } from '@/socket/instance';
+import { getRedirectUri, loopCb } from '@/util/util';
+import { useState } from 'react';
 
 const colors = getColors();
 
 export default function ServerCard({ server }: IServerCardProps) {
-  const handleServerClick = () => {};
+  const socket = getSocket();
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  const handleServerClick = () => {
+    if (socket && !server.isMutual)
+      socket.requestInvite(getRedirectUri('/servers'));
+    setButtonDisabled(true);
+  };
 
   const { rippleRef, rippleParentProps, rippleParentStyles, rippleStyles } =
     useTouchRipple();
@@ -146,6 +156,7 @@ export default function ServerCard({ server }: IServerCardProps) {
               onClick={handleServerClick}
               variant="contained"
               color={server.isMutual ? 'secondary' : 'success'}
+              disabled={buttonDisabled}
               sx={{
                 zIndex: 1,
                 fontWeight: 600,

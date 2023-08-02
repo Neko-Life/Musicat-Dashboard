@@ -1,5 +1,6 @@
 import Command from '@/classes/Command';
 import { getSocket } from '@/socket/instance';
+import { getRedirectUri } from '@/util/util';
 
 export default class ConsoleLoginCommand extends Command {
   constructor() {
@@ -9,6 +10,6 @@ export default class ConsoleLoginCommand extends Command {
   run() {
     const socket = getSocket();
 
-    socket.requestOauthState();
+    socket.requestOauth(getRedirectUri('/login'));
   }
 }

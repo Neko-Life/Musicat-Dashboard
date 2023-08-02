@@ -7,13 +7,24 @@ import { loopCb } from '@/util/util';
 import { getSocket } from '@/socket/instance';
 import { Box } from '@mui/material';
 import ServerCard from '@/components/Servers/ServerCard';
+import { useSearchParams } from 'react-router-dom';
 
 function Servers() {
   const socket = getSocket();
   const { serverList } = useMainSelector();
+  const [data] = useSearchParams();
 
   useEffect(() => {
-    if (socket) loopCb(() => socket && socket.requestServerList(), 10);
+    if (socket) {
+      const hasAuth = data.get('code')?.length;
+
+      if (hasAuth) {
+        loopCb(() => socket && socket.sendOauth(data), 10);
+        return;
+      }
+
+      loopCb(() => socket && socket.requestServerList(), 10);
+    }
   }, [socket]);
 
   if (getDebugState()) console.log(serverList);

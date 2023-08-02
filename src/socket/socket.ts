@@ -1,14 +1,17 @@
 import { serverUrl } from '@/config';
 import { consolePrint } from '@/console/console';
-import type { IEventPayload, IRequestPayload } from '@/interfaces/socket';
+import type {
+  IEventPayload,
+  IRequestPayload,
+  IRequestTypePayload,
+} from '@/interfaces/socket';
 import store, { actions } from '@/store/store';
 import { getDebugState } from '@/util/dbg';
-import { rand } from '@/util/util';
+import { getRedirectUri, rand } from '@/util/util';
 import { ERequestType } from './requestTypes';
 import { EEvent } from './eventTypes';
 
-const { setBotInfo, setOauthState, setServerList, setInviteLink } =
-  actions.main;
+const { setBotInfo, setOauth, setServerList } = actions.main;
 
 export class MCSocket {
   pingDuration: number;
@@ -164,16 +167,18 @@ export class MCSocket {
       // I didn't ask for this
     } else return;
 
-    if (typeof reqObj?.d === 'number') {
-      switch (reqObj.d) {
+    const reqType = typeof reqObj?.d === 'number' ? reqObj.d : reqObj.d.type;
+
+    if (reqType) {
+      switch (reqType) {
         case ERequestType.BOT_INFO:
           store.dispatch(setBotInfo(d));
           break;
         case ERequestType.SERVER_LIST:
           store.dispatch(setServerList(d));
           break;
-        case ERequestType.OAUTH_STATE:
-          store.dispatch(setOauthState(d));
+        case ERequestType.OAUTH:
+          store.dispatch(setOauth(d));
           break;
         default:
           console.error(new Error('Unknown op: ' + reqObj.d));
@@ -190,9 +195,6 @@ export class MCSocket {
     switch (event) {
       case EEvent.OAUTH:
         console.log('OAUTH');
-        break;
-      case EEvent.INVITE_LINK:
-        store.dispatch(setInviteLink(d));
         break;
       default:
         return;
@@ -329,12 +331,12 @@ export class MCSocket {
     return true;
   }
 
-  sendObj(obj: any) {
+  sendObj<T>(obj: T) {
     return this.send(JSON.stringify(obj));
   }
 
-  emitEvent(event: EEvent, data: any) {
-    const eObj: IEventPayload = {
+  emitEvent<T>(event: EEvent, data: T) {
+    const eObj: IEventPayload<T> = {
       type: 'e',
       event,
       d: data,
@@ -384,8 +386,8 @@ export class MCSocket {
     }
   }
 
-  request(req: ERequestType) {
-    const reqObj: IRequestPayload = {
+  request<T>(req: ERequestType | IRequestTypePayload<T>) {
+    const reqObj: IRequestPayload<T> = {
       type: 'req',
       nonce: this._generateNonce(),
       d: req,
@@ -414,17 +416,36 @@ export class MCSocket {
     return this.request(ERequestType.SERVER_LIST);
   }
 
-  sendOauth(data: any) {
+  sendOauth(data: URLSearchParams) {
+    const pathname = window?.location?.pathname;
+
+    if (!pathname) return false;
+
     const toSend = {
       code: data.get('code'),
       state: data.get('state'),
+      redirect_uri: getRedirectUri(pathname),
     };
 
     return this.emitEvent(EEvent.OAUTH, toSend);
   }
 
-  requestOauthState() {
-    return this.request(ERequestType.OAUTH_STATE);
+  requestOauth(redirectUri: string) {
+    let payload = {
+      type: ERequestType.OAUTH,
+      d: redirectUri,
+    };
+
+    return this.request(payload);
+  }
+
+  requestInvite(redirectUri: string) {
+    let payload = {
+      type: ERequestType.INVITE,
+      d: redirectUri,
+    };
+
+    return this.request(payload);
   }
 }
 
