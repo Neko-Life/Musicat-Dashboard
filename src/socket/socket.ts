@@ -167,7 +167,9 @@ export class MCSocket {
       // I didn't ask for this
     } else return;
 
-    const reqType = typeof reqObj?.d === 'number' ? reqObj.d : reqObj.d.type;
+    const reqType = typeof reqObj.d === 'number' ? reqObj.d : reqObj.d.type;
+
+    console.log(reqObj);
 
     if (reqType) {
       switch (reqType) {
@@ -178,6 +180,7 @@ export class MCSocket {
           store.dispatch(setServerList(d));
           break;
         case ERequestType.OAUTH:
+        case ERequestType.INVITE:
           store.dispatch(setOauth(d));
           break;
         default:

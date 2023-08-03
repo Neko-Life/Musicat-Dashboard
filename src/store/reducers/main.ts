@@ -1,10 +1,11 @@
-import { setStateNull } from '@/util/store';
+import { IConsoleStdoutEntry } from '@/interfaces/console';
+import { renderConsoleGreet, setStateNull } from '@/util/store';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface IStoreState {
   botInfo?: any;
   debug: boolean;
-  stdout: string[];
+  stdout: IConsoleStdoutEntry[];
   maxStdoutEntry: number;
   showConsole: boolean;
   serverList: any[];
@@ -13,7 +14,7 @@ interface IStoreState {
 
 const initialState: IStoreState = {
   debug: false,
-  stdout: [],
+  stdout: [renderConsoleGreet],
   maxStdoutEntry: 100,
   showConsole: false,
   serverList: [],
@@ -43,7 +44,10 @@ export const mainSlice = createSlice({
     setDebug: (state, { payload }: PayloadAction<IStoreState['debug']>) => {
       state.debug = payload;
     },
-    consoleConsolePrint: (state, { payload }: PayloadAction<string>) => {
+    consoleConsolePrint: (
+      state,
+      { payload }: PayloadAction<IConsoleStdoutEntry>
+    ) => {
       const newStdout = state.stdout.slice();
 
       if (newStdout.length >= state.maxStdoutEntry) newStdout.shift();

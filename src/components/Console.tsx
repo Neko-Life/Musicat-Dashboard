@@ -16,6 +16,7 @@ import { pathIs } from '@/util/util';
 import { getColors, getConsoleMarginTop } from '@/util/theme';
 import { getCommandManager } from '@/managers/instance';
 import classNames from 'classnames';
+import { IConsoleStdoutEntry } from '@/interfaces/console';
 
 const { toggleConsole } = actions.main;
 const colors = getColors();
@@ -24,21 +25,21 @@ interface IConsoleProps {
   disabled?: boolean;
 }
 
-type IStdoutItem = string;
-
 interface IStdoutContentProps {
-  stdout: IStdoutItem[];
+  stdout: IConsoleStdoutEntry[];
 }
 
 const renderLine = (
   ref: RefObject<HTMLDivElement> | null,
-  item: IStdoutItem,
+  item: IConsoleStdoutEntry,
   key: number
 ) => {
   const itemStyles: classNames.ArgumentArray = [commonStyles.noMar];
 
+  const isItemString = typeof item === 'string';
+
   const startsWith = (str: string) => {
-    return item.startsWith(str);
+    return isItemString && item.startsWith(str);
   };
 
   const inlineStyle: CSSProperties = {};
@@ -50,10 +51,12 @@ const renderLine = (
 
   if (inlineStyle.color) inlineStyle.fontWeight = 600;
 
+  const rendered = isItemString ? item : item();
+
   return (
     <div ref={ref} key={key}>
       <p className={classNames(...itemStyles)} style={inlineStyle}>
-        {item}
+        {rendered}
       </p>
     </div>
   );
@@ -61,9 +64,10 @@ const renderLine = (
 
 function StdoutContent({ stdout }: IStdoutContentProps) {
   const lastStdout = useRef<HTMLDivElement>(null);
+  const { showConsole } = useMainSelector();
 
   useEffect(() => {
-    if (lastStdout.current)
+    if (showConsole && lastStdout.current)
       lastStdout.current.scrollIntoView({
         behavior: 'smooth',
         block: 'end',
