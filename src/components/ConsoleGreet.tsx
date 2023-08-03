@@ -1,4 +1,5 @@
 import { Box, Button } from '@mui/material';
+import Markdown from './Markdown';
 
 export default function ConsoleGreet() {
   const discordInvite = () => {};
@@ -18,7 +19,7 @@ export default function ConsoleGreet() {
       >
         Welcome!
       </h1>
-      <div>Starts with `help`</div>
+      <Markdown>Starts with `help`</Markdown>
       <Box
         sx={{
           display: 'flex',

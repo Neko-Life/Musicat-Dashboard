@@ -17,6 +17,7 @@ import { getColors, getConsoleMarginTop } from '@/util/theme';
 import { getCommandManager, getConsoleStdout } from '@/managers/instance';
 import classNames from 'classnames';
 import { IConsoleStdoutEntry } from '@/interfaces/console';
+import Markdown from './Markdown';
 
 const { toggleConsole } = actions.main;
 const colors = getColors();
@@ -47,7 +48,7 @@ const renderLine = (
 
   if (inlineStyle.color) inlineStyle.fontWeight = 600;
 
-  const rendered = isItemString ? item : item();
+  const rendered = isItemString ? <Markdown>{item}</Markdown> : item();
 
   return (
     <div ref={ref} key={key}>

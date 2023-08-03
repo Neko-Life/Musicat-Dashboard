@@ -17,6 +17,10 @@
   padding: 8px;
 }
 
+.consoleStdout p {
+  margin: 0;
+}
+
 .consoleContainer {
   display: flex;
   position: absolute;
