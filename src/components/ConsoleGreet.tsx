@@ -29,6 +29,7 @@ export default function ConsoleGreet() {
         <Button
           sx={{
             textTransform: 'none',
+            fontSize: '16px',
           }}
           onClick={discordInvite}
         >
