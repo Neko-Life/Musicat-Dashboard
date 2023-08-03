@@ -14,7 +14,7 @@ import { actions } from '@/store/reducers';
 import { useDispatch } from 'react-redux';
 import { pathIs } from '@/util/util';
 import { getColors, getConsoleMarginTop } from '@/util/theme';
-import { getCommandManager } from '@/managers/instance';
+import { getCommandManager, getConsoleStdout } from '@/managers/instance';
 import classNames from 'classnames';
 import { IConsoleStdoutEntry } from '@/interfaces/console';
 
@@ -23,10 +23,6 @@ const colors = getColors();
 
 interface IConsoleProps {
   disabled?: boolean;
-}
-
-interface IStdoutContentProps {
-  stdout: IConsoleStdoutEntry[];
 }
 
 const renderLine = (
@@ -62,9 +58,23 @@ const renderLine = (
   );
 };
 
-function StdoutContent({ stdout }: IStdoutContentProps) {
-  const lastStdout = useRef<HTMLDivElement>(null);
+function StdoutContent() {
+  const consoleStdout = getConsoleStdout();
   const { showConsole } = useMainSelector();
+
+  const [stdout, setStdout] = useState<IConsoleStdoutEntry[]>(
+    consoleStdout.stdout
+  );
+
+  const lastStdout = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    consoleStdout.on('update', () => setStdout(consoleStdout.stdout));
+
+    return () => {
+      consoleStdout.off('update');
+    };
+  }, []);
 
   useEffect(() => {
     if (showConsole && lastStdout.current)
@@ -73,7 +83,7 @@ function StdoutContent({ stdout }: IStdoutContentProps) {
         block: 'end',
         inline: 'end',
       });
-  }, [stdout]);
+  }, [stdout.length]);
 
   return stdout?.map((item, idx, arr) =>
     renderLine(idx === arr.length - 1 ? lastStdout : null, item, idx)
@@ -82,8 +92,9 @@ function StdoutContent({ stdout }: IStdoutContentProps) {
 
 export default function Console({ disabled }: IConsoleProps) {
   const commandManager = getCommandManager();
-  const { stdout, showConsole } = useMainSelector();
+  const { showConsole } = useMainSelector();
   const dispatch = useDispatch();
+
   const [savedCommand, setSavedCommand] = useState('');
   const [command, setCommand] = useState('');
 
@@ -135,7 +146,7 @@ export default function Console({ disabled }: IConsoleProps) {
               : 'unset',
           }}
         >
-          <StdoutContent stdout={stdout} />
+          <StdoutContent />
         </Box>
 
         <div className={consoleStyles.consoleStdin}>

@@ -1,7 +1,5 @@
 import Command from '@/classes/Command';
-import store, { actions } from '@/store/store';
-
-const { consoleConsoleClear } = actions.main;
+import { getConsoleStdout } from '@/managers/instance';
 
 export default class ConsoleClearCommand extends Command {
   constructor() {
@@ -9,6 +7,6 @@ export default class ConsoleClearCommand extends Command {
   }
 
   run() {
-    store.dispatch(consoleConsoleClear());
+    getConsoleStdout().clear();
   }
 }
