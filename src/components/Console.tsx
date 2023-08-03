@@ -55,9 +55,9 @@ const renderLine = (
 
   return (
     <div ref={ref} key={key}>
-      <p className={classNames(...itemStyles)} style={inlineStyle}>
+      <div className={classNames(...itemStyles)} style={inlineStyle}>
         {rendered}
-      </p>
+      </div>
     </div>
   );
 };
