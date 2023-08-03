@@ -135,39 +135,51 @@ export default function Console({ disabled }: IConsoleProps) {
   };
 
   return (
-    <div className={`${commonStyles.shadowLight} ${consoleStyles.console}`}>
-      <div className={consoleStyles.consoleStdContainer}>
-        <Box
-          id="console-stdout"
-          className={consoleStyles.consoleStdout}
-          sx={{
-            height: pathIs('/console')
-              ? `calc(100vh - ${getConsoleMarginTop()})`
-              : 'unset',
-          }}
-        >
-          <StdoutContent />
-        </Box>
-
-        <div className={consoleStyles.consoleStdin}>
-          <form
-            className={consoleStyles.consoleStdinForm}
-            onSubmit={handleSubmit}
+    <>
+      <Box
+        className={`${commonStyles.shadowLight} ${consoleStyles.console} ${
+          showConsole ? 'active' : ''
+        }`}
+        sx={{
+          transform: 'translateY(calc(100% + 8px))',
+          '&.active': {
+            transform: 'translateY(0)',
+          },
+        }}
+      >
+        <div className={consoleStyles.consoleStdContainer}>
+          <Box
+            id="console-stdout"
+            className={consoleStyles.consoleStdout}
+            sx={{
+              height: pathIs('/console')
+                ? `calc(100vh - ${getConsoleMarginTop()})`
+                : 'unset',
+            }}
           >
-            <input
-              ref={stdinInput}
-              id="console-stdin-form-input"
-              className={consoleStyles.stdinFormInput}
-              value={command}
-              onChange={handleInputChange}
-              type="text"
-              disabled={disabled}
-              autoComplete="off"
-              onKeyDown={handleKeyDown}
-            />
-          </form>
+            <StdoutContent />
+          </Box>
+
+          <div className={consoleStyles.consoleStdin}>
+            <form
+              className={consoleStyles.consoleStdinForm}
+              onSubmit={handleSubmit}
+            >
+              <input
+                ref={stdinInput}
+                id="console-stdin-form-input"
+                className={consoleStyles.stdinFormInput}
+                value={command}
+                onChange={handleInputChange}
+                type="text"
+                disabled={disabled}
+                autoComplete="off"
+                onKeyDown={handleKeyDown}
+              />
+            </form>
+          </div>
         </div>
-      </div>
+      </Box>
 
       <Box>
         <Button
@@ -192,6 +204,6 @@ export default function Console({ disabled }: IConsoleProps) {
           Console
         </Button>
       </Box>
-    </div>
+    </>
   );
 }

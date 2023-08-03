@@ -71,11 +71,7 @@ function AppLayout({ children, hideNavBar }: IAppLayoutProps) {
             display: 'contents',
           }}
         >
-          <div
-            className={`${consoleStyles.consoleContainer} ${
-              showConsole ? consoleStyles.consoleShow : ''
-            }`}
-          >
+          <div className={`${consoleStyles.consoleContainer}`}>
             <Console disabled={!showConsole} />
           </div>
         </div>
