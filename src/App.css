@@ -10,14 +10,68 @@ div.App.theme-dark {
   --console-stdout-bg: #001d3d;
 }
 
+* {
+  transition-timing-function: ease-in-out;
+  transition: 0.5s;
+  font-family: texgyreadventorregular;
+}
+
 html {
   overflow: hidden;
+  overflow-wrap: break-word;
 }
 
 body {
   margin: 0px;
 }
 
-#root {
-  min-height: 100vh;
+button {
+  font-family: didactgothic;
+  transition: 0.2s;
+}
+
+button:hover {
+  scale: 105%;
+  transition: 0.2s;
+}
+
+img {
+  transition: 0.2s;
+}
+
+img:hover:not(.no-hover-scale) {
+  scale: 105%;
+  transition: 0.2s;
+}
+
+.one-line-text {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.server-card-img,
+.server-card-img * {
+  transition-delay: 0s;
+  transition-duration: 0s;
+}
+
+.server-card-img:hover,
+.server-card-img:hover * {
+  transition-delay: 5s;
+  transition-duration: 1200s;
+}
+
+.server-card-img:hover {
+  background-color: black;
+}
+
+.server-card-img:hover img {
+  scale: 1000%;
+  opacity: 0.3;
+}
+
+.server-card-img:hover p {
+  opacity: 100;
+  transition-timing-function: cubic-bezier(1, 0, 1, 0);
 }

@@ -1,7 +1,6 @@
-import store, { actions } from '@/store/store';
+import { IConsoleStdoutEntry } from '@/interfaces/console';
+import { getConsoleStdout } from '@/managers/instance';
 
-const { consoleConsolePrint } = actions.main;
-
-export const consolePrint = (str: string) => {
-  store.dispatch(consoleConsolePrint(str));
+export const consolePrint = (item: IConsoleStdoutEntry) => {
+  getConsoleStdout().print(item);
 };

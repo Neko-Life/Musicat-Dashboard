@@ -1,14 +1,15 @@
 import Command from '@/classes/Command';
 import { consolePrint } from '../console';
+import { CONSOLE_MARGIN_TOP } from '@/configs/constants';
 
 export default class ConsoleMaxHCommand extends Command {
   currentMaxHeight: number;
-  subtract100: number;
+  marginTop: number;
 
   constructor() {
     super('console-max-h');
     this.currentMaxHeight = 100;
-    this.subtract100 = 88;
+    this.marginTop = CONSOLE_MARGIN_TOP;
   }
 
   run(args: string) {
@@ -34,6 +35,6 @@ export default class ConsoleMaxHCommand extends Command {
     this.currentMaxHeight = h;
 
     if (el)
-      el.style.maxHeight = `calc(${h}vh - ${(this.subtract100 / 100) * h}px)`;
+      el.style.maxHeight = `calc(${h}vh - ${(this.marginTop / 100) * h}px)`;
   }
 }

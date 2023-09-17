@@ -4,6 +4,7 @@ import NotFound from '@/views/NotFound';
 import Login from '@/views/Login';
 import Servers from '@/views/Servers';
 import { useDefinedComponentLayout } from '@/util/router';
+import AppLayout from '@/layouts/AppLayout';
 
 export default createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export default createBrowserRouter([
   {
     path: '/login',
     element: useDefinedComponentLayout(Login),
+  },
+  {
+    path: '/console',
+    element: <AppLayout hideNavBar></AppLayout>,
   },
   {
     path: '*',

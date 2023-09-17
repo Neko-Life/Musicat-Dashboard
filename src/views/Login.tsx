@@ -1,16 +1,16 @@
-import { useContext, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import AppLayout from '@/layouts/AppLayout';
 import { defineComponentLayout } from '@/util/defineLayout';
-import MainContext from '@/contexts/MainContext';
 import { loopCb } from '@/util/util';
+import { getSocket } from '@/socket/instance';
 
 function Login() {
-  const { socket } = useContext(MainContext);
+  const socket = getSocket();
   const [data] = useSearchParams();
 
   useEffect(() => {
-    if (socket) loopCb(() => socket && socket.sendOauth(data));
+    if (socket) loopCb(() => socket && socket.sendOauth(data), 10);
   }, [socket]);
 
   return (

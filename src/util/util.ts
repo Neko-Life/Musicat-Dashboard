@@ -1,4 +1,5 @@
-import { RANDOM_MESSAGES } from './constants.js';
+import { BASE_URL } from '@/config';
+import { RANDOM_MESSAGES } from '@/configs/constants.js';
 
 export const rand = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -16,10 +17,29 @@ export const getRandMessage = () => {
 export const loopCb = async (
   cb: () => boolean | undefined,
   sleep: number = 1000,
-  iteration: number = 60
+  iteration: number = 1000
 ) => {
   while (iteration) {
     if (await new Promise((r, j) => setTimeout(() => r(cb()), sleep))) break;
     iteration--;
   }
+};
+
+/**
+ * Consider other variable that might affect default router pathname
+ * and adjust accordingly
+ */
+export const fullPathName = (pathname: string) => {
+  return (BASE_URL?.length && BASE_URL !== '/' ? BASE_URL : '') + pathname;
+};
+
+/**
+ * Is `path` is current location path?
+ */
+export const pathIs = (path: string = '') => {
+  return window.location.pathname === fullPathName(path);
+};
+
+export const getRedirectUri = (path: string = '') => {
+  return encodeURIComponent(window.location.origin + path);
 };

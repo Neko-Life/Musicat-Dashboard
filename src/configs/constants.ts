@@ -18,3 +18,6 @@ export const RANDOM_MESSAGES = [
   'what in the world...',
   '...',
 ];
+
+export const CONSOLE_MARGIN_TOP = 88;
+export const DISCORD_API = 'https://discord.com/api/v10';

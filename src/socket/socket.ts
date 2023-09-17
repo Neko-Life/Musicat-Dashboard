@@ -1,17 +1,17 @@
 import { serverUrl } from '@/config';
 import { consolePrint } from '@/console/console';
+import type {
+  IEventPayload,
+  IRequestPayload,
+  IRequestTypePayload,
+} from '@/interfaces/socket';
 import store, { actions } from '@/store/store';
 import { getDebugState } from '@/util/dbg';
-import { rand } from '@/util/util';
+import { getRedirectUri, rand } from '@/util/util';
 import { ERequestType } from './requestTypes';
+import { EEvent } from './eventTypes';
 
-interface IRequestPayload {
-  type: 'req' | 'res';
-  nonce: string;
-  d: ERequestType | any;
-}
-
-const { setBotInfo, setOauthState, setServerList } = actions.main;
+const { setBotInfo, setOauth, setServerList } = actions.main;
 
 export class MCSocket {
   pingDuration: number;
@@ -109,6 +109,9 @@ export class MCSocket {
           case 'res':
             this._handleRes(payload.nonce, payload.d);
             break;
+          case 'e':
+            this._handleEvent(payload.event, payload.d);
+            break;
           default:
             throw new TypeError('Unknown type: ' + payload.type);
         }
@@ -164,16 +167,21 @@ export class MCSocket {
       // I didn't ask for this
     } else return;
 
-    if (typeof reqObj?.d === 'number') {
-      switch (reqObj.d) {
+    const reqType = typeof reqObj.d === 'number' ? reqObj.d : reqObj.d.type;
+
+    console.log(reqObj);
+
+    if (reqType) {
+      switch (reqType) {
         case ERequestType.BOT_INFO:
           store.dispatch(setBotInfo(d));
           break;
         case ERequestType.SERVER_LIST:
           store.dispatch(setServerList(d));
           break;
-        case ERequestType.OAUTH_STATE:
-          store.dispatch(setOauthState(d));
+        case ERequestType.OAUTH:
+        case ERequestType.INVITE:
+          store.dispatch(setOauth(d));
           break;
         default:
           console.error(new Error('Unknown op: ' + reqObj.d));
@@ -182,6 +190,18 @@ export class MCSocket {
 
     // if (typeof reqObj.d !== "object")
     //   return;
+  }
+
+  async _handleEvent(event: EEvent, d: any) {
+    // !TODO: save data and clean console.log
+    console.log('event d', event, d);
+    switch (event) {
+      case EEvent.OAUTH:
+        console.log('OAUTH');
+        break;
+      default:
+        return;
+    }
   }
 
   reconnect(url?: string) {
@@ -306,7 +326,7 @@ export class MCSocket {
     }
 
     if (!this.isOpen()) {
-      console.error(new Error('Connection not open'));
+      console.warn('Connection not open');
       return false;
     }
 
@@ -314,8 +334,18 @@ export class MCSocket {
     return true;
   }
 
-  sendObj(obj: any) {
+  sendObj<T>(obj: T) {
     return this.send(JSON.stringify(obj));
+  }
+
+  emitEvent<T>(event: EEvent, data: T) {
+    const eObj: IEventPayload<T> = {
+      type: 'e',
+      event,
+      d: data,
+    };
+
+    return this.sendObj(eObj);
   }
 
   async sleep(ms: number) {
@@ -359,8 +389,8 @@ export class MCSocket {
     }
   }
 
-  request(req: ERequestType) {
-    const reqObj: IRequestPayload = {
+  request<T>(req: ERequestType | IRequestTypePayload<T>) {
+    const reqObj: IRequestPayload<T> = {
       type: 'req',
       nonce: this._generateNonce(),
       d: req,
@@ -389,18 +419,36 @@ export class MCSocket {
     return this.request(ERequestType.SERVER_LIST);
   }
 
-  sendOauth(data: any) {
-    // !TODO: create event object { type: "e", d: { e: E_OAUTH, d: toSend }}
+  sendOauth(data: URLSearchParams) {
+    const pathname = window?.location?.pathname;
+
+    if (!pathname) return false;
+
     const toSend = {
       code: data.get('code'),
       state: data.get('state'),
+      redirect_uri: getRedirectUri(pathname),
     };
 
-    return this.sendObj(toSend);
+    return this.emitEvent(EEvent.OAUTH, toSend);
   }
 
-  requestOauthState() {
-    return this.request(ERequestType.OAUTH_STATE);
+  requestOauth(redirectUri: string) {
+    let payload = {
+      type: ERequestType.OAUTH,
+      d: redirectUri,
+    };
+
+    return this.request(payload);
+  }
+
+  requestInvite(redirectUri: string) {
+    let payload = {
+      type: ERequestType.INVITE,
+      d: redirectUri,
+    };
+
+    return this.request(payload);
   }
 }
 

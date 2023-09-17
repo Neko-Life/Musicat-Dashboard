@@ -3,6 +3,9 @@ import { consolePrint } from '@/console/console';
 import { getDebugState } from '@/util/dbg';
 
 export default class CommandManager {
+  /**
+   * Command collection
+   */
   commands: Map<string, Command>;
 
   /**
@@ -35,9 +38,9 @@ export default class CommandManager {
 
     command = command.trim();
 
-    if (!command) return;
+    if (debug) console.log('command: `', command, '`');
 
-    if (debug) console.log('command:', command);
+    if (!command?.length) return;
 
     let cmd = '';
 
@@ -94,12 +97,12 @@ export default class CommandManager {
   /**
    * Register a Command instance
    */
-  register(commandClass: Command) {
-    if (!(commandClass instanceof Command))
+  register(command: Command) {
+    if (!(command instanceof Command))
       throw new TypeError('Command must be instance of Command class');
 
-    if (!commandClass.name) throw new Error('Command must have a name');
+    if (!command.name) throw new Error('Command must have a name');
 
-    this.commands.set(commandClass.name, commandClass);
+    this.commands.set(command.name, command);
   }
 }

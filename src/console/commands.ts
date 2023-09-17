@@ -4,6 +4,7 @@ import DebugCommand from './commands/debug';
 import PingCommand from './commands/ping';
 import ConsoleMaxHCommand from './commands/console-max-h';
 import EchoCommand from './commands/echo';
+import LoginCommand from './commands/login';
 import type CommandManager from '@/managers/CommandManager';
 
 export const registerAll = (commandManager: CommandManager) => {
@@ -13,4 +14,5 @@ export const registerAll = (commandManager: CommandManager) => {
   commandManager.register(new PingCommand());
   commandManager.register(new ConsoleMaxHCommand());
   commandManager.register(new EchoCommand());
+  commandManager.register(new LoginCommand());
 };
